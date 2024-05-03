@@ -2,7 +2,7 @@
     <div class="sidebar-header">
         <div class="d-flex justify-content-between">
             <div class="logo">
-                <a href="{{ url('/dashboard') }}"><img src="{{ asset('assets/images/logo/logo.png') }}" alt="Logo"
+                <a href="{{ url('/dashboard') }}"><img src="{{ asset('images/logo/logo.png') }}" alt="Logo"
                         srcset=""></a>
             </div>
             <div class="theme-toggle d-flex gap-2 align-items-center mt-2">

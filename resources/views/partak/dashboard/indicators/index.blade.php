@@ -63,13 +63,3 @@
         </div>
     </div>
 @endsection
-
-@section('css_files')
-    <link rel="stylesheet" href={{ asset('assets/extensions/simple-datatables/style.css') }}>
-    <link rel="stylesheet" href={{ asset('assets/css/pages/simple-datatables.css') }}>
-@endsection
-
-@section('js_files')
-    <script src={{ asset('assets/extensions/simple-datatables/umd/simple-datatables.js') }}></script>
-    <script src={{ asset('assets/js/pages/simple-datatables.js') }}></script>
-@endsection

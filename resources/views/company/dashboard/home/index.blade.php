@@ -13,7 +13,7 @@
                                         <div class="stats-icon purple">
                                             <svg width="1.6em" height="1.6em" style="color: rgb(255, 255, 255);">
                                                 <use
-                                                    xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#calendar-date-fill">
+                                                    xlink:href="vendors/bootstrap-icons/bootstrap-icons.svg#calendar-date-fill">
                                                 </use>
                                             </svg>
                                         </div>
@@ -50,7 +50,7 @@
                                     <div class="col-md-4">
                                         <div class="stats-icon green">
                                             <svg width="1.8em" height="2em" style="color: rgb(255, 255, 255);">
-                                                <use xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#stack">
+                                                <use xlink:href="vendors/bootstrap-icons/bootstrap-icons.svg#stack">
                                                 </use>
                                             </svg>
                                         </div>
@@ -72,7 +72,7 @@
                                             <!-- <i class="iconly-boldBookmark"></i> -->
                                             <svg width="1.4em" height="2em" style="color: rgb(255, 255, 255);">
                                                 <use
-                                                    xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#building">
+                                                    xlink:href="vendors/bootstrap-icons/bootstrap-icons.svg#building">
                                                 </use>
                                             </svg>
                                         </div>
@@ -104,7 +104,7 @@
                     <div class="card-body py-4 px-5">
                         <div class="d-flex align-items-center">
                             <div class="avatar avatar-xl">
-                                <img src="assets/images/faces/1.jpg" alt="Face 1">
+                                <img src="{{asset("images/faces/1.jpg")}}" alt="Face">
                             </div>
                             <div class="me-3 name ps-2">
                                 <h5 class="font-bold">طه حاجی وند</h5>
@@ -189,8 +189,8 @@
     </div>
 
 @section('js_files')
-    <script src="{{ asset('assets/extensions/dayjs/dayjs.min.js') }}"></script>
-    <script src="{{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
+    {{-- <script src="{{ asset('extensions/dayjs/dayjs.min.js') }}"></script> --}}
+    <script src="{{ asset('extensions/apexcharts/apexcharts.min.js') }}"></script>
     {{-- <script src="{{ asset('assets/js/pages/ui-apexchart.js') }}"></script> --}}
     <script>
         var lineOptions = {

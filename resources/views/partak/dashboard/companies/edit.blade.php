@@ -30,14 +30,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>کد رنگ تجاری شرکت</label>
-                                    <input type="text" class="form-control" name="company_color"
+                                    <input type="color" class="form-control" name="company_color"
                                         value="{{ $company_info->primary_color }}" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>کد رنگ بک گراند </label>
-                                    <input type="text" class="form-control" name="company_color_background"
+                                    <input type="color" class="form-control" name="company_color_background"
                                         value="{{ $company_info->secondary_color }}" />
                                 </div>
                             </div>

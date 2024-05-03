@@ -1,29 +1,22 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
-{{--
-/**
-* ! it's better to use @stack with push for CSS & JS files
-*/
---}}
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'داشبورد')</title>
     @yield('css_files')
-    <link rel="stylesheet" href={{ asset('assets/css/main/app.rtl.css') }}>
-    <link rel="stylesheet" href={{ asset('assets/css/main/app-dark.css') }}>
-    <link rel="stylesheet" href={{ asset('assets/css/font.css') }}>
-    <link rel="stylesheet" href={{ asset('assets/vendors/iconly/bold.css') }}>
-    <link rel="stylesheet" href={{ asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.css') }}>
-    <link rel="stylesheet" href={{ asset('assets/vendors/bootstrap-icons/bootstrap-icons.css') }}>
+    <link rel="stylesheet" href={{ asset('css/main/app.rtl.css') }}>
+    <link rel="stylesheet" href={{ asset('css/main/app-dark.css') }}>
+    <link rel="stylesheet" href={{ asset('css/font.css') }}>
+    <link rel="stylesheet" href={{ asset('vendors/iconly/bold.css') }}>
+    <link rel="stylesheet" href={{ asset('vendors/bootstrap-icons/bootstrap-icons.css') }}> 
+    <link rel="stylesheet" href={{ asset('vendors/perfect-scrollbar/perfect-scrollbar.css') }}>
     @yield('inline_css')
     @include('company.layouts.partials.theme')
 </head>
 
 <body>
-    <script src={{ asset('assets/js/initTheme.js') }}></script>
+    <script src={{ asset('js/initTheme.js') }}></script>
     <div id="app">
         <div id="sidebar" class="active">
             @include('company.layouts.sidebar')
@@ -44,10 +37,10 @@
             </footer>
         </div>
     </div>
-    <script src={{ asset('assets/js/bootstrap.bundle.min.js') }}></script>
-    <script src={{ asset('assets/js/app.js') }}></script>
-    <script src={{ asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}></script>
-    <script src={{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}></script>
+    <script src={{ asset('js/bootstrap.bundle.min.js') }}></script>
+    <script src={{ asset('js/app.js') }}></script>
+    <script src={{ asset('vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}></script>
+    <script src={{ asset('extensions/apexcharts/apexcharts.min.js') }}></script>
     {{-- <script src={{ asset('assets/js/main.js') }}></script> --}}
     <!-- {% block js %}{% endblock %} -->
     @yield('js_files')

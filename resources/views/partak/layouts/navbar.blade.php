@@ -42,7 +42,7 @@
                         class="user-dropdown d-flex align-items-center dropend dropdown-toggle"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="avatar avatar-md2">
-                            <img src="{{ asset('assets/images/logo/logo.svg') }}" alt="Avatar" />
+                            <img src="{{ asset('images/logo/logo.svg') }}" alt="Avatar" />
                         </div>
                         <div class="text">
                             <h6 class="user-dropdown-name">Partak</h6>

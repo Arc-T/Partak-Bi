@@ -1,6 +1,6 @@
 <style>
     #auth #auth-right {
-        background: url({{ asset('assets/images/4853433.png') }}), linear-gradient(-90deg, {{ $company->primary_color }}, {{ $company->secondary_color }});
+        background: url({{ asset('images/bg/4853433.jpg') }}), linear-gradient(-90deg, {{ $company->primary_color }}, {{ $company->secondary_color }});
     }
 
     h1 {

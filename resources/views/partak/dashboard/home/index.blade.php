@@ -1,7 +1,4 @@
 @extends('partak.layouts.master')
-@section('css_files')
-    <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-icons/bootstrap-icons.css') }}">
-@endsection
 @section('main_content')
     <div class="content-wrapper container">
         @include('partak.layouts.partials.messages')
@@ -95,9 +92,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('js_files')
-    <script src="{{ asset('assets/js/pages/ui-todolist.js') }}"></script>
-    <script src="{{ asset('assets/extensions/dragula/dragula.min.js') }}"></script>
 @endsection

@@ -65,6 +65,6 @@ class LoginController extends BaseController
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('company.login.view', [self::$subdomain])->with('warning', 'شما با موفقیت از سامانه خارج شدید !');
+        return redirect()->route('company.login', [self::$subdomain])->with('warning', 'شما با موفقیت از سامانه خارج شدید !');
     }
 }

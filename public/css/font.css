@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'Shabnam';
+    src: url('../fonts/shabnam/Shabnam.eot') format('embedded-opentype'),
+        /* Internet Explorer */
+        url('../fonts/shabnam/Shabnam.woff2') format('woff2'),
+        /* Super Modern Browsers */
+        url('../fonts/shabnam/Shabnam.woff') format('woff'),
+        /* Pretty Modern Browsers */
+        url('../fonts/shabnam/Shabnam.ttf') format('ttf');
+    /* Safari, Android, iOS */
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Shabnam';
+
+    src: url('../fonts/shabnam/Shabnam-Bold.eot') format('embedded-opentype'),
+
+        url('../fonts/shabnam/Shabnam-Bold.woff2') format('woff2'),
+
+        url('../fonts/shabnam/Shabnam-Bold.woff') format('woff'),
+
+        url('../fonts/shabnam/Shabnam-Bold.ttf') format('ttf');
+
+    font-weight: bold;
+}
+
+body{
+    font-family: "Shabnam";
+}
+

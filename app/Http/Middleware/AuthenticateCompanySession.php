@@ -19,7 +19,7 @@ class AuthenticateCompanySession
     {
         if (!$request->session()->has('user_session')) {
 
-            return redirect()->route('company.login.view', ['subdomain' => $request->route('subdomain')])->with('error', 'ابتدا باید وارد سایت شوید !');
+            return redirect()->route('company.login', ['subdomain' => $request->route('subdomain')])->with('error', 'ابتدا باید وارد سایت شوید !');
         }
 
         return $next($request);
