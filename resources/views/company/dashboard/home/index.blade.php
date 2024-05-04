@@ -110,11 +110,6 @@
                                 <h5 class="font-bold">طه حاجی وند</h5>
                                 <h6 class="text-muted mt-0">@taha_hvnd</h6>
                             </div>
-                            <form method="POST"
-                                action="{{ route('company.logout', [$subdomain]) }}">
-                                @csrf
-                                <button class="btn btn-primary" type="submit">خروج</button>
-                            </form>
                         </div>
                     </div>
                 </div>

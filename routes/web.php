@@ -33,18 +33,18 @@ Route::domain('{subdomain}.localhost')
 
             Route::namespace('App\Http\Controllers\Company')->group(function () {
 
-                Route::get('/dashboard',                        [App\Http\Controllers\Company\DashboardController::class, 'index'])->name('dashboard');
+                Route::get('/dashboard',                        [App\Http\Controllers\Company\DashboardController::class, 'index'])->name('dashboard.home');
 
                 Route::post('export/excel',                     [testController::class, 'export'])->name('export.excel');
 
                 Route::prefix('indicators')->group(function () {
 
-                    Route::get('/staff',                           [CustomersController::class, 'index'])->name('indicators.service');
-                    Route::get('/show-indicators',                 [CustomersController::class, 'index'])->name('indicators.submit');
-                    Route::get('/customers',                       [CustomersController::class, 'index'])->name('indicators.customer');
-                    Route::get('/dsfds',                           [CustomersController::class, 'index'])->name('indicators.agent_sales');
-                    Route::get('/custsdfsdfomers',                 [CustomersController::class, 'index'])->name('indicators.company_sales');
-                    Route::get('/show-result',                     [IndicatorController::class, 'show'])->name('indicator.serv');
+                    Route::get('/serivces',       [CustomersController::class, 'index'])->name('indicators.service');
+                    Route::get('/modems',         [CustomersController::class, 'index'])->name('indicators.modem');
+                    Route::get('/customers',      [CustomersController::class, 'index'])->name('indicators.customer');
+                    Route::get('/staffs',         [CustomersController::class, 'index'])->name('indicators.staff');
+                    Route::get('/custsdfsdfomers',[CustomersController::class, 'index'])->name('indicators.company_sales');
+                    Route::get('/show-result',    [IndicatorController::class, 'show'])->name('indicator.serv');
 
                 });
             });

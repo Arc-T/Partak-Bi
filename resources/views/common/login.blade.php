@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href={{ asset('images/logo/favicon.svg') }} type="image/x-icon" />
     <link rel="shortcut icon" href={{ asset('images/logo/favicon.png') }} type="image/png" />
     @isset($subdomain)
-       @include('company.layouts.partials.login-theme')
+        @include('company.layouts.partials.login-theme')
     @endisset
 </head>
 
@@ -24,19 +24,23 @@
                     <div class="auth-logo">
                         <a href="index.html"><img
                                 src=@isset($subdomain)
-                            {{ asset('images/logo/'.$company->Logo) }}
+                            {{ asset('images/logo/' . $company->Logo) }}
                             @else
                             {{ asset('images/logo/logo.svg') }}
                             @endisset
                                 alt="Logo" /></a>
                     </div>
                     <h1 class="auth-title">ورود به سامانه
-                        @isset($subdomain) {{ $company->name }} @else  ‌پارتاک BI @endisset
+                        @isset($subdomain)
+                            {{ $company->name }}
+                        @else
+                            ‌پارتاک BI
+                        @endisset
                     </h1>
                     <p class="auth-subtitle mb-5">
                         اطلاعات ورود به سامانه را از شرکت پارتاک دریافت نمایید
                     </p>
-                    
+
                     @include('company.layouts.partials.messages')
 
                     <form

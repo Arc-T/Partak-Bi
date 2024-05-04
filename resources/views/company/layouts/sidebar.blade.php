@@ -44,7 +44,7 @@
                 <h3>داشبورد</h3>
             </li>
             @php
-                $is_active = Route::currentRouteName() == 'company.menu.dashboard';
+                $is_active = Route::currentRouteName() == 'company.dashboard.home';
             @endphp
             <li class="sidebar-item{{ $is_active ? ' active' : '' }}">
                 <a href="{{ url('/dashboard') }}" class='sidebar-link'>
@@ -52,26 +52,27 @@
                     <span>پروفایل شرکت</span>
                 </a>
             </li>
-            @foreach ($common['titles'] as $title)
+            @foreach ($common['sidebar'] as $sidebar)
                 <li class="sidebar-title">
-                    <h3>{{ $title->title }}</h3>
+                    <h3>{{ $sidebar['title'] }}</h3>
                 </li>
-                @foreach ($common['sidebar'] as $access)
-                    @if ($access->IGID == $title->id)
-                        @php
-                            // $is_active = Route::currentRouteName() == 'company.indicator.' . $access->route;
-
-                        @endphp
-                        <li class="sidebar-item{{ $is_active ? ' active' : '' }}">
-                            <a href="{{ route('company.indicators.' . 'service', [$subdomain]) }}"
-                                class='sidebar-link'>
-                                {{-- <i class="bi bi-{{ $access->icon }}"></i> --}}
-                                {{-- <span>{{ $access->IName }}</span> --}}
-                            </a>
-                        </li>
-                    @endif
+                @foreach ($sidebar['indicators'] as $indicator)
+                    @php
+                        $is_active = Route::currentRouteName() == 'company.indicator.' . $indicator['route'];
+                    @endphp
+                    <li class="sidebar-item{{ $is_active ? ' active' : '' }}">
+                        <a href="{{ route('company.indicators.' . $indicator['route'], [$subdomain]) }}"
+                            class='sidebar-link'>
+                            <i class="bi bi-{{ $indicator['icon'] }}"></i>
+                            <span>{{ $indicator['name'] }}</span>
+                        </a>
+                    </li>
                 @endforeach
             @endforeach
         </ul>
+        <form method="POST" action="{{ route('company.logout', [$subdomain]) }}">
+            @csrf
+            <button class="btn btn-block btn-outline-primary" type="submit">خروج</button>
+        </form>
     </div>
 </div>
