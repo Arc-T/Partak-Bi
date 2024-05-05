@@ -71,8 +71,7 @@
                                         <div class="stats-icon red">
                                             <!-- <i class="iconly-boldBookmark"></i> -->
                                             <svg width="1.4em" height="2em" style="color: rgb(255, 255, 255);">
-                                                <use
-                                                    xlink:href="vendors/bootstrap-icons/bootstrap-icons.svg#building">
+                                                <use xlink:href="vendors/bootstrap-icons/bootstrap-icons.svg#building">
                                                 </use>
                                             </svg>
                                         </div>
@@ -104,11 +103,11 @@
                     <div class="card-body py-4 px-5">
                         <div class="d-flex align-items-center">
                             <div class="avatar avatar-xl">
-                                <img src="{{asset("images/faces/1.jpg")}}" alt="Face">
+                                <img src="{{ asset('images/faces/1.jpg') }}" alt="Face">
                             </div>
                             <div class="me-3 name ps-2">
-                                <h5 class="font-bold">طه حاجی وند</h5>
-                                <h6 class="text-muted mt-0">@taha_hvnd</h6>
+                                <h5 class="font-bold">{{ Auth::user()->name }}</h5>
+                                <h6 class="text-muted mt-0">{{ Auth::user()->username . '@' }}</h6>
                             </div>
                         </div>
                     </div>

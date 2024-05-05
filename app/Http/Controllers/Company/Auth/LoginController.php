@@ -8,7 +8,6 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class LoginController extends BaseController
 {
     protected $user;
@@ -36,7 +35,7 @@ class LoginController extends BaseController
 
                 if (Auth::user()->active == '0') return redirect()->back()->with('error', 'کاربر غیر فعال می باشد !');
 
-                return redirect()->route('company.dashboard', [self::$subdomain]);
+                return redirect()->route('company.dashboard.home', [self::$subdomain]);
 
             } else {
 
@@ -60,7 +59,7 @@ class LoginController extends BaseController
     public function logout(Request $request)
     {
         Auth::logout();
-
+        
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();

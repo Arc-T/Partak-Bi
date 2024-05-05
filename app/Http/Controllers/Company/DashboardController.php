@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Company;
 
-use App\Classes\CompanyClass;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends BaseController
 {
@@ -10,8 +10,6 @@ class DashboardController extends BaseController
 
     public function index()
     {
-        $view_details             = CompanyClass::get_company_view_details(self::$subdomain);
-
         // $indicator_customer_table = DB::connection('db_hamyarnet')->table('ind_customers')->get()->toArray();
 
         $date = [];
@@ -22,8 +20,6 @@ class DashboardController extends BaseController
         $sum = [12, 14, 15, 16, 166];
 
         return view('company.dashboard.home.index')->with([
-
-            'common'        => $view_details,
             'date'          => $date,
             'sum'           => $sum
         ]);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Company;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Utilities\CompanyUtility;
 
 class BaseController extends Controller
 {
@@ -16,5 +17,7 @@ class BaseController extends Controller
         if(!isset(self::$subdomain) || self::$subdomain != $request->route('subdomain') ) self::$subdomain = $request->route('subdomain');
 
         view()->share('subdomain', self::$subdomain);
+
+        CompanyUtility::isCompanyCachedInfo(self::$subdomain);
     }
 }

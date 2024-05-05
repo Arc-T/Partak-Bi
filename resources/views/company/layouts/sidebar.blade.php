@@ -45,6 +45,7 @@
             </li>
             @php
                 $is_active = Route::currentRouteName() == 'company.dashboard.home';
+                $company_info = Cache::get('company_info');
             @endphp
             <li class="sidebar-item{{ $is_active ? ' active' : '' }}">
                 <a href="{{ url('/dashboard') }}" class='sidebar-link'>
@@ -52,7 +53,7 @@
                     <span>پروفایل شرکت</span>
                 </a>
             </li>
-            @foreach ($common['sidebar'] as $sidebar)
+            @foreach ($company_info['sidebar'] as $sidebar)
                 <li class="sidebar-title">
                     <h3>{{ $sidebar['title'] }}</h3>
                 </li>

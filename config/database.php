@@ -62,23 +62,6 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-
-        'db_hamyarnet' => [
-            'driver'         => 'mysql',
-            'host'           => '178.173.128.10',
-            'port'           => '3306',
-            'database'       => 'BI',
-            'username'       => 'partakbi',
-            'password'       => 'partakbi@1402',
-            'charset'        => 'utf8mb4',
-            'collation'      => 'utf8mb4_unicode_ci',
-            'prefix_indexes' => true,
-            'strict'         => true,
-            'options'        => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
-        ],
-
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
