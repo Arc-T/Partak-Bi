@@ -29,7 +29,7 @@ Route::domain('{subdomain}.localhost')
 
         Route::post('/logout',  [CompanyLoginController::class,  'logout'])->name('logout');
 
-        // Route::middleware(['company.session.controller'])->group(function () {
+        Route::middleware(['company.session.controller'])->group(function () {
 
             Route::namespace('App\Http\Controllers\Company')->group(function () {
 
@@ -48,7 +48,7 @@ Route::domain('{subdomain}.localhost')
 
                 });
             });
-        // });
+        });
     });
 
 

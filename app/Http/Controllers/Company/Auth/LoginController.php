@@ -14,12 +14,14 @@ class LoginController extends BaseController
 
     public function index(Request $request)
     {
-        if ($request->session()->has('user_session')) {
+        if (Auth::user()) {
 
-            return redirect()->route('company.dashboard.index', [self::$subdomain]);
+            return redirect()->route('company.dashboard.home', [self::$subdomain]);
         }
 
         $company_table = Company::where('subdomain', self::$subdomain)->first();
+
+        // dd($request->session());
 
         return view('common.login', [
             'company'   => $company_table

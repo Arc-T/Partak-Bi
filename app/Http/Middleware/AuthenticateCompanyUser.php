@@ -2,10 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Company;
-use App\Models\User;
 use Closure;
+use App\Models\User;
+use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthenticateCompanyUser
 {
@@ -18,13 +19,11 @@ class AuthenticateCompanyUser
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = decrypt($request->session()->get('user_session'));
-
-        $subdomain = Company::where('ID' , User::where('ID' , $user)->value('CompanyID'))->value('Subdomain');
+        $subdomain = Company::where('id' , User::where('id' , Auth::user()->id)->value('company_id'))->value('subdomain');
 
         if($subdomain != $request->route('subdomain')) {
 
-            dd("HEEHEH");
+            return redirect()->back()->with('error','دسترسی امکان پذیر نمی باشد !');
         }
 
         return $next($request);

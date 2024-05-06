@@ -29,7 +29,7 @@ class LoginController extends Controller
             'password' => ['required']
         ]);
 
-        if (Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['password']])) {
+        if (Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['password'] , 'company_id' => 1])) {
 
             // $request->session()->regenerate();
 
