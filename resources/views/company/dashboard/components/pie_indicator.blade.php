@@ -49,7 +49,7 @@
                     dataLabels: {
                         value: {
                             formatter: function(val) {
-                                return val+ ' فرد'
+                                return val + ' فرد'
                             }
                         },
                     },

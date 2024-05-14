@@ -1,65 +1,63 @@
 <style>
-
-@php
-    $colors = Cache::get('company_info');
-    $colros = $colors['colors'];
-@endphp
+    @php $colors =Cache::get('company_info');
+    $colors = $colors['colors'];
+    @endphp
 
     .btn-primary {
-        --bs-btn-bg:{{ $colros['primary'] }};
-        --bs-btn-border-color:{{ $colros['primary'] }};
-        --bs-btn-hover-bg:{{ $colros['secondary'] }};
-        --bs-btn-hover-border-color:{{ $colros['secondary'] }};
-        --bs-btn-active-bg:{{ $colros['secondary'] }};
-        --bs-btn-active-border-color:{{ $colros['secondary'] }};
-        --bs-btn-disabled-bg:{{ $colros['primary'] }};
-        --bs-btn-disabled-border-color:{{ $colros['primary'] }};
+        --bs-btn-bg: {{ $colors['primary'] }};
+        --bs-btn-border-color: {{ $colors['primary'] }};
+        --bs-btn-hover-bg: {{ $colors['secondary'] }};
+        --bs-btn-hover-border-color: {{ $colors['secondary'] }};
+        --bs-btn-active-bg: {{ $colors['secondary'] }};
+        --bs-btn-active-border-color: {{ $colors['secondary'] }};
+        --bs-btn-disabled-bg: {{ $colors['primary'] }};
+        --bs-btn-disabled-border-color: {{ $colors['primary'] }};
     }
 
     .btn-outline-primary {
-        --bs-btn-color:{{ $colros['primary'] }};
-        --bs-btn-border-color:{{ $colros['primary'] }};
-        --bs-btn-hover-bg:{{ $colros['primary'] }};
-        --bs-btn-hover-border-color:{{ $colros['primary'] }};
-        --bs-btn-active-bg:{{ $colros['primary'] }};
-        --bs-btn-active-border-color:{{ $colros['primary'] }};
-        --bs-btn-disabled-color:{{ $colros['primary'] }};
-        --bs-btn-disabled-border-color:{{ $colros['primary'] }};
+        --bs-btn-color: {{ $colors['primary'] }};
+        --bs-btn-border-color: {{ $colors['primary'] }};
+        --bs-btn-hover-bg: {{ $colors['primary'] }};
+        --bs-btn-hover-border-color: {{ $colors['primary'] }};
+        --bs-btn-active-bg: {{ $colors['primary'] }};
+        --bs-btn-active-border-color: {{ $colors['primary'] }};
+        --bs-btn-disabled-color: {{ $colors['primary'] }};
+        --bs-btn-disabled-border-color: {{ $colors['primary'] }};
     }
 
     body.theme-dark .btn-outline-primary {
-        --bs-btn-color:{{ $colros['primary'] }};
-        --bs-btn-border-color:{{ $colros['primary'] }};
-        --bs-btn-hover-bg:{{ $colros['primary'] }};
-        --bs-btn-hover-border-color:{{ $colros['primary'] }};
-        --bs-btn-active-bg:{{ $colros['primary'] }};
-        --bs-btn-active-border-color:{{ $colros['primary'] }};
-        --bs-btn-disabled-color:{{ $colros['primary'] }};
-        --bs-btn-disabled-border-color:{{ $colros['primary'] }};
+        --bs-btn-color: {{ $colors['primary'] }};
+        --bs-btn-border-color: {{ $colors['primary'] }};
+        --bs-btn-hover-bg: {{ $colors['primary'] }};
+        --bs-btn-hover-border-color: {{ $colors['primary'] }};
+        --bs-btn-active-bg: {{ $colors['primary'] }};
+        --bs-btn-active-border-color: {{ $colors['primary'] }};
+        --bs-btn-disabled-color: {{ $colors['primary'] }};
+        --bs-btn-disabled-border-color: {{ $colors['primary'] }};
     }
 
     body.theme-dark .btn-primary {
-        --bs-btn-color:fff;
-        --bs-btn-bg:{{ $colros['primary'] }};
-        --bs-btn-border-color:{{ $colros['primary'] }};
-        --bs-btn-hover-bg:{{ $colros['secondary'] }};
-        --bs-btn-hover-border-color:{{ $colros['secondary'] }};
-        --bs-btn-active-bg:{{ $colros['secondary'] }};
-        --bs-btn-active-border-color:{{ $colros['secondary'] }};
-        --bs-btn-disabled-bg:{{ $colros['primary'] }};
-        --bs-btn-disabled-border-color:{{ $colros['primary'] }};
+        --bs-btn-color: fff;
+        --bs-btn-bg: {{ $colors['primary'] }};
+        --bs-btn-border-color: {{ $colors['primary'] }};
+        --bs-btn-hover-bg: {{ $colors['secondary'] }};
+        --bs-btn-hover-border-color: {{ $colors['secondary'] }};
+        --bs-btn-active-bg: {{ $colors['secondary'] }};
+        --bs-btn-active-border-color: {{ $colors['secondary'] }};
+        --bs-btn-disabled-bg: {{ $colors['primary'] }};
+        --bs-btn-disabled-border-color: {{ $colors['primary'] }};
     }
 
     body.theme-dark .sidebar-wrapper .menu .sidebar-item.active>.sidebar-link {
-        background-color:{{ $colros['secondary'] }};
+        background-color: {{ $colors['secondary'] }};
     }
 
     body.theme-dark .form-check-input:checked {
-        background-color:{{ $colros['secondary'] }};
-        border-color:{{ $colros['secondary'] }};
+        background-color: {{ $colors['secondary'] }};
+        border-color: {{ $colors['secondary'] }};
     }
 
     .sidebar-wrapper .menu .sidebar-item.active>.sidebar-link {
-        background-color:{{ $colros['secondary'] }};
+        background-color: {{ $colors['secondary'] }};
     }
 </style>

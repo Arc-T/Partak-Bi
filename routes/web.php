@@ -44,7 +44,7 @@ Route::domain('{subdomain}.localhost')
                     Route::get('/customers',      [CustomersController::class, 'index'])->name('indicators.customer');
                     Route::get('/staffs',         [CustomersController::class, 'index'])->name('indicators.staff');
                     Route::get('/custsdfsdfomers',[CustomersController::class, 'index'])->name('indicators.company_sales');
-                    Route::get('/show-result',    [IndicatorController::class, 'show'])->name('indicator.serv');
+                    Route::get('/show-result',    [IndicatorController::class, 'show'])->name('indicator.result');
 
                 });
             });

@@ -1,16 +1,9 @@
-{{--
-/**
-* ? SALES (فروش), SMS (پیامک) , Payment (پرداخت آنلاین)
-* * SALES Forms sales (فروش) , evecuation (تخلیه) , service (سرویس)
-* TODO: Try componet with slot to make this page dynamically
-*/
---}}
-
 <div class="page-heading">
     <p class="text-success">
     <h4>تنظیمات</h4>
     </p>
 </div>
+
 <div class="row align-items-center">
     <div class="col-md">
         <div class="card">

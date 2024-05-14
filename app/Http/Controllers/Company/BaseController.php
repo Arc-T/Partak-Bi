@@ -14,6 +14,8 @@ class BaseController extends Controller
     // checks if subdomain hasn't been initialized and current value with current subdomain value.
     public function __construct(Request $request)
     {
+        // dd(self::$subdomain);
+        
         if(!isset(self::$subdomain) || self::$subdomain != $request->route('subdomain') ) self::$subdomain = $request->route('subdomain');
 
         view()->share('subdomain', self::$subdomain);

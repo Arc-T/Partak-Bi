@@ -59,7 +59,7 @@
                 </li>
                 @foreach ($sidebar['indicators'] as $indicator)
                     @php
-                        $is_active = Route::currentRouteName() == 'company.indicator.' . $indicator['route'];
+                        $is_active = Route::currentRouteName() == 'company.indicators.' . $indicator['route'];
                     @endphp
                     <li class="sidebar-item{{ $is_active ? ' active' : '' }}">
                         <a href="{{ route('company.indicators.' . $indicator['route'], [$subdomain]) }}"
@@ -71,9 +71,18 @@
                 @endforeach
             @endforeach
         </ul>
-        <form method="POST" action="{{ route('company.logout', [$subdomain]) }}">
+        <form method="POST" action="{{ route('company.logout', [$subdomain]) }}" class="sidebar-exit-button">
             @csrf
             <button class="btn btn-block btn-outline-primary" type="submit">خروج</button>
         </form>
     </div>
 </div>
+
+<style>
+.sidebar-exit-button {
+    position: absolute;
+    bottom: 20px; /* Adjust this value as needed */
+    left: 0;
+    width: 100%;
+}
+</style>

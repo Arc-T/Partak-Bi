@@ -19,7 +19,8 @@ class CompanyUtility
 
     }
 
-    public static function setCompanyCachedInfo($subdomain):bool{
+    private static function setCompanyCachedInfo($subdomain):bool
+    {
 
         $company_info['colors'] = self::getCompanyColorTheme($subdomain);
 
@@ -31,7 +32,7 @@ class CompanyUtility
 
     }
 
-    public static function getCompanyColorTheme($subdomain): array
+    private static function getCompanyColorTheme($subdomain): array
     {
         return Company::select('primary_color AS primary', 'secondary_color AS secondary')
             ->where('subdomain', $subdomain)

@@ -1,6 +1,7 @@
 @extends('company.layouts.master')
 
 @section('main_content')
+
     <div class="page-content">
         <section class="row">
             <div class="col-12 col-lg-9">
@@ -85,6 +86,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -112,49 +114,19 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="card">
                     <div class="card-header">
-                        <h4>پرفروش ترین سرویس ها</h4>
+                        <h4>پر مخاطب ترین استان ها</h4>
+                        <h6 class="text-muted mb-0 pt-1">اطلاعات آپدیت شده</h6>
                     </div>
-                    <div class="card-content pb-4">
-                        <div class="recent-message d-flex px-4 py-3">
-                            {{-- <div class="avatar avatar-lg">
-                                <img src="assets/images/faces/4.jpg">
-                            </div> --}}
-                            <div class="name me-4">
-                                <h5 class="mb-1">سرویس 400 گیگ TDLTE</h5>
-                                <h6 class="text-muted mb-0">سرویس مشترکین TDLTE سه ماهه با سرعت 1 مگ</h6>
-                            </div>
-                        </div>
-                        <div class="recent-message d-flex px-4 py-3">
-                            {{-- <div class="avatar avatar-lg">
-                                <img src="assets/images/faces/5.jpg">
-                            </div> --}}
-                            <div class="name me-4">
-                                <h5 class="mb-1">سرویس 100 گیگ ADSL</h5>
-                                <h6 class="text-muted mb-0">سرویس مشترکین ADSL سه ماهه با سرعت 5 مگ</h6>
-                            </div>
-                        </div>
-                        <div class="recent-message d-flex px-4 py-3">
-                            {{-- <div class="avatar avatar-lg">
-                                <img src="assets/images/faces/1.jpg">
-                            </div> --}}
-                            <div class="name me-4">
-                                <h5 class="mb-1">سرویس 200 گیگ Wireless</h5>
-                                <h6 class="text-muted mb-0">سرویس مشترکین Wireless سه ماهه با سرعت 9 مگ</h6>
-                            </div>
-                        </div>
-                        <div class="recent-message d-flex px-4 py-3">
-
-                            <div class="name me-4">
-                                <h5 class="mb-1">سرویس 200 گیگ FTTH</h5>
-                                <h6 class="text-muted mb-0">سرویس مشترکین FTTH یک ماهه با سرعت 9 مگ</h6>
-                            </div>
-                        </div>
+                    <div class="card-body">
+                        <div id="container"></div>
                     </div>
                 </div>
             </div>
         </section>
+        
         <section class="section">
             <div class="row">
                 <div class="col-md-9">
@@ -167,7 +139,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                {{-- <div class="col-md-3">
                     <div class="card">
                         <div class="card-header">
                             <h4>پرفروش ترین بسته ترافیکی</h4>
@@ -177,13 +149,125 @@
                             <div id="radialGradient"></div>
                         </div>
                     </div>
+                </div> --}}
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>پرفروش ترین سرویس ها</h4>
+                        </div>
+                        <div class="card-content pb-4">
+                            <div class="recent-message d-flex px-4 py-3">
+                                {{-- <div class="avatar avatar-lg">
+                                <img src="assets/images/faces/4.jpg">
+                            </div> --}}
+                                <div class="name me-4">
+                                    <h5 class="mb-1">سرویس 400 گیگ TDLTE</h5>
+                                    <h6 class="text-muted mb-0">سرویس مشترکین TDLTE سه ماهه با سرعت 1 مگ</h6>
+                                </div>
+                            </div>
+                            <div class="recent-message d-flex px-4 py-3">
+                                {{-- <div class="avatar avatar-lg">
+                                <img src="assets/images/faces/5.jpg">
+                            </div> --}}
+                                <div class="name me-4">
+                                    <h5 class="mb-1">سرویس 100 گیگ ADSL</h5>
+                                    <h6 class="text-muted mb-0">سرویس مشترکین ADSL سه ماهه با سرعت 5 مگ</h6>
+                                </div>
+                            </div>
+                            <div class="recent-message d-flex px-4 py-3">
+                                {{-- <div class="avatar avatar-lg">
+                                <img src="assets/images/faces/1.jpg">
+                            </div> --}}
+                                <div class="name me-4">
+                                    <h5 class="mb-1">سرویس 200 گیگ Wireless</h5>
+                                    <h6 class="text-muted mb-0">سرویس مشترکین Wireless سه ماهه با سرعت 9 مگ</h6>
+                                </div>
+                            </div>
+                            <div class="recent-message d-flex px-4 py-3">
+
+                                <div class="name me-4">
+                                    <h5 class="mb-1">سرویس 200 گیگ FTTH</h5>
+                                    <h6 class="text-muted mb-0">سرویس مشترکین FTTH یک ماهه با سرعت 9 مگ</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </div>
 
+@section('inline_css')
+    <style>
+        #container {
+            height: 365px;
+        }
+    </style>
+@endsection
+
 @section('js_files')
-    {{-- <script src="{{ asset('extensions/dayjs/dayjs.min.js') }}"></script> --}}
+    <script src="https://cdn.anychart.com/releases/8.12.1/js/anychart-base.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4">
+    </script>
+    <script src="https://cdn.anychart.com/releases/8.12.1/js/anychart-map.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4">
+    </script>
+    <script
+        src="https://cdn.anychart.com/releases/8.12.1/js/anychart-exports.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4">
+    </script>
+    <script src="https://cdn.anychart.com/releases/8.12.1/js/anychart-ui.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4">
+    </script>
+    <script src="{{ asset('js/iran.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.15/proj4.js"></script>
+
+    <script>
+        anychart.onDocumentReady(function() {
+            // This sample uses 3rd party proj4 component
+            // that makes it possible to set coordinates
+            // for the points and labels on the map and
+            // required for custom projections and grid labels formatting.
+            // See https://docs.anychart.com/Maps/Map_Projections
+
+            // data
+            var data = [{
+                    id: "IR.CM",
+                    size: 2
+                },
+                {
+                    id: "IR.TH",
+                    size: 3
+                },
+            ];
+
+            // create map chart
+            var map = anychart.map();
+
+            // set geodata using https://cdn.anychart.com/geodata/2.2.0/countries/australia/australia.js
+            map.geoData(anychart.maps["iran"]);
+
+            //create bubble series
+            var series = map.bubble(data);
+
+            //set series geo id field settings
+            series.labels().format("{%name}");
+
+            series.tooltip().format("{%size} thousands of tourists");
+
+            series.tooltip().titleFormat("{%name}");
+
+
+            map.title("استان تهران، پر مخاطب ترین \n منطقه ی فروش");
+
+            // set max and min bubble sizes
+            map.maxBubbleSize(35);
+            map.minBubbleSize(10);
+
+            // set container id for the chart
+            map.container("container");
+
+            // initiate chart drawing
+            map.draw();
+        });
+    </script>
+
     <script src="{{ asset('extensions/apexcharts/apexcharts.min.js') }}"></script>
     {{-- <script src="{{ asset('assets/js/pages/ui-apexchart.js') }}"></script> --}}
     <script>

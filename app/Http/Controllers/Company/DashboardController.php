@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Company;
 
-use Illuminate\Support\Facades\Auth;
-
 class DashboardController extends BaseController
 {
     protected $user;
@@ -19,7 +17,7 @@ class DashboardController extends BaseController
         // }
         $sum = [12, 14, 15, 16, 166];
 
-        return view('company.dashboard.home.index')->with([
+        return view('company.dashboard.home.index',[
             'date'          => $date,
             'sum'           => $sum
         ]);

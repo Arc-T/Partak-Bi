@@ -1,8 +1,8 @@
-@extends('companies.layouts.master')
+@extends('company.layouts.master')
 @section('title', 'آمار مشتریان')
 @section('main_content')
 
-    <style>
+    {{-- <style>
         .fixed-size-image {
             width: 350px;
             /* Set the desired width */
@@ -11,7 +11,7 @@
             object-fit: cover;
             /* Maintain aspect ratio and crop if necessary */
         }
-    </style>
+    </style> --}}
     <section id="groups">
         <div class="row match-height">
             <div class="col-12 mt-3 mb-1">
@@ -23,7 +23,7 @@
                 <div class="card">
                     <div class="card-content">
                         <img class="card-img-top fixed-size-image"
-                            src="{{ asset('assets/images/graphs/stacked-chart.svg') }}" />
+                            src="{{ asset('images/graphs/stacked-chart.svg') }}" />
                         <div class="card-body">
                             <p class="text-center">
                                 <a class="btn btn-outline-primary rounded-pill" data-bs-toggle="collapse"
@@ -34,9 +34,8 @@
                             </p>
 
                             <div class="collapse" id="stacked-chart">
-                                <form
-                                    action={{ @route('company.indicator.result', ['subdomain' => request()->route('subdomain')]) }}
-                                    method="GET" target="_blank">
+                                <form action={{ @route('company.indicator.result', [$subdomain]) }} method="GET"
+                                    target="_blank">
                                     @csrf
                                     <label>شروع بازه</label>
                                     <input data-jdp class="form-control" name="start_date" /><br />
@@ -96,7 +95,7 @@
                 <div class="card">
                     <div class="card-content">
                         <img class="card-img-top fixed-size-image"
-                            src="{{ asset('assets/images/graphs/area-chart.svg') }}" />
+                            src="{{ asset('images/graphs/area-chart.svg') }}" />
                         <div class="card-body">
                             <p class="text-center">
                                 <a class="btn btn-outline-primary rounded-pill" data-bs-toggle="collapse" href="#area-chart"
@@ -106,9 +105,8 @@
                             </p>
 
                             <div class="collapse" id="area-chart">
-                                <form
-                                    action={{ @route('company.indicator.result', ['subdomain' => request()->route('subdomain')]) }}
-                                    method="GET" target="_blank">
+                                <form action={{ @route('company.indicator.result', [$subdomain]) }} method="GET"
+                                    target="_blank">
                                     @csrf
                                     <label>شروع بازه</label>
                                     <input data-jdp class="form-control" name="start_date" /><br />
@@ -168,7 +166,7 @@
                 <div class="card">
                     <div class="card-content">
                         <img class="card-img-top fixed-size-image"
-                            src="{{ asset('assets/images/graphs/bar-chart.png') }}" />
+                            src="{{ asset('images/graphs/bar-chart.png') }}" />
                         <div class="card-body">
                             <p class="text-center">
                                 <a class="btn btn-outline-primary rounded-pill" data-bs-toggle="collapse"
@@ -177,9 +175,8 @@
                                 </a>
                             </p>
                             <div class="collapse" id="bar-chart">
-                                <form
-                                    action={{ @route('company.indicator.result', ['subdomain' => request()->route('subdomain')]) }}
-                                    method="GET" target="_blank">
+                                <form action={{ @route('company.indicator.result', [$subdomain]) }} method="GET"
+                                    target="_blank">
                                     @csrf
                                     <label>شروع بازه</label>
                                     <input data-jdp class="form-control" name="start_date" /><br />
@@ -239,7 +236,7 @@
                 <div class="card">
                     <div class="card-content">
                         <img class="card-img-top fixed-size-image"
-                            src="{{ asset('assets/images/graphs/line-chart.png') }}" />
+                            src="{{ asset('images/graphs/line-chart.png') }}" />
                         <div class="card-body">
                             {{-- <h4 class="card-title text-center">نمودار خطی</h4> --}}
                             <p class="text-center">
@@ -249,9 +246,8 @@
                                 </a>
                             </p>
                             <div class="collapse" id="line-chart">
-                                <form
-                                    action={{ @route('company.indicator.result', ['subdomain' => request()->route('subdomain')]) }}
-                                    method="GET" target="_blank">
+                                <form action={{ @route('company.indicator.result', [$subdomain]) }} method="GET"
+                                    target="_blank">
                                     @csrf
                                     <label>شروع بازه</label>
                                     <input data-jdp class="form-control" name="start_date" /><br />
@@ -311,7 +307,7 @@
                 <div class="card">
                     <div class="card-content">
                         <img class="card-img-top fixed-size-image"
-                            src="{{ asset('assets/images/graphs/pie-chart.png') }}" />
+                            src="{{ asset('images/graphs/pie-chart.png') }}" />
                         <div class="card-body">
                             <p class="text-center">
                                 <a class="btn btn-outline-primary rounded-pill" data-bs-toggle="collapse"
@@ -319,9 +315,8 @@
                                     نمودار دایره
                                 </a>
                             <div class="collapse" id="pie-chart">
-                                <form
-                                    action={{ @route('company.indicator.result', ['subdomain' => request()->route('subdomain')]) }}
-                                    method="GET" target="_blank">
+                                <form action={{ @route('company.indicator.result', [$subdomain]) }} method="GET"
+                                    target="_blank">
                                     @csrf
                                     <label>تاریخ روز</label>
                                     <input data-jdp class="form-control" name="start_date" /><br />
@@ -379,7 +374,7 @@
                 <div class="card">
                     <div class="card-content">
                         <img class="card-img-top fixed-size-image"
-                            src="{{ asset('assets/images/graphs/radar-chart.png') }}" />
+                            src="{{ asset('images/graphs/radar-chart.png') }}" />
                         <div class="card-body">
                             <p class="text-center">
                                 <a class="btn btn-outline-primary rounded-pill" data-bs-toggle="collapse"
@@ -388,9 +383,8 @@
                                     نمودار رادار
                                 </a>
                             <div class="collapse" id="radar-chart">
-                                <form
-                                    action={{ @route('company.indicator.result', ['subdomain' => request()->route('subdomain')]) }}
-                                    method="GET" target="_blank">
+                                <form action={{ @route('company.indicator.result', [$subdomain]) }} method="GET"
+                                    target="_blank">
                                     @csrf
                                     <label>شروع بازه</label>
                                     <input data-jdp class="form-control" name="start_date" /><br />
@@ -453,46 +447,43 @@
 @endsection
 
 @section('css_files')
-    <link rel="stylesheet" href={{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }} />
-    <link rel="stylesheet" href={{ asset('assets/extensions/jalali-date-picker/jalali.min.css') }}>
+    <link rel="stylesheet" href={{ asset('extensions/choices.js/public/assets/styles/choices.css') }} />
+    <link rel="stylesheet" href={{ asset('extensions/jalali-date-picker/jalali.min.css') }}>
 @endsection
 
 @section('inline_css')
     <style>
+        @php $colors =Cache::get('company_info');
+        $colors =$colors['colors'];
+        @endphp
         .form-check-input:checked {
-            background-color: #{{ $common['color']['ColorBackground'] }};
-            border-color: #{{ $common['color']['ColorBackground'] }};
+            background-color: #{{ $colors['secondary'] }};
+            border-color: #{{ $colors['secondary'] }};
         }
-    </style>
 
-    <style>
         jdp-container .jdp-btn-close,
         jdp-container .jdp-btn-empty,
         jdp-container .jdp-btn-today {
-            background: #{{ $common['color']['ColorBackground'] }};
+            background: #{{ $colors['secondary'] }};
         }
 
         jdp-container .jdp-day-name.selected,
         jdp-container .jdp-day.selected {
-            background-color: #{{ $common['color']['ColorBackground'] }} !important;
+            background-color: #{{ $colors['secondary'] }} !important;
         }
-    </style>
 
-    <style>
         .choices__list--multiple .choices__item {
-            border: 1px solid #fff;
-            background-color: #{{ $common['color']['ColorBackground'] }};
+            background-color: #{{ $colors['secondary'] }};
         }
     </style>
 @endsection
 
 @section('js_files')
-    <script src={{ asset('assets/extensions/jalali-date-picker/jalali.min.js') }}></script>
-    <script src={{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}></script>
-    <script src={{ asset('assets/js/pages/form-element-select.js') }}></script>
+    <script src={{ asset('extensions/jalali-date-picker/jalali.min.js') }}></script>
+    <script src={{ asset('extensions/choices.js/public/assets/scripts/choices.js') }}></script>
+    <script src={{ asset('js/pages/form-element-select.js') }}></script>
     <script>
         jalaliDatepicker.startWatch();
     </script>
 
 @endsection
-

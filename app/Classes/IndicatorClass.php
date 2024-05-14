@@ -7,7 +7,7 @@ use Hekmatinasser\Verta\Facades\Verta;
 
 /**
 need a function to check inputs base on indicators
- */
+*/
 
 class IndicatorClass
 {
@@ -74,6 +74,12 @@ class IndicatorClass
                     ->toArray();
                 break;
         }
+
+        [1,'ADSL','2024-02-13','Teh','بهره بردار',3];
+        [2,'ADSL','2024-02-13','Teh','جمع شده',3];
+        [3,'ADSL','2024-02-13','Teh','مشکل دار',3];
+        [4,'ADSL','2024-02-13','Teh','بدون وضعیت',3];
+        [5,'ADSL','2024-02-13','Teh','آماده به نصب',3];
 
         return $query;
     }
