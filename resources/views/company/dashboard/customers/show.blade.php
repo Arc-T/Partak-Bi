@@ -30,7 +30,7 @@
                             <!-- -------------- General START   -------------- -->
                             <div class="col-12">
                                 <div class="row">
-                                    <div class="col-3">
+                                    <div class="col-6">
                                         <div class="card border-primary mb-3">
                                             <div class="card-header">
                                                 <h4>تعداد مشتریان به تفکیک سرویس</h4>
@@ -50,8 +50,7 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="col-3">
+                                    <div class="col-6">
                                         <div class="card">
                                             <div class="card-header">
                                                 <h4>تعداد مشتریان به تفکیک نوع</h4>
@@ -61,7 +60,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <div class="card">
                                             <div class="card-header">
                                                 <h4>تعداد مشتریان به تفکیک وضعیت</h4>
@@ -72,7 +71,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <div class="card">
                                             <div class="card-header">
                                                 <h4>تعداد مشتریان بر اساس استان</h4>
@@ -83,7 +82,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-8">
+                                    <div class="col-6">
                                         <div class="card">
                                             <div class="card-header">
                                                 <h4>تعداد مشتریان بر اساس شهر</h4>
@@ -102,8 +101,260 @@
                         <!-- -------------- Custome START -------------- -->
                         <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledby="sales-tab">
 
+                            <form class="form form-horizontal" action="{{ url('/') }}"> <!-- Form Sales Start -->
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">تنظیمات شاخص وضعیت مشتریان</h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label>هزینه راه اندازی کامل</label>
+                                                                <input type="text" id="roundText"
+                                                                    class="form-control round" placeholder="ریال">
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label>هزینه راه اندازی مجدد</label>
+                                                                <input type="text" id="squareText"
+                                                                    class="form-control square" placeholder="ریال">
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-sm-6 pt-4">
+                                                            <div class="form-group">
+                                                                <label>هزینه راه اندازی وایرلس</label>
+                                                                <input type="text" id="squareText"
+                                                                    class="form-control square" placeholder="ریال">
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-sm-6 pt-4">
+                                                            <div class="form-group">
+                                                                <label>هزینه تعویض خط</label>
+                                                                <input type="text" id="squareText"
+                                                                    class="form-control square" placeholder="ریال">
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-sm-6 pt-4">
+                                                            <div class="form-group">
+                                                                <label>هزینه نصب و حضور کارشناس</label>
+                                                                <input type="text" id="squareText"
+                                                                    class="form-control square" placeholder="ریال">
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-sm-6 pt-4">
+                                                            <div class="form-group">
+                                                                <label>هزینه هر ماه IP</label>
+                                                                <input type="text" id="squareText"
+                                                                    class="form-control square" placeholder="ریال">
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-4">
+                                            <div class="card">
+                                                <div class="card-body">
+
+                                                    <div class="form-check form-switch form-group">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="flexSwitchCheckDefault">
+                                                        <label class="form-check-label" for="flexSwitchCheckDefault">ثبت
+                                                            نام آنلاین</label>
+                                                    </div>
+
+                                                    <div class="form-check form-switch form-group">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="flexSwitchCheckChecked" checked>
+                                                        <label class="form-check-label" for="flexSwitchCheckChecked">نمایش
+                                                            آمار مشتریان
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-4">
+                                            <div class="card">
+                                                <div class="card-body">
+
+                                                    <div class="form-check form-switch form-group">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="flexSwitchCheckDefault">
+                                                        <label class="form-check-label" for="flexSwitchCheckDefault">معرف
+                                                            در واحد فروش</label>
+                                                    </div>
+
+                                                    <div class="form-check form-switch form-group">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="flexSwitchCheckChecked" checked>
+                                                        <label class="form-check-label" for="flexSwitchCheckChecked">معرف
+                                                            در ثبت نام آنلاین
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-4">
+                                            <div class="card">
+                                                <div class="card-body">
+
+                                                    <div class="form-check form-switch form-group">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="flexSwitchCheckDefault">
+                                                        <label class="form-check-label" for="flexSwitchCheckDefault">تغییر
+                                                            سرویس در پنل</label>
+                                                    </div>
+
+                                                    <div class="form-check form-switch form-group">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="flexSwitchCheckChecked" checked>
+                                                        <label class="form-check-label" for="flexSwitchCheckChecked">نمایش
+                                                            آمار مشتریان
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-end me-4">
+                                        <button type="submit" class="btn btn-primary me-2 mb-1">ثبت تنظیمات</button>
+                                        <button type="reset"
+                                            class="btn btn-light-secondary me-1 mb-1">بازگردانی</button>
+                                    </div>
+
+                                </div>
+                            </form>
+
+                            </br>
+                            <hr>
+
+                            <div class="row match-height">
+                                <div class="col-md-6 col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">تنظیمات تخلیه</h4>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="card-body">
+
+
+                                                <form class="form form-horizontal" action="{{ url('/') }}">
+                                                    <!-- Form Evecuation Start -->
+                                                    <div class="form-body">
+                                                        <div class="row">
+
+
+                                                            <div class="col-md-4 form-group">
+                                                                <label>ما به تفاوت تخلیه</label>
+                                                            </div>
+                                                            <div class="col-md-8 form-group">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="ریال">
+                                                            </div>
+
+
+                                                            <div class="col-md-4 form-group">
+                                                                <label>هزینه نگهداری روزانه پورت</label>
+                                                            </div>
+                                                            <div class="col-md-8 form-group">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="ریال">
+                                                            </div>
+
+
+                                                            <div class="d-flex justify-content-end me-4 mt-4">
+                                                                <button type="submit"
+                                                                    class="btn btn-primary me-2 mb-1">ثبت تنظیمات</button>
+                                                                <button type="reset"
+                                                                    class="btn btn-light-secondary me-1 mb-1">بازگردانی</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form> <!-- Form Evecuation End -->
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">تنظیمات سرویس</h4>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="card-body">
+
+                                                <form class="form form-horizontal" action="{{ url('/') }}">
+                                                    <!-- Form Service Start -->
+                                                    <div class="form-body">
+                                                        <div class="row">
+
+
+                                                            <div class="col-md-4 form-group">
+                                                                <label>آبونمان مخابرات</label>
+                                                            </div>
+                                                            <div class="col-md-8 form-group">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="ریال">
+                                                            </div>
+
+
+                                                            <div class="col-md-4 form-group">
+                                                                <label>هزینه نگهداری روزانه پورت</label>
+                                                            </div>
+                                                            <div class="col-md-8 form-group">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="ریال">
+                                                            </div>
+
+
+                                                            <div class="d-flex justify-content-end me-4 mt-4">
+                                                                <button type="submit"
+                                                                    class="btn btn-primary me-2 mb-1">ثبت تنظیمات</button>
+                                                                <button type="reset"
+                                                                    class="btn btn-light-secondary me-1 mb-1">بازگردانی</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </form> <!-- Form Service End -->
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                        <!-- -------------- Custome END   -------------- -->
                     </div>
                 </div>
             </div>
@@ -115,11 +366,11 @@
     <script src="{{ asset('extensions/apexcharts/apexcharts.min.js') }}"></script>
     <script>
         var options = {
-            series: {!! json_encode($general['Ind_Type']['data']) !!},
+            series: {!! json_encode($general['StatusName']['data']) !!},
             chart: {
-                type: 'pie',
+                type: 'donut',
             },
-            labels: {!! json_encode($general['Ind_Type']['name']) !!},
+            labels: {!! json_encode($general['StatusName']['name']) !!},
             responsive: [{
                 breakpoint: 480,
                 options: {
@@ -280,7 +531,6 @@
         chart1.render();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     </script>
-
     <script src="https://cdn.anychart.com/releases/8.12.1/js/anychart-base.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4">
     </script>
     <script src="https://cdn.anychart.com/releases/8.12.1/js/anychart-map.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4">
@@ -464,7 +714,7 @@
                 data: [1]
             }, {
                 name: 'بدون وضعیت',
-                data:[23]
+                data: [23]
             }, {
                 name: 'جمع شده',
                 data: [25]

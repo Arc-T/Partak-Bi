@@ -60,7 +60,24 @@ class ApexChart
             }
         }
 
-        dd($results);
+        // foreach ($filters as $filter) {
+
+        //     foreach ($data as $item) {
+
+        //         $key = array_search($item[$filter], array_column($results, 'name'));
+        
+        //         if ($key === false) {
+
+        //             $results[] = [
+        //                 'name' => $item[$filter],
+        //                 'data' => [$item['Count']]
+        //             ];
+        //         } else {
+
+        //             $results[$key]['data'][count($results[$key]['data']) - 1] += $item['Count'];
+        //         }
+        //     }
+        // }
     
         return $results;
     }

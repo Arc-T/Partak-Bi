@@ -11,8 +11,6 @@ class CustomersController extends BaseController
         $t = new CompanyService;
 
         $general = $t->processIndicator(null);
-
-        dd($general);
         
         //$customers_ind_table   = DB::connection('db_' . self::$subdomain)->table('ind_customers')->get()->toArray();
         

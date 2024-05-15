@@ -13,7 +13,7 @@ class CompanyService
     {
         $data = $this->requestIndicator($params);
 
-        $filtered_data = $this->filterIndicatorData($data,['charts' => 'common' , 'filters' => ['StatusName']]);
+        $filtered_data = $this->filterIndicatorData($data,['charts' => 'common' , 'filters' => ['StatusName','Ind_Type']]);
 
         return $filtered_data;
     }
@@ -29,6 +29,9 @@ class CompanyService
             ]
         ];
 
+        /*
+        ! Curls error should be handled 
+        */
         $this->response = Http::withBody(json_encode($query_params), 'application/json')
             ->get("https://user.hamyar.net/api/BI/rest.php");
 
@@ -46,7 +49,7 @@ class CompanyService
         switch ($params['charts']) {
             case 'common':
                 return App::call(
-                    [new \App\Http\Services\ApexChart, 'basicChartDataSort'],
+                    [new \App\Http\Services\ApexChart, 'pieChartDataSort'],
                     ['data' => $data, 'filters' => $params['filters']]
                 );
                 break;
