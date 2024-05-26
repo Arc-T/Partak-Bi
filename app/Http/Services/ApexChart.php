@@ -4,9 +4,7 @@ namespace App\Http\Services;
 
 class ApexChart
 {
-    /*
-        ! name convention problem with data `Count`
-    */
+
     public function pieChartDataSort(array $data, array $filters): array
     {
         $results = [];
@@ -40,13 +38,13 @@ class ApexChart
     public function basicChartDataSort(array $data, array $filters): array
     {
         $results = [];
-    
+
         foreach ($data as $item) {
 
             foreach ($filters as $filter) {
 
                 $key = array_search($item[$filter], array_column($results, 'name'));
-    
+
                 if ($key === false) {
 
                     $results[] = [
@@ -65,7 +63,7 @@ class ApexChart
         //     foreach ($data as $item) {
 
         //         $key = array_search($item[$filter], array_column($results, 'name'));
-        
+
         //         if ($key === false) {
 
         //             $results[] = [
@@ -78,7 +76,20 @@ class ApexChart
         //         }
         //     }
         // }
-    
+
         return $results;
+    }
+
+    public function commonChartDataSort(array $filtered_data): array
+    {
+
+        $categories = $filtered_data['locations'];
+
+        $series = $filtered_data['indicators'];
+
+        return ([
+            'categories' => $categories,
+            'series' => $series
+        ]);
     }
 }

@@ -11,12 +11,12 @@
 
                         <!-- ############    TABS START     ############ -->
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="general-tab" data-bs-toggle="tab" href="#general" role="tab"
+                            <a class="nav-link" id="general-tab" data-bs-toggle="tab" href="#general" role="tab"
                                 aria-controls="general" aria-selected="false">آمار جامع</a>
                         </li>
 
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="sales-tab" data-bs-toggle="tab" href="#sales" role="tab"
+                            <a class="nav-link active" id="sales-tab" data-bs-toggle="tab" href="#sales" role="tab"
                                 aria-controls="sales" aria-selected="true">آمار شخصی</a>
                         </li>
                         <!-- ############    TABS END      ############ -->
@@ -24,23 +24,24 @@
 
                     <div class="tab-content" id="myTabContent">
 
-                        <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                        <div class="tab-pane fade" id="general" role="tabpanel" aria-labelledby="general-tab">
                             </br>
 
                             <!-- -------------- General START   -------------- -->
                             <div class="col-12">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <div class="card border-primary mb-3">
                                             <div class="card-header">
-                                                <h4>تعداد مشتریان به تفکیک سرویس</h4>
+                                                <h4>تعداد مشتریان بر اساس همه ی وضعیت ها به تفکیک استان</h4>
+                                                <h6 class="text-muted mb-0 pt-1">اطلاعات از تاریخ تا هستند</h6>
                                             </div>
                                             <div class="card-body px-3 py-4-5">
                                                 <div id="chart"></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    {{-- <div class="col-6">
                                         <div class="card">
                                             <div class="card-header">
                                                 <h4>تعداد مشتریان به تفکیک مراکز مخابراتی</h4>
@@ -92,14 +93,14 @@
                                                 <div id="chart3"></div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <!-- -------------- General END   -------------- -->
                         </div>
 
                         <!-- -------------- Custome START -------------- -->
-                        <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledby="sales-tab">
+                        <div class="tab-pane fade show active" id="sales" role="tabpanel" aria-labelledby="sales-tab">
 
                             <form class="form form-horizontal" action="{{ url('/') }}"> <!-- Form Sales Start -->
                                 <div class="form-body">
@@ -107,431 +108,423 @@
                                         <div class="col-md-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h4 class="card-title">تنظیمات شاخص وضعیت مشتریان</h4>
+                                                    <h4 class="card-title mt-4">نمودار های موجود بر اساس استان</h4>
                                                 </div>
-                                                <div class="card-body">
-                                                    <div class="row">
 
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label>هزینه راه اندازی کامل</label>
-                                                                <input type="text" id="roundText"
-                                                                    class="form-control round" placeholder="ریال">
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label>هزینه راه اندازی مجدد</label>
-                                                                <input type="text" id="squareText"
-                                                                    class="form-control square" placeholder="ریال">
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-sm-6 pt-4">
-                                                            <div class="form-group">
-                                                                <label>هزینه راه اندازی وایرلس</label>
-                                                                <input type="text" id="squareText"
-                                                                    class="form-control square" placeholder="ریال">
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-sm-6 pt-4">
-                                                            <div class="form-group">
-                                                                <label>هزینه تعویض خط</label>
-                                                                <input type="text" id="squareText"
-                                                                    class="form-control square" placeholder="ریال">
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-sm-6 pt-4">
-                                                            <div class="form-group">
-                                                                <label>هزینه نصب و حضور کارشناس</label>
-                                                                <input type="text" id="squareText"
-                                                                    class="form-control square" placeholder="ریال">
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-sm-6 pt-4">
-                                                            <div class="form-group">
-                                                                <label>هزینه هر ماه IP</label>
-                                                                <input type="text" id="squareText"
-                                                                    class="form-control square" placeholder="ریال">
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="row match-height">
+                                        <div class="col-12">
+                                            <div class="card-group">
+                                                <div class="card">
+                                                    <div class="card-content">
+                                                        <img class="card-img-top img-fluid"
+                                                            src="{{ asset('images/graphs/bar-chart.png') }}"
+                                                            alt="Card image cap">
+                                                        <div class="card-body">
+                                                            <div class="form-check form-switch form-group">
+                                                                <label class="form-check-label" for="flexSwitchCheckDefault" ">نمودار
+                                                                                            خطی</label>
+                                                                                        <input class="form-check-input" type="checkbox" id="active">
+                                                                                    </div>
 
-                                        <div class="col-4">
-                                            <div class="card">
-                                                <div class="card-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-6">
+                                                                                            <h6 class="mt-4">اندازه نمودار</h6>
+                                                                                            <select class="form-select" id="size_select" disabled>
+                                                                                                <option>کوچک</option>
+                                                                                                <option>متوسط</option>
+                                                                                                <option>بزرگ</option>
+                                                                                            </select>
+                                                                                        </div>
 
-                                                    <div class="form-check form-switch form-group">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            id="flexSwitchCheckDefault">
-                                                        <label class="form-check-label" for="flexSwitchCheckDefault">ثبت
-                                                            نام آنلاین</label>
-                                                    </div>
+                                                                                        {{-- <div class="col-md-6">
+                                                                    <h6 class="mt-4">معیار شاخص</h6>
+                                                                    <select class="form-select" id="basicSelect">
+                                                                        <option>استان</option>
+                                                                        <option>شهر</option>
+                                                                        <option>مرکز مخابراتی</option>
+                                                                    </select>
+                                                                </div> --}}
 
-                                                    <div class="form-check form-switch form-group">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            id="flexSwitchCheckChecked" checked>
-                                                        <label class="form-check-label" for="flexSwitchCheckChecked">نمایش
-                                                            آمار مشتریان
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                                                        <div class="col-md-6 mt-4">
+                                                                                            <h6>استان ها</h6>
+                                                                                            <div class="form-group">
+                                                                                                <select class="choices form-select multiple-remove"
+                                                                                                    multiple="multiple" id="province_select" >
+                                                                                                    <optgroup label="Figures">
+                                                                                                        <option value="romboid">Romboid</option>
+                                                                                                        <option value="trapeze" selected>Trapeze
+                                                                                                        </option>
+                                                                                                        <option value="triangle">Triangle</option>
+                                                                                                        <option value="polygon">Polygon</option>
+                                                                                                    </optgroup>
+                                                                                                    <optgroup label="Colors">
+                                                                                                        <option value="red">Red</option>
+                                                                                                        <option value="green">Green</option>
+                                                                                                        <option value="blue" selected>Blue
+                                                                                                        </option>
+                                                                                                        <option value="purple">Purple</option>
+                                                                                                    </optgroup>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
 
-
-                                        <div class="col-4">
-                                            <div class="card">
-                                                <div class="card-body">
-
-                                                    <div class="form-check form-switch form-group">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            id="flexSwitchCheckDefault">
-                                                        <label class="form-check-label" for="flexSwitchCheckDefault">معرف
-                                                            در واحد فروش</label>
-                                                    </div>
-
-                                                    <div class="form-check form-switch form-group">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            id="flexSwitchCheckChecked" checked>
-                                                        <label class="form-check-label" for="flexSwitchCheckChecked">معرف
-                                                            در ثبت نام آنلاین
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-4">
-                                            <div class="card">
-                                                <div class="card-body">
-
-                                                    <div class="form-check form-switch form-group">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            id="flexSwitchCheckDefault">
-                                                        <label class="form-check-label" for="flexSwitchCheckDefault">تغییر
-                                                            سرویس در پنل</label>
-                                                    </div>
-
-                                                    <div class="form-check form-switch form-group">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            id="flexSwitchCheckChecked" checked>
-                                                        <label class="form-check-label" for="flexSwitchCheckChecked">نمایش
-                                                            آمار مشتریان
-                                                        </label>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex justify-content-end me-4">
-                                        <button type="submit" class="btn btn-primary me-2 mb-1">ثبت تنظیمات</button>
-                                        <button type="reset"
-                                            class="btn btn-light-secondary me-1 mb-1">بازگردانی</button>
-                                    </div>
-
-                                </div>
-                            </form>
-
-                            </br>
-                            <hr>
-
-                            <div class="row match-height">
-                                <div class="col-md-6 col-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4 class="card-title">تنظیمات تخلیه</h4>
-                                        </div>
-                                        <div class="card-content">
-                                            <div class="card-body">
-
-
-                                                <form class="form form-horizontal" action="{{ url('/') }}">
-                                                    <!-- Form Evecuation Start -->
-                                                    <div class="form-body">
-                                                        <div class="row">
-
-
-                                                            <div class="col-md-4 form-group">
-                                                                <label>ما به تفاوت تخلیه</label>
-                                                            </div>
-                                                            <div class="col-md-8 form-group">
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="ریال">
-                                                            </div>
-
-
-                                                            <div class="col-md-4 form-group">
-                                                                <label>هزینه نگهداری روزانه پورت</label>
-                                                            </div>
-                                                            <div class="col-md-8 form-group">
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="ریال">
-                                                            </div>
-
-
-                                                            <div class="d-flex justify-content-end me-4 mt-4">
-                                                                <button type="submit"
-                                                                    class="btn btn-primary me-2 mb-1">ثبت تنظیمات</button>
-                                                                <button type="reset"
-                                                                    class="btn btn-light-secondary me-1 mb-1">بازگردانی</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form> <!-- Form Evecuation End -->
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4 class="card-title">تنظیمات سرویس</h4>
-                                        </div>
-                                        <div class="card-content">
-                                            <div class="card-body">
-
-                                                <form class="form form-horizontal" action="{{ url('/') }}">
-                                                    <!-- Form Service Start -->
-                                                    <div class="form-body">
-                                                        <div class="row">
-
-
-                                                            <div class="col-md-4 form-group">
-                                                                <label>آبونمان مخابرات</label>
-                                                            </div>
-                                                            <div class="col-md-8 form-group">
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="ریال">
+                                                                                        <div class="col-md-12 mt-4">
+                                                                                            <h6>عنوان نمودار (اختیاری)</h6>
+                                                                                            <input class="form-control" type="text"
+                                                                                                placeholder="Default Input" id="title" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    {{-- <small class="text-muted">Last updated 3
+                                                                mins ago.</small> --}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="card">
+                                                                            <div class="card-content">
+                                                                                <img class="card-img-top img-fluid"
+                                                                                    src="{{ asset('images/graphs/line-chart.png') }}"
+                                                                                    alt="Card image cap" />
+                                                                                <div class="card-body">
+                                                                                    <div class="form-check form-switch form-group">
+                                                                                        <label class="form-check-label"
+                                                                                            for="flexSwitchCheckDefault">نمودار
+                                                                                            خطی</label>
+                                                                                        <input class="form-check-input" type="checkbox"
+                                                                                            id="flexSwitchCheckDefault">
+                                                                                    </div>
+                                                                                    <p class="card-text">
+                                                                                        This card has supporting text below
+                                                                                        as a natural lead-in to additional
+                                                                                        content.
+                                                                                    </p>
+                                                                                    <small class="text-muted">Last updated 3
+                                                                                        mins ago.</small>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="card">
+                                                                            <div class="card-content">
+                                                                                <img class="card-img-top img-fluid"
+                                                                                    src="{{ asset('images/graphs/stacked-chart.svg') }}"
+                                                                                    alt="Card image cap">
+                                                                                <div class="card-body">
+                                                                                    <div class="form-check form-switch form-group">
+                                                                                        <label class="form-check-label"
+                                                                                            for="flexSwitchCheckDefault">نمودار
+                                                                                            خطی</label>
+                                                                                        <input class="form-check-input" type="checkbox"
+                                                                                            id="flexSwitchCheckDefault">
+                                                                                    </div>
+                                                                                    <p class="card-text">
+                                                                                        This card has supporting text below
+                                                                                        as a natural lead-in to additional
+                                                                                        content.
+                                                                                    </p>
+                                                                                    <small class="text-muted">Last updated 3
+                                                                                        mins ago.</small>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="card">
+                                                                            <div class="card-content">
+                                                                                <img class="card-img-top img-fluid"
+                                                                                    src="{{ asset('images/graphs/timeline-chart.png') }}"
+                                                                                    alt="Card image cap">
+                                                                                <div class="card-body">
+                                                                                    <div class="form-check form-switch form-group">
+                                                                                        <label class="form-check-label"
+                                                                                            for="flexSwitchCheckDefault">نمودار
+                                                                                            خطی</label>
+                                                                                        <input class="form-check-input" type="checkbox"
+                                                                                            id="flexSwitchCheckDefault">
+                                                                                    </div>
+                                                                                    <p class="card-text">
+                                                                                        This card has supporting text below
+                                                                                        as a natural lead-in to additional
+                                                                                        content.
+                                                                                    </p>
+                                                                                    <small class="text-muted">Last updated
+                                                                                        3 mins ago.</small>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
 
 
-                                                            <div class="col-md-4 form-group">
-                                                                <label>هزینه نگهداری روزانه پورت</label>
-                                                            </div>
-                                                            <div class="col-md-8 form-group">
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="ریال">
-                                                            </div>
-
-
-                                                            <div class="d-flex justify-content-end me-4 mt-4">
-                                                                <button type="submit"
-                                                                    class="btn btn-primary me-2 mb-1">ثبت تنظیمات</button>
+                                                            <div class="d-flex justify-content-end">
+                                                                <button type="submit" class="btn btn-primary me-2 mb-1">ثبت تنظیمات</button>
                                                                 <button type="reset"
                                                                     class="btn btn-light-secondary me-1 mb-1">بازگردانی</button>
                                                             </div>
 
                                                         </div>
-                                                    </div>
-                                                </form> <!-- Form Service End -->
-
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 @endsection
 @section('js_files')
-    <script src="{{ asset('extensions/apexcharts/apexcharts.min.js') }}"></script>
-    <script>
-        var options = {
-            series: {!! json_encode($general['StatusName']['data']) !!},
-            chart: {
-                type: 'donut',
-            },
-            labels: {!! json_encode($general['StatusName']['name']) !!},
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200 // Adjust chart width for responsiveness
-                    },
-                    legend: {
-                        position: 'left'
-                    }
-                }
-            }]
-        };
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
+                            <script src="{{ asset('extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
 
-        var options1 = {
-            series: [{
-                    name: 'Desktops',
-                    data: [{
-                            x: 'ABC',
-                            y: 10
-                        },
-                        {
-                            x: 'DEF',
-                            y: 60
-                        },
-                        {
-                            x: 'XYZ',
-                            y: 41
-                        },
-                        {
-                            x: 'DEF',
-                            y: 60
-                        },
-                        {
-                            x: 'DEF',
-                            y: 60
-                        },
-                        {
-                            x: 'DEF',
-                            y: 60
-                        },
-                        {
-                            x: 'DEF',
-                            y: 60
-                        },
-                        {
-                            x: 'DEF',
-                            y: 60
-                        },
-                        {
-                            x: 'DEF',
-                            y: 60
-                        },
-                        {
-                            x: 'DEF',
-                            y: 60
-                        },
-                        {
-                            x: 'DEF',
-                            y: 60
-                        },
-                        {
-                            x: 'DEF',
-                            y: 60
-                        },
-                        {
-                            x: 'DEF',
-                            y: 60
-                        },
-                    ]
-                },
-                {
-                    name: 'Mobile',
-                    data: [{
-                            x: 'ABCD',
-                            y: 12
-                        },
-                        {
-                            x: 'DEFG',
-                            y: 20
-                        },
-                        {
-                            x: 'WXYZ',
-                            y: 51
-                        },
-                        {
-                            x: 'PQR',
-                            y: 30
-                        },
-                        {
-                            x: 'MNO',
-                            y: 20
-                        },
-                        {
-                            x: 'CDE',
-                            y: 30
-                        },
-                        {
-                            x: 'CDE',
-                            y: 30
-                        },
-                        {
-                            x: 'CDE',
-                            y: 30
-                        },
-                        {
-                            x: 'CDE',
-                            y: 30
-                        },
-                        {
-                            x: 'CDE',
-                            y: 30
-                        },
-                        {
-                            x: 'CDE',
-                            y: 30
-                        },
-                        {
-                            x: 'CDE',
-                            y: 30
-                        },
-                        {
-                            x: 'CDE',
-                            y: 30
-                        },
-                        {
-                            x: 'CDE',
-                            y: 30
-                        },
-                        {
-                            x: 'CDE',
-                            y: 30
-                        },
-                        {
-                            x: 'CDE',
-                            y: 30
-                        },
+                    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+                        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-                    ]
-                }
-            ],
-            legend: {
-                show: false
-            },
-            chart: {
-                height: 350,
-                type: 'treemap'
-            },
-            title: {
-                text: 'Multi-dimensional Treemap',
-                align: 'center'
-            }
-        };
+                            <script>
+                                $("#active").click(function() {
 
-        var chart1 = new ApexCharts(document.querySelector("#chart1"), options1);
-        chart1.render();
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    </script>
-    <script src="https://cdn.anychart.com/releases/8.12.1/js/anychart-base.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4">
+                                    if ($("#active").prop("checked")) {
+
+                                        $("#size_select").prop('disabled', false);
+
+                                        $("#province_select").prop('disabled', false);
+
+                                        $("#title").prop('disabled', false);
+
+                                    } else {
+
+                                        $("#size_select").prop('disabled', true);
+
+                                        $("#province_select").prop('disabled', true);
+
+                                        $("#title").prop('disabled', true);
+                                    }
+                                });
+                            </script>
+
+                            <script>
+                                let choices = document.querySelectorAll(".choices")
+                                let initChoice
+                                for (let i = 0; i < choices.length; i++) {
+                                    if (choices[i].classList.contains("multiple-remove")) {
+                                        initChoice = new Choices(choices[i], {
+                                            delimiter: ",",
+                                            editItems: true,
+                                            maxItemCount: -1,
+                                            removeItemButton: true,
+                                        })
+                                    } else {
+                                        initChoice = new Choices(choices[i])
+                                    }
+                                }
+                            </script>
+                            <script src="{{ asset('extensions/apexcharts/apexcharts.min.js') }}"></script>
+
+                            <script>
+                                let data = {!! json_encode($general) !!};
+
+                                var options_1 = {
+
+                                    series: data['indicators'],
+                                    chart: {
+                                        type: 'bar',
+                                        height: 350,
+                                        stacked: true,
+                                        toolbar: {
+                                            show: true
+                                        },
+                                        zoom: {
+                                            enabled: true
+                                        }
+                                    },
+                                    responsive: [{
+                                        breakpoint: 480,
+                                        options: {
+                                            legend: {
+                                                position: 'bottom',
+                                                offsetX: -10,
+                                                offsetY: 0
+                                            }
+                                        }
+                                    }],
+                                    plotOptions: {
+                                        bar: {
+                                            horizontal: false,
+                                            borderRadius: 10,
+                                            borderRadiusApplication: 'end', // 'around', 'end'
+                                            borderRadiusWhenStacked: 'last', // 'all', 'last'
+                                            dataLabels: {
+                                                total: {
+                                                    enabled: true,
+                                                    style: {
+                                                        fontSize: '13px',
+                                                        fontWeight: 900
+                                                    }
+                                                }
+                                            }
+                                        },
+                                    },
+                                    xaxis: {
+                                        categories: data['locations'],
+                                    },
+                                    legend: {
+                                        position: 'right',
+                                        offsetY: 40
+                                    },
+                                    fill: {
+                                        opacity: 1
+                                    }
+                                };
+                                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                var chart = new ApexCharts(document.querySelector("#chart"), options_1);
+                                chart.render();
+
+                                var options1 = {
+                                    series: [{
+                                            name: 'Desktops',
+                                            data: [{
+                                                    x: 'ABC',
+                                                    y: 10
+                                                },
+                                                {
+                                                    x: 'DEF',
+                                                    y: 60
+                                                },
+                                                {
+                                                    x: 'XYZ',
+                                                    y: 41
+                                                },
+                                                {
+                                                    x: 'DEF',
+                                                    y: 60
+                                                },
+                                                {
+                                                    x: 'DEF',
+                                                    y: 60
+                                                },
+                                                {
+                                                    x: 'DEF',
+                                                    y: 60
+                                                },
+                                                {
+                                                    x: 'DEF',
+                                                    y: 60
+                                                },
+                                                {
+                                                    x: 'DEF',
+                                                    y: 60
+                                                },
+                                                {
+                                                    x: 'DEF',
+                                                    y: 60
+                                                },
+                                                {
+                                                    x: 'DEF',
+                                                    y: 60
+                                                },
+                                                {
+                                                    x: 'DEF',
+                                                    y: 60
+                                                },
+                                                {
+                                                    x: 'DEF',
+                                                    y: 60
+                                                },
+                                                {
+                                                    x: 'DEF',
+                                                    y: 60
+                                                },
+                                            ]
+                                        },
+                                        {
+                                            name: 'Mobile',
+                                            data: [{
+                                                    x: 'ABCD',
+                                                    y: 12
+                                                },
+                                                {
+                                                    x: 'DEFG',
+                                                    y: 20
+                                                },
+                                                {
+                                                    x: 'WXYZ',
+                                                    y: 51
+                                                },
+                                                {
+                                                    x: 'PQR',
+                                                    y: 30
+                                                },
+                                                {
+                                                    x: 'MNO',
+                                                    y: 20
+                                                },
+                                                {
+                                                    x: 'CDE',
+                                                    y: 30
+                                                },
+                                                {
+                                                    x: 'CDE',
+                                                    y: 30
+                                                },
+                                                {
+                                                    x: 'CDE',
+                                                    y: 30
+                                                },
+                                                {
+                                                    x: 'CDE',
+                                                    y: 30
+                                                },
+                                                {
+                                                    x: 'CDE',
+                                                    y: 30
+                                                },
+                                                {
+                                                    x: 'CDE',
+                                                    y: 30
+                                                },
+                                                {
+                                                    x: 'CDE',
+                                                    y: 30
+                                                },
+                                                {
+                                                    x: 'CDE',
+                                                    y: 30
+                                                },
+                                                {
+                                                    x: 'CDE',
+                                                    y: 30
+                                                },
+                                                {
+                                                    x: 'CDE',
+                                                    y: 30
+                                                },
+                                                {
+                                                    x: 'CDE',
+                                                    y: 30
+                                                },
+
+                                            ]
+                                        }
+                                    ],
+                                    legend: {
+                                        show: false
+                                    },
+                                    chart: {
+                                        height: 350,
+                                        type: 'treemap'
+                                    },
+                                    title: {
+                                        text: 'Multi-dimensional Treemap',
+                                        align: 'center'
+                                    }
+                                };
+
+                                var chart1 = new ApexCharts(document.querySelector("#chart1"), options1);
+                                chart1.render();
+
+
+                                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                            </script>
+                            {{-- <script src="https://cdn.anychart.com/releases/8.12.1/js/anychart-base.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4">
     </script>
     <script src="https://cdn.anychart.com/releases/8.12.1/js/anychart-map.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4">
     </script>
@@ -591,9 +584,9 @@
             // initiate chart drawing
             map.draw();
         });
-    </script>
+    </script> --}}
 
-    <script>
+                            {{-- <script>
         var options33 = {
             series: [{
                 name: "",
@@ -773,13 +766,14 @@
 
         var chart55 = new ApexCharts(document.querySelector("#chart5"), options55);
         chart55.render();
-    </script>
+    </script> --}}
 @endsection
 @section('inline_css')
-    <style>
-        #container {
-            height: 600px;
-            width: 100%;
-        }
-    </style>
+                            <link rel="stylesheet" href="{{ asset('extensions/choices.js/public/assets/styles/choices.css') }}">
+                            <style>
+                                #container {
+                                    height: 600px;
+                                    width: 100%;
+                                }
+                            </style>
 @endsection

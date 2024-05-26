@@ -2,7 +2,7 @@ Partak Project for BI Dashboard
 
 Powered By Taha Hajivand
 
-Customers - Status Indicator:
+Customers Indicator:
 
 Provinces: [
 
@@ -12,13 +12,13 @@ Provinces: [
 
             Baharestan:[
 
-                Markazmokhaberat:[
+                MarakezMokhoberati:[
 
                         Markazi:[
 
                             Filters:[
                         
-                            StatusName => Count
+                              StatusName : Count
                         ]
                     ]
                 ]
@@ -27,7 +27,8 @@ Provinces: [
     ]
 ]
 
-Database Migration
+################################### Database Migration #######################################
+
 
 CREATE DATABASE partak_bi CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
 
@@ -95,4 +96,4 @@ CREATE TABLE users (
   created_at TIMESTAMP NULL DEFAULT NULL,
   updated_at TIMESTAMP NULL DEFAULT NULL,
   CONSTRAINT user_to_company FOREIGN KEY ( company_id ) REFERENCES companies ( id ) ON DELETE CASCADE ) ENGINE = INNODB;
-	
+  #######################################################################################
