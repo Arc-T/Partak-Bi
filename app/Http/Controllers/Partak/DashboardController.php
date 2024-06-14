@@ -16,10 +16,8 @@ class DashboardController extends Controller
         $results = DB::select('SELECT a.id AS CID,
                                       a.name AS CName,
                                       a.group_id AS CGID,
-                                      b.id AS CDID,
                                       c.id AS UID
                                 FROM companies AS a
-                                LEFT JOIN companies_database AS b ON a.id = b.company_id
                                 LEFT JOIN users AS c ON  a.id = c.company_id
                                 ');
 
@@ -31,9 +29,6 @@ class DashboardController extends Controller
             $color = 'danger';
 
             if (!empty($result->CGID)) {
-                $percent += 25;
-            }
-            if (!empty($result->CDID)) {
                 $percent += 25;
             }
             if (!empty($result->UID)) {
@@ -53,7 +48,6 @@ class DashboardController extends Controller
                 'CID'     => $result->CID,
                 'CName'   => $result->CName,
                 'CGID'    => $result->CGID,
-                'CDID'    => $result->CDID,
                 'UID'     => $result->UID,
                 'percent' => $percent,
                 'color'   => $color,

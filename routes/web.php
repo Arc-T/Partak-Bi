@@ -6,13 +6,13 @@ use App\Http\Controllers\Partak\CompanyController;
 use App\Http\Controllers\Partak\IndicatorController;
 use App\Http\Controllers\Partak\DashboardController;
 use App\Http\Controllers\Partak\CompanyGroupController;
+use App\Http\Controllers\Partak\CompanyDatabaseController;
+use App\Http\Controllers\Partak\CompanyGroupsIndicatorController;
 use App\Http\Controllers\Partak\Auth\LoginController as PartkaLoginController;
 #############################################################
 use App\Http\Controllers\Company\CustomersController;
 use App\Http\Controllers\Company\Auth\LoginController as CompanyLoginController;
-use App\Http\Controllers\Partak\CompanyGroupsIndicatorController;
-use App\Http\Controllers\Partak\CompanyDatabaseController;
-use App\Http\Controllers\testController;
+use App\Http\Controllers\Company\IndicatorController as CompanyIndicatorController;
 
 // Routes for Companies
 
@@ -33,19 +33,22 @@ Route::domain('{subdomain}.localhost')
 
             Route::namespace('App\Http\Controllers\Company')->group(function () {
 
-                Route::get('/dashboard',                        [App\Http\Controllers\Company\DashboardController::class, 'index'])->name('dashboard.home');
-
-                Route::post('export/excel',                     [testController::class, 'export'])->name('export.excel');
+                Route::get('/dashboard',  [App\Http\Controllers\Company\DashboardController::class, 'index'])->name('dashboard.home');
 
                 Route::prefix('indicators')->group(function () {
 
-                    Route::get('/serivces',       [CustomersController::class, 'index'])->name('indicators.service');
-                    Route::get('/modems',         [CustomersController::class, 'index'])->name('indicators.modem');
-                    Route::get('/customers',      [CustomersController::class, 'index'])->name('indicators.customer');
-                    Route::get('/staffs',         [CustomersController::class, 'index'])->name('indicators.staff');
-                    Route::get('/custsdfsdfomers',[CustomersController::class, 'index'])->name('indicators.company_sales');
-                    Route::get('/show-result',    [IndicatorController::class, 'show'])->name('indicator.result');
+                    Route::get('/status',  [CompanyIndicatorController::class, 'index'])->name('indicators.service');
+                    
+                    Route::get('/status1',  [CompanyIndicatorController::class, 'index'])->name('indicators.status');
+                    Route::get('/status2',  [CompanyIndicatorController::class, 'index'])->name('indicators.status.province');
+                    Route::get('/status3',  [CompanyIndicatorController::class, 'index'])->name('indicators.status.city');
+                    
+                    Route::get('/status4',  [CompanyIndicatorController::class, 'index'])->name('indicators.status.mdf');
 
+                    Route::post('/service',  [CompanyIndicatorController::class, 'store'])->name('indicators.store');
+                    Route::get('/modems',    [CustomersController::class, 'index'])->name('indicators.modem');
+                    Route::get('/customers', [CustomersController::class, 'index'])->name('indicators.customer');
+                    Route::get('/staffs',    [CustomersController::class, 'index'])->name('indicators.staff');
                 });
             });
         });
@@ -72,16 +75,15 @@ Route::domain('localhost')
 
                 Route::resource('/companies',  CompanyController::class)->except('show');
 
-                Route::resource('/companies-database' , CompanyDatabaseController::class)->except('show');
+                Route::resource('/companies-database', CompanyDatabaseController::class)->except('show');
 
                 Route::resource('/companies-group', CompanyGroupController::class)->except('show');
 
-                Route::resource('/companies-group-indicator', CompanyGroupsIndicatorController::class)->only(['edit','update']);
+                Route::resource('/companies-group-indicator', CompanyGroupsIndicatorController::class)->only(['edit', 'update']);
 
                 Route::resource('/indicators', IndicatorController::class)->except('show');
 
-                Route::resource('/users' , UserController::class)->except('show');
-
+                Route::resource('/users', UserController::class)->except('show');
             });
         });
     });

@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Services;
 
-use App\Http\Utilities\CompanyUtility;
+use App\Utilities\CompanyUtility;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class IndicatorService
 {
     private object $response;
     /*
-    * Process indicator request in 3 steps
-    * 1st: send request to CRM 
-    * 2nd: clean response data
-    * 3rd: assign data to charts
-    */
+     * Process indicator request in 3 steps
+     * 1st: send request to CRM 
+     * 2nd: clean response data
+     * 3rd: assign data to charts
+     */
     public function processIndicatorRequest(array $params = null): array
     {
         // $data = $this->sendRequest($params);
@@ -24,6 +25,22 @@ class IndicatorService
         $charts = $this->assignDataToChart($filtered_data, ['type' => 'common']);
 
         return $filtered_data;
+    }
+
+    public function getGraphsList(int $indicator_id)
+    {
+        return DB::select('SELECT a.*, b.graph_id , b.indicator_id
+                       FROM graphs AS a, indicators_graph AS b 
+                       WHERE a.id= b.graph_id
+                       AND b.indicator_id = ?', [$indicator_id]);
+    }
+
+    public function getIndicatorInputs(int $indicator_id)
+    {
+        return DB::select('SELECT a.name,a.title,a.size,b.input_id
+                            FROM inputs AS a, indicators_input AS b 
+                            WHERE a.id = b.input_id 
+                            AND b.indicator_id = ?', [$indicator_id]);
     }
 
     private function sendRequest(array $params = null): array
@@ -55,8 +72,8 @@ class IndicatorService
     }
 
     /*
-    * Filters response data of API.
-    */
+     * Filters response data of API.
+     */
     private function filterDataResponse(array $data, array $params): array
     {
         $data2 = [
@@ -124,12 +141,12 @@ class IndicatorService
     }
 
     /*
-    * Based on charts, assign filtered data to charts
-    */
+     * Based on charts, assign filtered data to charts
+     */
     private function assignDataToChart(array $filtered_data, array $charts): array
     {
         return App::call(
-            [new \App\Http\Services\ApexChart, 'commonChartDataSort'],
+            [new \App\Services\ApexChart, 'commonChartDataSort'],
             ['filtered_data' => $filtered_data]
         );
     }

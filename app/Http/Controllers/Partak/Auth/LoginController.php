@@ -36,8 +36,9 @@ class LoginController extends Controller
             // $sessionData = encrypt($user->ID);
 
             // $request->session()->put('admin_session', $sessionData);
-
+            
             return redirect()->route('partak.dashboard');
+
         } else {
 
             return redirect()->back()->with(

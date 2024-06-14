@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Company;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Utilities\CompanyUtility;
+use App\Utilities\CompanyUtility;
 
 class BaseController extends Controller
 {
