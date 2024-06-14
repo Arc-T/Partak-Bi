@@ -64,17 +64,17 @@
 
                     @foreach ($sidebar['menus'] as $menu)
                             @php
-                                $is_active = Route::currentRouteName() == 'company.indicators.' . $menu['route'];
                                 $has_sub = isset($menu['submenus']) ? 'has-sub' : '';
+                                $route_active = explode('.',Route::currentRouteName())[2] == $menu['route'] ? 'active': '';
                             @endphp
 
-                            <li class="sidebar-item{{ $is_active ? ' active' : '' . ' ' . $has_sub}}">
+                            <li class="sidebar-item{{' '. $route_active.' '. $has_sub}}">
                                 <a href="{{ route('company.indicators.' . $menu['route'], [$subdomain]) }}" class='sidebar-link'>
                                     <i class="bi bi-{{ $menu['icon'] }}"></i>
                                     <span>{{ $menu['title'] }}</span>
                                 </a>
                                 @if(isset($menu['submenus']))
-                                    <ul class="submenu {{ explode('.',Route::currentRouteName())[2] == $menu['route'] ? 'active': ''}}">
+                                    <ul class="submenu {{ $route_active }}">
                                         @foreach ($menu['submenus'] as $submenu)
                                                 @php
                                                     $submenu_active = Route::currentRouteName() == 'company.indicators.' . $menu['route'] . '.' . $submenu['route'] ? 'active' : '';
