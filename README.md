@@ -1,8 +1,13 @@
 ** BUGS **
-Company accepts partak user
-Cache delete in admin panel should be handled
+/**
+*! Company accepts Partak user
+*! Cache delete in admin panel should be handled
+*! try-catch in queries
+*! logging system should be handled
+*! validation rules should be implemented
+*/
+
 \*\*
-D:\\xamp\\php\\php.exe
 ################################### Database Migration #######################################
 CREATE DATABASE partak_bi CHARACTER
 SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
@@ -29,22 +34,18 @@ id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 `name` VARCHAR ( 200 ),
 active ENUM ( '0', '1' ),
 indicator_group_id INT,
-CONSTRAINT indicator_to_indicator_group FOREIGN KEY ( indicator_group_id ) REFERENCES indicators_group ( id ) ON DELETE CASCADE
+parent_id INT,
+FOREIGN KEY ( indicator_group_id ) REFERENCES indicators_group ( id ) ON DELETE CASCADE,
+FOREIGN KEY ( parent_id ) REFERENCES indicators ( id ) ON DELETE CASCADE,
 ) ENGINE = INNODB;
-
 CREATE TABLE menus (
 id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 route VARCHAR ( 200 ),
 icon VARCHAR ( 200 ),
-parent_id INT,
 indicator_id INT,
-title VARCHAR(200),
-CONSTRAINT menu_to_menu FOREIGN KEY (parent_id) REFERENCES menus(id) ON DELETE CASCADE,
-CONSTRAINT menu_to_indicator FOREIGN KEY ( indicator_id ) REFERENCES indicators ( id ) ON DELETE CASCADE,
-INDEX menu_index(parent_id),
+FOREIGN KEY ( indicator_id ) REFERENCES indicators ( id ) ON DELETE CASCADE,
 INDEX indicator_index(indicator_id)
 ) ENGINE = INNODB;
-
 CREATE TABLE companies_group_indicator (
 id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 indicator_id INT,
@@ -66,14 +67,17 @@ updated_at TIMESTAMP NULL DEFAULT NULL,
 CONSTRAINT user_to_company FOREIGN KEY ( company_id ) REFERENCES companies ( id ) ON DELETE CASCADE
 ) ENGINE = INNODB;
 CREATE TABLE graphs ( id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, `name` VARCHAR ( 200 ), `title` VARCHAR ( 200 ) ) ENGINE = INNODB;
-CREATE TABLE indicators_graph (
+CREATE TABLE indicators_graph_with_input (
 id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 indicator_id INT,
 graph_id INT,
-CONSTRAINT indicators_graph_to_indicators FOREIGN KEY ( indicator_id ) REFERENCES indicators ( id ) ON DELETE CASCADE,
-CONSTRAINT indicators_graph_to_graphs FOREIGN KEY ( graph_id ) REFERENCES graphs ( id ) ON DELETE CASCADE,
+input_id INT,
+FOREIGN KEY ( indicator_id ) REFERENCES indicators ( id ) ON DELETE CASCADE,
+FOREIGN KEY ( graph_id ) REFERENCES graphs ( id ) ON DELETE CASCADE,
+FOREIGN KEY ( input_id ) REFERENCES inputs ( id ) ON DELETE CASCADE,
 INDEX indicator_index ( indicator_id ),
-INDEX graph_index ( graph_id )
+INDEX graph_index ( graph_id ),
+INDEX input_index ( input_id)
 ) ENGINE = INNODB;
 CREATE TABLE inputs(
 id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -81,13 +85,13 @@ id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 `title` VARCHAR (200),
 `size` INT
 ) ENGINE = INNODB;
-CREATE TABLE indicators_input(
+CREATE TABLE graphs_input(
 id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-`indicator_id` INT,
+`graph_id` INT,
 `input_id` INT,
-CONSTRAINT indicator_input_to_indicator FOREIGN KEY ( indicator_id ) REFERENCES indicators (id) ON DELETE CASCADE,
-CONSTRAINT indicator_input_to_input FOREIGN KEY ( input_id ) REFERENCES inputs (id) ON DELETE CASCADE,
-INDEX indicator_index ( indicator_id),
+FOREIGN KEY ( graph_id ) REFERENCES graphs (id) ON DELETE CASCADE,
+FOREIGN KEY ( input_id ) REFERENCES inputs (id) ON DELETE CASCADE,
+INDEX graph_index ( graph_id),
 INDEX input_index (input_id)
 ) ENGINE = INNODB;
 #######################################################################################

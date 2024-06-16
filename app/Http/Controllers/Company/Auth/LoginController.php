@@ -16,10 +16,10 @@ class LoginController extends BaseController
     {
         if (Auth::user()) {
 
-            return redirect()->route('company.dashboard.home', [self::$subdomain]);
+            return redirect()->route('company.dashboard.home', [$this->subdomain]);
         }
 
-        $company_table = Company::where('subdomain', self::$subdomain)->first();
+        $company_table = Company::where('subdomain', $this->subdomain)->first();
 
         // dd($request->session());
 
@@ -37,7 +37,7 @@ class LoginController extends BaseController
 
                 if (Auth::user()->active == '0') return redirect()->back()->with('error', 'کاربر غیر فعال می باشد !');
 
-                return redirect()->route('company.dashboard.home', [self::$subdomain]);
+                return redirect()->route('company.dashboard.home', [$this->subdomain]);
 
             } else {
 
@@ -66,6 +66,6 @@ class LoginController extends BaseController
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('company.login', [self::$subdomain])->with('warning', 'شما با موفقیت از سامانه خارج شدید !');
+        return redirect()->route('company.login', [$this->subdomain])->with('warning', 'شما با موفقیت از سامانه خارج شدید !');
     }
 }

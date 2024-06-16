@@ -23,9 +23,7 @@ class CompanyUtility
             return true;
 
         return self::setCompanyCachedInfo($subdomain);
-
     }
-
     private static function setCompanyCachedInfo($subdomain): bool
     {
 
@@ -38,7 +36,6 @@ class CompanyUtility
         return Cache::forever('company_info', $company_info);
 
     }
-
     private static function getCompanyColorTheme($subdomain): array
     {
         return Company::select('primary_color AS primary', 'secondary_color AS secondary')
@@ -46,7 +43,6 @@ class CompanyUtility
             ->first()
             ->toArray();
     }
-
     private static function getCompanySidebarMenus($subdomain): array
     {
         // A Single method it needs
@@ -55,17 +51,16 @@ class CompanyUtility
         $group_id = $company_table['group_id'];
 
         $query = DB::select('SELECT a.*,
-                             c.id AS indicator_group_id,c.title AS indicator_group_title
-                             FROM menus AS a,
-                             indicators AS b,
-                             indicators_group AS c,
-                             companies_group_indicator AS d,
-                             companies_group AS e
-                             WHERE a.indicator_id = b.id
-                             AND b.indicator_group_id = c.id
-                             AND d.company_group_id = e.id
-                             AND d.company_group_id = ?
-                             AND d.indicator_id = b.id
+                             b.id AS indicator_group_id, b.title AS indicator_group_title
+                             FROM indicators AS a,
+                             indicators_group AS b,
+                             companies_group AS c,
+                             companies_group_indicator AS d
+                             WHERE a.indicator_group_id = b.id
+                             AND c.id = ?
+                             AND c.id = d.company_group_id
+                             AND d.indicator_id = a.id
+                             ORDER BY a.id
                              ', [$group_id]);
 
         $menus = [];
@@ -102,7 +97,7 @@ class CompanyUtility
 
             $sidebar['titles'][$result->indicator_group_title] = $menus;
         }
-
+        
         return $sidebar;
     }
 }

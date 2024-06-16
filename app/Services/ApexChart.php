@@ -80,9 +80,8 @@ class ApexChart
         return $results;
     }
 
-    public function commonChartDataSort(array $filtered_data): array
+    public static function commonChartDataSort(array $filtered_data): array
     {
-
         $categories = $filtered_data['locations'];
 
         $series = $filtered_data['indicators'];

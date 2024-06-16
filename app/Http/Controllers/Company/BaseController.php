@@ -8,18 +8,13 @@ use App\Utilities\CompanyUtility;
 
 class BaseController extends Controller
 {
-    // keeps variable value in memory
-    protected static $subdomain;
-
-    // checks if subdomain hasn't been initialized and current value with current subdomain value.
+    public $subdomain = '';
     public function __construct(Request $request)
     {
-        // dd(self::$subdomain);
+        $this->subdomain = $request->route('subdomain');
         
-        if(!isset(self::$subdomain) || self::$subdomain != $request->route('subdomain') ) self::$subdomain = $request->route('subdomain');
+        view()->share('subdomain', $this->subdomain);
 
-        view()->share('subdomain', self::$subdomain);
-
-        CompanyUtility::isCompanyCachedInfo(self::$subdomain);
+        CompanyUtility::isCompanyCachedInfo($this->subdomain);
     }
 }

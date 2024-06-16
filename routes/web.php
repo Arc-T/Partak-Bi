@@ -42,6 +42,7 @@ Route::domain('{subdomain}.localhost')
                     Route::get('/status1',  [CompanyIndicatorController::class, 'index'])->name('indicators.status');
                     Route::get('/status2',  [CompanyIndicatorController::class, 'index'])->name('indicators.status.province');
                     Route::get('/status3',  [CompanyIndicatorController::class, 'index'])->name('indicators.status.city');
+                    Route::get('/status5',  [CompanyIndicatorController::class, 'index'])->name('indicators.sell');
                     
                     Route::get('/status4',  [CompanyIndicatorController::class, 'index'])->name('indicators.status.mdf');
 

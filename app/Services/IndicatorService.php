@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Indicator;
 use App\Utilities\CompanyUtility;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -16,51 +17,144 @@ class IndicatorService
      * 2nd: clean response data
      * 3rd: assign data to charts
      */
-    public function processIndicatorRequest(array $params = null): array
+    public function processIndicatorCustomRequest(array $params = null): array
     {
         // $data = $this->sendRequest($params);
 
-        $filtered_data = $this->filterDataResponse([], []);
+        $indicator_id = $this->getIndicatorIdByRoute($params['route']);
+
+        $graph_id = App::call(
+            [new \App\Services\GraphService, 'getGraphIdByName'],
+            [
+                'graph_name' => $params['graph']
+            ]
+        );
+
+        $params = $this->getIndicatorRequestParameters($indicator_id, $graph_id);
+
+        $filtered_data = $this->filterDataResponse([]);
 
         $charts = $this->assignDataToChart($filtered_data, ['type' => 'common']);
 
         return $filtered_data;
     }
-
-    public function getGraphsList(int $indicator_id)
+    public function processIndicatorDailyGraphs(string $subdomain, string $route): array
     {
-        return DB::select('SELECT a.*, b.graph_id , b.indicator_id
-                       FROM graphs AS a, indicators_graph AS b 
-                       WHERE a.id= b.graph_id
-                       AND b.indicator_id = ?', [$indicator_id]);
-    }
+        $indicator = $this->getIndicatorDetailsByRoute($route);
 
-    public function getIndicatorInputs(int $indicator_id)
-    {
-        return DB::select('SELECT a.name,a.title,a.size,b.input_id
-                            FROM inputs AS a, indicators_input AS b 
-                            WHERE a.id = b.input_id 
-                            AND b.indicator_id = ?', [$indicator_id]);
-    }
+        $date = date('d.m.Y', strtotime("-1 days"));
 
-    private function sendRequest(array $params = null): array
-    {
-        $query_params = [
+        $params = [
+            "subdomain" => $subdomain,
             "method" => "indicator",
             "data" => [
-                "IndicatorRef" => "1",
-                "BeginDate" => "2024-05-13",
-                "EndDate" => "2024-05-13"
-            ]
+                "IndicatorRef" => $indicator['parent_id'],
+                "BeginDate" => $date,
+                "EndDate" => $date
+            ],
         ];
 
-        $company_url = CompanyUtility::getCompanyApiUrl($params['company']);
+        // $data = $this->sendRequest($params);
 
+        /**
+         * * Remove Null after test
+         */
+        return $filtered_data = $this->filterDataResponse(null);
+
+        /**
+         * * Should Assign Data base on chart types
+         */
+        // $charts = ApexChart::commonChartDataSort($filtered_data);
+
+        // return $charts;
+    }
+    public function getIndicatorGraphsByRoute(string $route): array
+    {
+        /**
+         * * Double Check if company has access to the indicator
+         */
+        
+        $indicator_details = $this->getIndicatorDetailsByRoute($route);
+
+        // Check emptiness 
+        $query = DB::select('SELECT a.name AS graph_name, a.title AS graph_title, 
+                                    b.name AS input_name, b.title AS input_title,b.type, b.size
+                           FROM graphs AS a, 
+                             inputs AS b,
+                             indicators_graph_input AS c
+                           WHERE a.id= c.graph_id
+                            AND b.id = c.input_id
+                            AND c.indicator_id = ?', [$indicator_details['id']]);
+        $graphs = [];
+
+        // maybe it needs a function?
+        foreach ($query as $result) {
+
+            if (!isset($graphs[$result->graph_name])) {
+                $graphs[$result->graph_name] = [];
+
+                $graphs[$result->graph_name] = [
+                    'title' => $result->graph_title
+                ];
+            }
+
+            if (!isset($graphs[$result->graph_name]['inputs']))
+                $graphs[$result->graph_name]['inputs'] = [];
+
+            $inputs = [
+                'name' => $result->input_name,
+                'title' => $result->input_title,
+                'type' => $result->type,
+                'size' => $result->size
+            ];
+
+            $graphs[$result->graph_name]['inputs'][] = $inputs;
+
+        }
+        return $graphs;
+    }
+    public function getIndicatorRequestParameters(int $indicator_id, int $graph_id)
+    {
+        $query = DB::select('SELECT a.name 
+                    FROM inputs AS a,
+                    indicators_graph_with_input AS b
+                    WHERE a.id = b.input_id
+                    AND b.indicator_id = ?
+                    AND b.graph_id = ?', [$indicator_id, $graph_id]);
+
+        dd($query);
+    }
+    public function getIndicatorDetailsByRoute(string $route): array
+    {
+        return Indicator::where('route', $route)->first()->toArray();
+    }
+    public function getIndicatorDailyGraphs(string $indicator_id): array
+    {
+        /**
+         *!Should handle errors
+         */
+
+        return DB::select('SELECT a.title,b.name
+                             FROM indicators_daily_graph AS a,
+                             graphs AS b
+                             WHERE a.graph_id = b.id
+                             AND a.indicator_id = ?', [$indicator_id]);
+    }
+    private function cacheDailyIndicatorResponse()
+    {
+    }
+    private function sendRequest(array $params): array
+    {
+        $query_params = [
+            "url" => CompanyUtility::getCompanyApiUrl($params['subdomain']),
+            "method" => $params['method'],
+            "data" => $params['data']
+        ];
         /*
         ! Curls error should be handled 
         */
         $this->response = Http::withBody(json_encode($query_params), 'application/json')
-            ->get($company_url);
+            ->get($params['url']);
 
         // http code above 200 and less than 300
         if ($this->response->successful()) {
@@ -70,11 +164,10 @@ class IndicatorService
 
         return [];
     }
-
     /*
      * Filters response data of API.
      */
-    private function filterDataResponse(array $data, array $params): array
+    private function filterDataResponse(array $data = null): array
     {
         $data2 = [
             'Dates' => [
@@ -138,16 +231,5 @@ class IndicatorService
             'locations' => $locations,
             'indicators' => $indicators
         ];
-    }
-
-    /*
-     * Based on charts, assign filtered data to charts
-     */
-    private function assignDataToChart(array $filtered_data, array $charts): array
-    {
-        return App::call(
-            [new \App\Services\ApexChart, 'commonChartDataSort'],
-            ['filtered_data' => $filtered_data]
-        );
     }
 }

@@ -4,27 +4,26 @@ namespace App\Http\Controllers\Company;
 
 use App\Services\IndicatorService;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Route;
 
 class IndicatorController extends BaseController
 {
+    private string $current_route;
+    public function __construct(Request $request)
+    {
+        parent::__construct($request);
+
+        $this->current_route = explode('.', Route::currentRouteName())[3];
+    }
     public function index()
     {
         $t = new IndicatorService;
 
-        $general = $t->processIndicatorRequest(null);
+        // $general = $t->processIndicatorRequest(null);
 
-        $graphs_list = $t->getGraphsList(1);
+        $general = $t->processIndicatorDailyGraphs($this->subdomain, $this->current_route);
         
-        $indicators_list = $t->getIndicatorInputs(1);
-
-        // $provinces = array_values(array_values($tt['Date'])[0]['Provinces']);
-
-        // $t = json_encode($data);
-
-        // $provinces = array_keys(array_values($data['Date'])[0]['Provinces']);
-
-        //$customers_ind_table   = DB::connection('db_' . self::$subdomain)->table('ind_customers')->get()->toArray();
+        $graphs_list = $t->getIndicatorGraphsByRoute($this->current_route);
 
         return view('company.dashboard.customers.show', [
             'general' => $general,
@@ -51,12 +50,13 @@ class IndicatorController extends BaseController
      */
     public function store(Request $request)
     {
-        $size = $request->input('*_size');
-        $title = $request->input('*_title');
-        $provinces = $request->input('*_provinces');
+        $input_id = $request->input('id');
+        $t = new IndicatorService;
 
-        dd($size,$title,$provinces);
-
+        dd($t->getIndicatorRequestParametersByGraphId($input_id));
+        
+        $size = $request->input('size');
+        $title = $request->input('title');
 
     }
 
