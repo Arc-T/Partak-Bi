@@ -60,14 +60,14 @@
                         <h3>{{ $titles }}</h3>
                     </li>
 
-                    @foreach ($sidebar['menus'] as $menu)
+                    @foreach ($sidebar['menus'] as $indicator => $menu)
                             @php
                                 $has_sub = isset($menu['submenus']) ? 'has-sub' : '';
                                 $route_active = explode('.',Route::currentRouteName())[2] == $menu['route'] ? 'active': '';
                             @endphp
 
                             <li class="sidebar-item{{' '. $route_active.' '. $has_sub}}">
-                                <a href="{{ route('company.indicators.' . $menu['route'], [$subdomain]) }}" class='sidebar-link'>
+                                <a href="{{ route('company.indicators.show', ['subdomain' => $subdomain, 'indicator' => $indicator ]) }}" class='sidebar-link'>
                                     <i class="bi bi-{{ $menu['icon'] }}"></i>
                                     <span>{{ $menu['title'] }}</span>
                                 </a>
@@ -75,10 +75,10 @@
                                     <ul class="submenu {{ $route_active }}">
                                         @foreach ($menu['submenus'] as $submenu)
                                                 @php
-                                                    $submenu_active = Route::currentRouteName() == 'company.indicators.' . $menu['route'] . '.' . $submenu['route'] ? 'active' : '';
+                                                    $submenu_active = Route::currentRouteName() == 'company.indicators.show' . $menu['route'] . '.' . $submenu['route'] ? 'active' : '';
                                                 @endphp
                                                 <li class="submenu-item {{ $submenu_active }}">
-                                                    <a href="{{ route('company.indicators.' . $menu['route'] . '.' . $submenu['route'], [$subdomain]) }}"
+                                                    <a href="{{ route('company.indicators.show', ['subdomain' => $subdomain, 'indicator' => $submenu['id']]) }}"
                                                         class='submenu-link'>
                                                         {{$submenu['title']}}
                                                     </a>

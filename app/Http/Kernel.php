@@ -56,6 +56,6 @@ class Kernel extends HttpKernel
         'check.subdomain'               => \App\Http\Middleware\CheckSubdomain::class,
         'company.session.controller'    => \App\Http\Middleware\AuthenticateCompanySession::class,
         'company.user.controller'       => \App\Http\Middleware\AuthenticateCompanyUser::class,
-        'partak.session.controller'     => \App\Http\Middleware\AuthenticatePartakSession::class,
+        'admin.session.controller'      => \App\Http\Middleware\AuthenticateAdminSession::class,
     ];
 }

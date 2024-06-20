@@ -22,13 +22,8 @@
             <div class="col-lg-5 col-12">
                 <div id="auth-left">
                     <div class="auth-logo">
-                        <a href="index.html"><img
-                                src=@isset($subdomain)
-                            {{ asset('images/logo/' . $company->Logo) }}
-                            @else
-                            {{ asset('images/logo/logo.svg') }}
-                            @endisset
-                                alt="Logo" /></a>
+                        <a href="index.html"><img src=@isset($subdomain) {{ asset('images/logo/' . $company->Logo) }}
+                        @else {{ asset('images/logo/logo.svg') }} @endisset alt="Logo" /></a>
                     </div>
                     <h1 class="auth-title">ورود به سامانه
                         @isset($subdomain)
@@ -43,13 +38,8 @@
 
                     @include('company.layouts.partials.messages')
 
-                    <form
-                        action=@isset($subdomain)
-                    {{ @route('company.auth', ['subdomain' => $subdomain]) }}
-                    @else
-                    {{ @route('partak.auth') }}
-                    @endisset
-                        method="POST">
+                    <form action= @isset($subdomain) {{ route('company.auth', ['subdomain' => $subdomain]) }} @else {{
+                        route('admin.auth') }} @endisset method="POST">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-2">
                             <input type="text" class="form-control form-control-xl" placeholder="نام کاربری"

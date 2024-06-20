@@ -1,17 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Partak\UserController;
-use App\Http\Controllers\Partak\CompanyController;
-use App\Http\Controllers\Partak\IndicatorController;
-use App\Http\Controllers\Partak\DashboardController;
-use App\Http\Controllers\Partak\CompanyGroupController;
-use App\Http\Controllers\Partak\CompanyDatabaseController;
-use App\Http\Controllers\Partak\CompanyGroupsIndicatorController;
-use App\Http\Controllers\Partak\Auth\LoginController as PartkaLoginController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\IndicatorController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\CompanyGroupController;
+use App\Http\Controllers\Admin\CompanyDatabaseController;
+use App\Http\Controllers\Admin\CompanyGroupsIndicatorController;
+use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 #############################################################
-use App\Http\Controllers\Company\CustomersController;
+use App\Http\Controllers\Company\ReportsController;
 use App\Http\Controllers\Company\Auth\LoginController as CompanyLoginController;
+use App\Http\Controllers\Company\DashboardController as CompanyDashboardController;
 use App\Http\Controllers\Company\IndicatorController as CompanyIndicatorController;
 
 // Routes for Companies
@@ -21,60 +22,46 @@ Route::domain('{subdomain}.localhost')
     ->name('company.')
     ->group(function () {
 
-        Route::get('/login',    [CompanyLoginController::class,  'index'])->name('login');
+        Route::get('/login', [CompanyLoginController::class, 'index'])->name('login');
 
-        Route::get('/',         [CompanyLoginController::class,  'index'])->name('login');
+        Route::get('/', [CompanyLoginController::class, 'index'])->name('login');
 
-        Route::post('/login',   [CompanyLoginController::class,  'login'])->name('auth');
+        Route::post('/login', [CompanyLoginController::class, 'login'])->name('auth');
 
-        Route::post('/logout',  [CompanyLoginController::class,  'logout'])->name('logout');
+        Route::post('/logout', [CompanyLoginController::class, 'logout'])->name('logout');
 
         Route::middleware(['company.session.controller'])->group(function () {
 
             Route::namespace('App\Http\Controllers\Company')->group(function () {
 
-                Route::get('/dashboard',  [App\Http\Controllers\Company\DashboardController::class, 'index'])->name('dashboard.home');
+                Route::get('/dashboard', [CompanyDashboardController::class, 'index'])->name('dashboard.home');
 
-                Route::prefix('indicators')->group(function () {
+                Route::resource('/indicators', CompanyIndicatorController::class)->only(['show','store']);
 
-                    Route::get('/status',  [CompanyIndicatorController::class, 'index'])->name('indicators.service');
-                    
-                    Route::get('/status1',  [CompanyIndicatorController::class, 'index'])->name('indicators.status');
-                    Route::get('/status2',  [CompanyIndicatorController::class, 'index'])->name('indicators.status.province');
-                    Route::get('/status3',  [CompanyIndicatorController::class, 'index'])->name('indicators.status.city');
-                    Route::get('/status5',  [CompanyIndicatorController::class, 'index'])->name('indicators.sell');
-                    
-                    Route::get('/status4',  [CompanyIndicatorController::class, 'index'])->name('indicators.status.mdf');
-
-                    Route::post('/service',  [CompanyIndicatorController::class, 'store'])->name('indicators.store');
-                    Route::get('/modems',    [CustomersController::class, 'index'])->name('indicators.modem');
-                    Route::get('/customers', [CustomersController::class, 'index'])->name('indicators.customer');
-                    Route::get('/staffs',    [CustomersController::class, 'index'])->name('indicators.staff');
-                });
+                Route::resource('/reports', ReportsController::class);
             });
         });
     });
 
-
-##############################################   PARTAK     ###################################################
+##############################################   ADMIN     ###################################################
 
 Route::domain('localhost')
-    ->name('partak.')
+    ->name('admin.')
     ->group(function () {
 
-        Route::post('/login',  [PartkaLoginController::class, 'authenticate'])->name('auth');
+        Route::post('/login', [AdminLoginController::class, 'authenticate'])->name('auth');
 
-        Route::get('/',        [PartkaLoginController::class, 'index'])->name('login');
+        Route::get('/', [AdminLoginController::class, 'index'])->name('login');
 
-        Route::post('/logout', [PartkaLoginController::class, 'logout'])->name('logout');
+        Route::post('/logout', [AdminLoginController::class, 'logout'])->name('logout');
 
-        Route::namespace('App\Http\Controllers\Partak')->group(function () {
+        Route::namespace('App\Http\Controllers\Admin')->group(function () {
 
-            Route::middleware(['partak.session.controller'])->group(function () {
+            Route::middleware(['admin.session.controller'])->group(function () {
 
-                Route::get('/dashboard',        [DashboardController::class, 'index'])->name('dashboard');
+                Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-                Route::resource('/companies',  CompanyController::class)->except('show');
+                Route::resource('/companies', CompanyController::class)->except('show');
 
                 Route::resource('/companies-database', CompanyDatabaseController::class)->except('show');
 

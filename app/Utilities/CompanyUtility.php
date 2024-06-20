@@ -83,6 +83,7 @@ class CompanyUtility
             } else {
 
                 $submenus = [
+                    'id' => $result->id,
                     'title' => $result->title,
                     'icon' => $result->icon,
                     'route' => $result->route

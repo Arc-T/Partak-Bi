@@ -2,7 +2,7 @@
 @section('title', 'آمار مشتریان')
 
 @section('main_content')
-
+@include('company.layouts.partials.messages')
 <div class="row align-items-center">
     <div class="col-md">
         <div class="card">
@@ -16,8 +16,8 @@
                     </li>
 
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="sales-tab" data-bs-toggle="tab" href="#sales" role="tab"
-                            aria-controls="sales" aria-selected="true">آمار شخصی</a>
+                        <a class="nav-link active" id="personal-tab" data-bs-toggle="tab" href="#personal" role="tab"
+                            aria-controls="personal" aria-selected="true">آمار شخصی</a>
                     </li>
                 </ul>
                 <!-- ############    TABS END      ############ -->
@@ -44,13 +44,130 @@
                     <!-- -------------- General END   -------------- -->
 
                     <!-- -------------- Custom START -------------- -->
-                    <div class="tab-pane fade show active" id="sales" role="tabpanel" aria-labelledby="sales-tab">
+                    <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">
+                        <br />
                         <div class="row">
+
+                            <div class="col-md-12 m-4">
+                                <p>
+                                    برای ثبت آمار شخصی، ابتدا نام گزارش خود را وارد نمایید (این نام به عنوان نام سربرگ
+                                    اضافه خواهد شد).
+                                    پس از آن، از لیست نمودار های موجود، مقادیر مورد نظر خود را اعمال کنید و بر روی دکمه
+                                    ثبت کلیک کنید.
+                                    برای اضافه کردن نمودار به گزارش های فعال، کافی است از جدول ارائه شده، گزارش مورد نظر
+                                    را انتخاب کرده و نمودارهای مدنظر خود را به آن اضافه کنید.
+                                </p>
+                            </div>
+
+                            <hr />
+
+                            <div class="col-md-4 mt-2">
+                                <form action="{{ route('company.reports.store', [$subdomain])}}" method="post">
+                                @csrf
+                                    <br />
+                                    <h4>گزارش جدید</h4>
+
+                                    <h6 class="text-muted mb-0 pt-1">اطلاعات گزارش خود را درج کرده و بر بروی گزینه ی
+                                        "ثبت
+                                        گزارش" کلیک کنید</h6>
+                                    <div class="row mt-4">
+                                        <div class="col-md-6 mt-3">
+                                            <h5>نام گزارش</h5>
+                                            <input type="text" class="form-control" placeholder="گزارش برترین استان ها"
+                                                name="report_name">
+                                        </div>
+                                        <div class="col-md-6 mt-3">
+                                            <div class="row">
+                                                <h5>وضعیت گزارش</h5>
+                                                <div class="col-md-6 pt-2 ">
+                                                    <div class="form-check form-check-success pt-1">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="report_active" value="1" checked />
+                                                        <label class="form-check-label">
+                                                            فعال
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 pt-2">
+                                                    <div class="form-check form-check-danger pt-1">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="report_active" value="0" />
+                                                        <label class="form-check-label">
+                                                            غیر فعال
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mt-4">
+                                            <h5>توضیحات گزارش (اختیاری)</h5>
+                                            <textarea class="form-control" rows="0" name="report_comment"></textarea>
+                                        </div>
+
+                                        <br />
+                                        <div class="mt-4">
+                                            <button type="submit" class="btn btn-block btn-outline-secondary">ثبت
+                                                گزارش</button>
+                                        </div>
+                                        <input type="hidden" name="indicator" value="{{Request()->indicator}}">
+                                    </div>
+                                </form>
+                                <br /><br />
+                            </div>
+
+                            <div class="col-md-8 mt-2">
+                                <br />
+                                <h4>
+                                    لیست گزارش های ثبت شده
+                                </h4>
+                                <h6 class="text-muted mb-0 pt-1">لیست گزارش های ثبت شده برای شاخص مورد نظر به همراه
+                                    مشخصات آن</h6>
+                                <div class="card-content">
+                                    <!-- table head dark -->
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th>ردیف</th>
+                                                        <th>نام گزارش</th>
+                                                        <th>زمان ایجاد</th>
+                                                        <th>توضیحات</th>
+                                                        <th>فعال</th>
+                                                        <th>عملیات</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($reports as $report)
+                                                        <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{$report->title}}</td>
+                                                            <td>{{ verta($report->created_at) }}</td>
+                                                            <td>{{$report->comment}}</td>
+                                                            <td>
+                                                                @if($report->active)
+                                                                    <span class="badge bg-success">فعال</span>
+                                                                @else
+                                                                    <span class="badge bg-danger">غیر فعال</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>...</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr />
+
                             <div class="col-md-12">
                                 <h4 class="ms-4 mt-4">
                                     لیست نمودار ها
                                 </h4>
-
+                                <br />
                                 <div class="card-group">
                                     @foreach ($graphs_list as $name => $graph)
                                         <div class="col-md-3">
@@ -66,21 +183,15 @@
                                                             </h4>
 
                                                             <div class="row">
-                                                                <input type="hidden" name="graph_name" value="{{$name}}">
-                                                                <div class="col-md-6">
-                                                                    <h6 class="mt-4">اندازه نمودار</h6>
+                                                                <input type="hidden" name="gid" value="{{$graph['id']}}">
+                                                                <div class="col-md-12">
+                                                                    <h6 class="mt-4">گزارش ها</h6>
                                                                     <select class="form-select" name='size'
                                                                         style="background-position: left.75rem center">
-                                                                        <option>کوچک</option>
-                                                                        <option>متوسط</option>
-                                                                        <option>بزرگ</option>
+                                                                        @foreach ($reports as $report)
+                                                                        <option value="{{$report->id}}">{{$report->title}}</option>
+                                                                        @endforeach
                                                                     </select>
-                                                                </div>
-
-                                                                <div class="col-md-6">
-                                                                    <h6 class="mt-4">عنوان نمودار (اختیاری)</h6>
-                                                                    <input type="text" class="form-control" name='title'
-                                                                        placeholder="انتخاب کنید">
                                                                 </div>
 
                                                                 @foreach ($graph['inputs'] as $input)
@@ -89,7 +200,8 @@
                                                                         @if($input['type'] === 'select')
                                                                             <select class="choices form-select multiple-remove"
                                                                                 name='{{$input['name']}}[]' multiple="multiple">
-                                                                                <option value="ALL" selected>انتخاب همه</option>
+                                                                                <option value="ALL" selected>انتخاب همه
+                                                                                </option>
                                                                             </select>
 
                                                                         @elseif($input['type'] === 'date')
@@ -111,74 +223,6 @@
                                     @endforeach
                                 </div>
                             </div>
-
-                            <hr />
-
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <h4>
-                                        لیست گزارش های ثبت شده
-                                    </h4>
-                                </div>
-                                <!-- table head dark -->
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0">
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th>ردیف</th>
-                                                    <th>نام شرکت</th>
-                                                    <th>ساب دامین</th>
-                                                    <th>توضیحات</th>
-                                                    <th>فعال</th>
-                                                    <th>عملیات</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {{-- @foreach ($companies as $company) --}}
-                                                <tr>
-                                                    <td>hello</td>
-                                                    <td>hello</td>
-                                                    <td>hello</td>
-                                                    <td>hello</td>
-                                                    <td>
-                                                        {{-- @if ($company->active)
-                                                        <span class="badge bg-success">فعال</span>
-                                                        @else
-                                                        <span class="badge bg-danger">غیر فعال</span>
-                                                        @endif --}}
-
-                                                    </td>
-                                                    <td>
-                                                        {{-- <div class="row">
-                                                            <div class="col-md-1">
-                                                                @include(
-                                                                'partak.layouts.partials.delete',
-                                                                [
-                                                                'route' => 'companies',
-                                                                'parameter' => $company,
-                                                                ]
-                                                                )
-                                                            </div>
-                                                            <div class="col-md-1">
-                                                                @include(
-                                                                'partak.layouts.partials.edit',
-                                                                [
-                                                                'route' => 'companies',
-                                                                'parameter' => $company,
-                                                                ]
-                                                                )
-                                                            </div>
-                                                        </div> --}}
-                                                    </td>
-                                                </tr>
-                                                {{-- @endforeach --}}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                     <!-- -------------- Custom END   -------------- -->
@@ -228,10 +272,10 @@
 <script src={{ asset('js/pages/form-element-select.js') }}></script>
 
 <script>
-    
+
     let data = {!! json_encode($general) !!};
 
-    var options_1 = {
+    let options_1 = {
 
         series: data['indicators'],
         chart: {
@@ -284,10 +328,10 @@
         }
     };
 
-    var chart = new ApexCharts(document.querySelector("#chart"), options_1);
+    let chart = new ApexCharts(document.querySelector("#chart"), options_1);
     chart.render();
 
-    var options1 = {
+    let options1 = {
         series: [{
             name: 'Desktops',
             data: [{
@@ -427,9 +471,9 @@
         }
     };
 
-    var chart1 = new ApexCharts(document.querySelector("#chart1"), options1);
+    let chart1 = new ApexCharts(document.querySelector("#chart1"), options1);
     chart1.render();
-    
+
 </script>
 
 @endsection
