@@ -54,8 +54,8 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'check.subdomain'               => \App\Http\Middleware\CheckSubdomain::class,
-        'company.session.controller'    => \App\Http\Middleware\AuthenticateCompanySession::class,
-        'company.user.controller'       => \App\Http\Middleware\AuthenticateCompanyUser::class,
+        'user.session.controller'       => \App\Http\Middleware\AuthenticateCompanySession::class,
+        // 'user.user.controller'          => \App\Http\Middleware\AuthenticateCompanyUser::class,
         'admin.session.controller'      => \App\Http\Middleware\AuthenticateAdminSession::class,
     ];
 }

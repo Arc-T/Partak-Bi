@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use App\Models\Indicator;
+use App\Models\Report;
 use App\Utilities\CompanyUtility;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
@@ -12,7 +15,7 @@ class IndicatorService
     private object $response;
     /*
      * Process indicator request in 3 steps
-     * 1st: send request to CRM 
+     * 1st: send request to CRM
      * 2nd: clean response data
      * 3rd: assign data to charts
      */
@@ -67,15 +70,15 @@ class IndicatorService
     public function getIndicatorGraphsByRoute(string $route): array
     {
         /**
-         * * Double Check if company has access to the indicator
+         * * Double Check if user has access to the indicator
          */
-        
+
         $indicator_details = $this->getIndicatorDetailsByRoute($route);
 
-        // Check emptiness 
-        $query = DB::select('SELECT a.id,a.name AS graph_name, a.title AS graph_title, 
+        // Check emptiness
+        $query = DB::select('SELECT a.id,a.name AS graph_name, a.title AS graph_title,
                                     b.name AS input_name, b.title AS input_title,b.type, b.size
-                           FROM graphs AS a, 
+                           FROM graphs AS a,
                              inputs AS b,
                              indicators_graph_input AS c
                            WHERE a.id= c.graph_id
@@ -112,7 +115,7 @@ class IndicatorService
     }
     public function getIndicatorGraphInputs(int $indicator_id, int $graph_id)
     {
-        $query = DB::select('SELECT a.name 
+        $query = DB::select('SELECT a.name
                     FROM inputs AS a,
                     indicators_graph_with_input AS b
                     WHERE a.id = b.input_id
@@ -121,9 +124,9 @@ class IndicatorService
 
         dd($query);
     }
-    public function getIndicatorDetailsByRoute(string $route): array
+    private function getIndicatorDetailsByRoute(string $route): Model
     {
-        return Indicator::where('route', $route)->first()->toArray();
+        return Indicator::where('route', $route)->firstOrFail();
     }
     public function getIndicatorDailyGraphs(int $indicator_id): array
     {
@@ -137,9 +140,17 @@ class IndicatorService
                              WHERE a.graph_id = b.id
                              AND a.indicator_id = ?', [$indicator_id]);
     }
-    public function getIndicatorReports(int $indicator_id): array {
+    public function getIndicatorReports(string $subdomain, string $route): Collection
+    {
+        $indicator_id = self::getIndicatorIdByRoute($route);
 
-        $query = DB::select('SELECT * FROM reports WHERE indicator_id = ?',[$indicator_id]);
+        $company_id = CompanyService::getCompanyIdBySubdomain($subdomain);
+
+        return Report::where(['company_id' => $company_id, 'indicator_id' => $indicator_id])->get();
+    }
+    public static function getIndicatorIdByRoute(string $route): int
+    {
+        return Indicator::where('route', $route)->pluck('id')[0];
     }
     private function cacheDailyIndicatorResponse()
     {
@@ -152,7 +163,7 @@ class IndicatorService
             "data" => $params['data']
         ];
         /*
-        ! Curls error should be handled 
+        ! Curls error should be handled
         */
         $this->response = Http::withBody(json_encode($query_params), 'application/json')
             ->get($params['url']);

@@ -11,10 +11,9 @@ class CompanyUtility
 
     public static function getCompanyApiUrl($subdomain): string
     {
-        $url = Company::find('subdomain', $subdomain)->pluck('api');
-
-        return $url;
+        return Company::find('subdomain', $subdomain)->pluck('api');
     }
+
     public static function isCompanyCachedInfo($subdomain): bool
     {
         $cached_company_info = Cache::get('company_info');
@@ -24,6 +23,7 @@ class CompanyUtility
 
         return self::setCompanyCachedInfo($subdomain);
     }
+
     private static function setCompanyCachedInfo($subdomain): bool
     {
 
@@ -36,6 +36,7 @@ class CompanyUtility
         return Cache::forever('company_info', $company_info);
 
     }
+
     private static function getCompanyColorTheme($subdomain): array
     {
         return Company::select('primary_color AS primary', 'secondary_color AS secondary')
@@ -43,6 +44,7 @@ class CompanyUtility
             ->first()
             ->toArray();
     }
+
     private static function getCompanySidebarMenus($subdomain): array
     {
         // A Single method it needs
@@ -50,7 +52,7 @@ class CompanyUtility
 
         $group_id = $company_table['group_id'];
 
-        $query = DB::select('SELECT a.*,
+        $query = DB::select("SELECT a.*,
                              b.id AS indicator_group_id, b.title AS indicator_group_title
                              FROM indicators AS a,
                              indicators_group AS b,
@@ -61,7 +63,7 @@ class CompanyUtility
                              AND c.id = d.company_group_id
                              AND d.indicator_id = a.id
                              ORDER BY a.id
-                             ', [$group_id]);
+                             ", [$group_id]);
 
         $menus = [];
         $sidebar = [];
@@ -83,7 +85,6 @@ class CompanyUtility
             } else {
 
                 $submenus = [
-                    'id' => $result->id,
                     'title' => $result->title,
                     'icon' => $result->icon,
                     'route' => $result->route
@@ -98,7 +99,7 @@ class CompanyUtility
 
             $sidebar['titles'][$result->indicator_group_title] = $menus;
         }
-        
+
         return $sidebar;
     }
 }

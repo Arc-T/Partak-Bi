@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthenticateCompanySession
@@ -19,7 +18,7 @@ class AuthenticateCompanySession
     {
         if (!Auth::user()) {
 
-            return redirect()->route('company.login', ['subdomain' => $request->route('subdomain')])->with('error', 'ابتدا باید وارد سایت شوید !');
+            return redirect()->route('user.login', ['subdomain' => $request->route('subdomain')])->with('error', 'ابتدا باید وارد سایت شوید !');
         }
 
         return $next($request);

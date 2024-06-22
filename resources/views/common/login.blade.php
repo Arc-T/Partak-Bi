@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href={{ asset('images/logo/favicon.svg') }} type="image/x-icon" />
     <link rel="shortcut icon" href={{ asset('images/logo/favicon.png') }} type="image/png" />
     @isset($subdomain)
-        @include('company.layouts.partials.login-theme')
+        @include('user.layouts.partials.login-theme')
     @endisset
 </head>
 
@@ -36,9 +36,9 @@
                         اطلاعات ورود به سامانه را از شرکت پارتاک دریافت نمایید
                     </p>
 
-                    @include('company.layouts.partials.messages')
+                    @include('user.layouts.partials.messages')
 
-                    <form action= @isset($subdomain) {{ route('company.auth', ['subdomain' => $subdomain]) }} @else {{
+                    <form action= @isset($subdomain) {{ route('user.auth', ['subdomain' => $subdomain]) }} @else {{
                         route('admin.auth') }} @endisset method="POST">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-2">

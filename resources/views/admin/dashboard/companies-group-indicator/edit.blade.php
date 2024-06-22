@@ -75,7 +75,7 @@
         $('#company_group_select').on('change', function () {
             var newId = $(this).val();
             var currentUrl = window.location.href;
-            var newUrl = currentUrl.replace(/\/company-groups-access\/\d+\//, '/company-groups-access/' + newId + '/');
+            var newUrl = currentUrl.replace(/\/company-groups-access\/\d+\//, '/user-groups-access/' + newId + '/');
             window.location.href = newUrl;
         });
     });

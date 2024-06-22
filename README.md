@@ -1,12 +1,17 @@
 ** BUGS **
 /**
-*! Company accepts Partak user
+*! User accepts Partak user
 *! Cache delete in admin panel should be handled
 *! try-catch in queries
 *! logging system should be handled
 *! validation rules should be implemented
 */
-
+/////////////////////////////////////
+//        "laravel/sanctum": "^3.0",
+//        "laravel/tinker": "^2.7",
+//        "predis/predis": "^2.1"
+//"maatwebsite/excel": "^3.1"
+///////////////////////////////////
 ################################### Database Migration #######################################
 CREATE DATABASE partak_bi CHARACTER 
 SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';

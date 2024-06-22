@@ -1,25 +1,25 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+######################## Admin ###############################
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\IndicatorController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CompanyGroupController;
-use App\Http\Controllers\Admin\CompanyDatabaseController;
 use App\Http\Controllers\Admin\CompanyGroupsIndicatorController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
-#############################################################
-use App\Http\Controllers\Company\ReportsController;
-use App\Http\Controllers\Company\Auth\LoginController as CompanyLoginController;
-use App\Http\Controllers\Company\DashboardController as CompanyDashboardController;
-use App\Http\Controllers\Company\IndicatorController as CompanyIndicatorController;
+####################### User ##########################
+use App\Http\Controllers\User\ReportsController;
+use App\Http\Controllers\User\Auth\LoginController as CompanyLoginController;
+use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\User\IndicatorController as UserIndicatorController;
 
-// Routes for Companies
+##############################################   User    ###################################################
 
 Route::domain('{subdomain}.localhost')
-    ->middleware('check.subdomain')
-    ->name('company.')
+    // ->middleware('check.subdomain')
+    ->name('user.')
     ->group(function () {
 
         Route::get('/login', [CompanyLoginController::class, 'index'])->name('login');
@@ -30,16 +30,17 @@ Route::domain('{subdomain}.localhost')
 
         Route::post('/logout', [CompanyLoginController::class, 'logout'])->name('logout');
 
-        Route::middleware(['company.session.controller'])->group(function () {
+        Route::middleware(['user.session.controller'])->group(function () {
 
-            Route::namespace('App\Http\Controllers\Company')->group(function () {
+            Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard.home');
 
-                Route::get('/dashboard', [CompanyDashboardController::class, 'index'])->name('dashboard.home');
+            Route::get('/indicators/{indicator}/{route}', [UserIndicatorController::class, 'show']);
 
-                Route::resource('/indicators', CompanyIndicatorController::class)->only(['show','store']);
+            Route::post('/indicators/{indicator}/{route}', [UserIndicatorController::class, 'store']);
 
-                Route::resource('/reports', ReportsController::class);
-            });
+            Route::post('/indicators/{indicator}/{route}/report', [ReportsController::class, 'store']);
+
+            // Route::resource('/reports', ReportsController::class);
         });
     });
 
@@ -55,24 +56,19 @@ Route::domain('localhost')
 
         Route::post('/logout', [AdminLoginController::class, 'logout'])->name('logout');
 
-        Route::namespace('App\Http\Controllers\Admin')->group(function () {
+        Route::middleware(['admin.session.controller'])->group(function () {
 
-            Route::middleware(['admin.session.controller'])->group(function () {
+            Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-                Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+            Route::resource('/companies', CompanyController::class)->except('show');
 
-                Route::resource('/companies', CompanyController::class)->except('show');
+            Route::resource('/companies-group', CompanyGroupController::class)->except('show');
 
-                Route::resource('/companies-database', CompanyDatabaseController::class)->except('show');
+            Route::resource('/companies-group-indicator', CompanyGroupsIndicatorController::class)->only(['edit', 'update']);
 
-                Route::resource('/companies-group', CompanyGroupController::class)->except('show');
+            Route::resource('/indicators', IndicatorController::class)->except('show');
 
-                Route::resource('/companies-group-indicator', CompanyGroupsIndicatorController::class)->only(['edit', 'update']);
-
-                Route::resource('/indicators', IndicatorController::class)->except('show');
-
-                Route::resource('/users', UserController::class)->except('show');
-            });
+            Route::resource('/users', UserController::class)->except('show');
         });
     });
 
