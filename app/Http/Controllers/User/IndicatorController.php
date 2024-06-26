@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Services\CompanyService;
+use App\Services\GraphService;
 use App\Services\ReportService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -10,18 +12,18 @@ use App\Services\IndicatorService;
 
 class IndicatorController extends BaseController
 {
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $params = $request->validate([
-            'report' =>'required|numeric',
-            'graph' =>'required|numeric',
+            'report' => 'required|numeric',
+            'graph' => 'required|numeric',
             'comment' => 'nullable|max|255'
         ]);
 
         return ReportService::saveReportDetails($params) ? redirect()->back()->with('success', 'نمودار با موفقیت ثبت گردید !') : redirect()->back()->with('error', 'در ثبت نمودار خطایی رخ داده است !');
     }
 
-    public function show():View
+    public function show(): View
     {
         $t = new IndicatorService;
 
@@ -29,12 +31,19 @@ class IndicatorController extends BaseController
 
         $graphs_list = $t->getIndicatorGraphsByRoute(Request()->route);
 
-        $reports =  $t->getIndicatorReports(Request()->subdomain, Request()->route);
+        $reports = $t->getIndicatorReports(Request()->subdomain, Request()->route);
 
-        return view('user.dashboard.customers.show', [
+        $inputs = GraphService::getGraphInputsByIndicatorId(Request()->route);
+
+        // $url = CompanyService::getCompanyApiBySubdomain(Request()->subdomain);
+        $url ='https://178.173.128.10/api/BI/rest.php';
+
+        return view('user.dashboard.indicators.show', [
+            'url' => $url,
+            'inputs' => $inputs,
             'general' => $general,
-            'graphs_list' => $graphs_list,
-            'reports' => $reports
+            'reports' => $reports,
+            'graphs_list' => $graphs_list
         ]);
     }
 }

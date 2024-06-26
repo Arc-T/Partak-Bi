@@ -182,7 +182,7 @@
                                 <br />
                                 @if($reports->isNotEmpty())
                                     <div class="card-group">
-                                        @foreach ($graphs_list as $name => $graph)
+                                        @foreach ($graphs_list as $graph)
                                             <div class="col-md-3">
                                                 <div class="card">
                                                     <div class="card-content">
@@ -190,11 +190,11 @@
                                                             action="{{ url('/indicators/' . Request()->indicator . '/' . Request()->route) }}">
                                                             @csrf
                                                             <img class="card-img-top img-fluid"
-                                                                src="{{ asset('images/graphs/' . $name . '-chart.png') }}"
+                                                                src="{{ asset('images/graphs/' . $graph->name . '-chart.png') }}"
                                                                 alt="Card image cap">
-                                                            <input type="hidden" name="graph" value="{{$graph['id']}}">
+                                                            <input type="hidden" name="graph" value="{{$graph->id}}">
                                                             <div class="card-body">
-                                                                <h4 class="card-title">{{ 'نمودار ' . $graph['title'] }}
+                                                                <h4 class="card-title">{{ 'نمودار ' . $graph->title }}
                                                                 </h4>
 
                                                                 <div class="row">
@@ -205,28 +205,11 @@
                                                                             name="report">
                                                                             @foreach ($reports as $report)
                                                                                 <option value="{{$report['id']}}">
-                                                                                    {{$report['title']}}
+                                                                                    {{$report->title}}
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
-
-                                                                    <!-- @foreach ($graph['inputs'] as $input)
-                                                                                        <div class="col-md-{{$input['size']}} mt-4">
-                                                                                            <h6>{{$input['title']}}</h6>
-                                                                                            @if($input['type'] === 'select')
-                                                                                                <select class="choices form-select multiple-remove"
-                                                                                                    name='{{$input['name']}}[]' multiple="multiple">
-                                                                                                    <option value="ALL" selected>انتخاب همه
-                                                                                                    </option>
-                                                                                                </select>
-
-                                                                                            @elseif($input['type'] === 'date')
-                                                                                                <input type="text" class="form-control"
-                                                                                                    name='{{$input['name']}}' placeholder="انتخاب کنید">
-                                                                                            @endif
-                                                                                        </div>
-                                                                                    @endforeach -->
                                                                     <div class="mt-4">
                                                                         <button type="submit"
                                                                             class="btn btn-block btn-primary">ثبت</button>
@@ -252,22 +235,65 @@
                     <!-- -------------- Personal END   -------------- -->
 
                     <!-- -------------- Csutom START -------------- -->
+                    @php    
+                        $graphs_count = 0; 
+                    @endphp
+
                     @if ($reports->isNotEmpty())
                         @foreach ($reports as $report)
                             <div class="tab-pane fade" id="custom{{$loop->iteration}}" role="tabpanel"
                                 aria-labelledby="custom{{$loop->iteration}}-tab">
+                                <br />
                                 <div class="col-12">
                                     <div class="row">
                                         @if(!$report->reportGraphs->isEmpty())
-                                            @foreach ($report->reportGraphs as $graphs)
-                                                <div class="col-{{ ($graphs->graph['name'] === 'pie') ? '4' : '12'}}">
+                                            @foreach ($report->reportGraphs as $graphs) 
+                                                @php 
+                                                    ++$graphs_count; 
+                                                @endphp
+                                                <div class="col-{{ ($graphs->graph['name'] === 'pie') ? '4' : '12'}} mt-4">
                                                     <div class="card border-primary mb-3">
                                                         <div class="card-header">
                                                             <h4>تعداد مشتریان بر اساس همه ی وضعیت ها به تفکیک استان</h4>
                                                             <h6 class="text-muted mb-0 pt-1">اطلاعات از تاریخ تا هستند</h6>
                                                         </div>
                                                         <div class="card-body px-3 py-4-5">
-                                                            <div chart-type-{{$loop->iteration}}="{{$graphs->graph['name']}}"></div>
+                                                            <div chart-type-{{$graphs_count}}="{{$graphs->graph['name']}}"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-8 mt-4">
+                                                            <h6>عنوان نمودار</h6>
+                                                            <input type="text" class="form-control" placeholder="گزارش نمونه"
+                                                                name="title">
+                                                        </div>
+                                                        <div class="col-md-4 mt-4">
+                                                            <h6>اندازه نمودار</h6>
+                                                            <select class="form-select" style="background-position: left.75rem center"
+                                                                name="size">
+                                                                <option value="S">کوچک</option>
+                                                                <option value="M">متوسط</option>
+                                                                <option value="B">بزرگ</option>
+                                                            </select>
+                                                        </div>
+                                                        @foreach ($inputs as $input)
+                                                            @if ($input->graph_id === $graphs['graph_id'])
+                                                                <div class="col-md-{{$input->size}} mt-4">
+                                                                    <h6>{{$input->title}}</h6>
+                                                                    @if($input->type === 'select')
+                                                                        <select class="choices form-select multiple-remove" name='{{$input->name}}'
+                                                                            multiple="multiple">
+                                                                            <option value="ALL" selected>انتخاب همه
+                                                                            </option>
+                                                                        </select>
+                                                                    @elseif($input->type === 'date')
+                                                                        <input type="text" class="form-control" name="{{$input->name}}">
+                                                                    @endif
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                        <div class="mt-4">
+                                                            <button type="submit" class="btn btn-block btn-outline-primary">ثبت</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -275,7 +301,8 @@
                                         @else
                                             <div class="alert alert-warning mt-4">
                                                 <h4 class="alert-heading">توجه !</h4>
-                                                <p>هیچ نموداری برای گزارش خود انتخاب نکرده اید. لطفا از سربرگ آمار شخصی اقدام به ثبت نمودار کنید</p>
+                                                <p>هیچ نموداری برای گزارش خود انتخاب نکرده اید. لطفا از سربرگ آمار شخصی اقدام به ثبت
+                                                    نمودار کنید</p>
                                             </div>
                                         @endif
                                     </div>
@@ -285,7 +312,6 @@
                     @endif
                     <!-- -------------- Custom END -------------- -->
                 </div>
-
             </div>
         </div>
     </div>
@@ -295,25 +321,30 @@
 
 @section('js_files')
 
-<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<!-- <script src={{ asset('extensions/choices.js/public/assets/scripts/choices.js') }}></script> -->
+<script src={{ asset('extensions/choices.js/public/assets/scripts/choices.js') }}></script>
 
-<!-- <script src={{ asset('js/pages/form-element-select.js') }}></script> -->
+<script src={{ asset('js/pages/form-element-select.js') }}></script>
 
 <script src={{ asset('extensions/apexcharts/apexcharts.min.js') }}></script>
 
 <script>
 
-    for (let i = 0; i < 10; i++) {
+    let count = {!! json_encode($graphs_count) !!};
 
-        let chart_number = document.querySelector('[chart-type-' + i + ']');
+    if (count !== 0) {
 
-        if (chart_number) {
+        for (let i = 0; i <= count; i++) {
 
-            let chart_value = chart_number.getAttribute('chart-type-' + i);
+            let chart_number = document.querySelector('[chart-type-' + i + ']');
 
-            @include('user.dashboard.components.graphs.charts')
+            if (chart_number) {
+
+                let chart_value = chart_number.getAttribute('chart-type-' + i);
+
+                @include('user.dashboard.components.graphs.charts')
+            }
         }
     }
 
@@ -382,8 +413,8 @@
 
 @endsection
 
-<!-- @section('inline_css') -->
-<!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
+@section('inline_css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-<!-- <link rel="stylesheet" href={{ asset('extensions/choices.js/public/assets/styles/choices.css') }} /> -->
-<!-- @endsection -->
+<link rel="stylesheet" href={{ asset('extensions/choices.js/public/assets/styles/choices.css') }} />
+@endsection

@@ -8,12 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class CompanyUtility
 {
-
-    public static function getCompanyApiUrl($subdomain): string
-    {
-        return Company::find('subdomain', $subdomain)->pluck('api');
-    }
-
     public static function isCompanyCachedInfo($subdomain): bool
     {
         $cached_company_info = Cache::get('company_info');

@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Indicator;
 use App\Models\Report;
-use App\Utilities\CompanyUtility;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -76,53 +75,14 @@ class IndicatorService
         $indicator_details = $this->getIndicatorDetailsByRoute($route);
 
         // Check emptiness
-        $query = DB::select('SELECT a.id,a.name AS graph_name, a.title AS graph_title,
-                                    b.name AS input_name, b.title AS input_title,b.type, b.size
-                           FROM graphs AS a,
-                             inputs AS b,
-                             indicators_graph_input AS c
-                           WHERE a.id= c.graph_id
-                            AND b.id = c.input_id
-                            AND c.indicator_id = ?', [$indicator_details['id']]);
-        $graphs = [];
+        $query = DB::select('SELECT a.id,a.name,a.title
+                             FROM graphs AS a,
+                               indicators_graph_input AS b
+                             WHERE a.id= b.graph_id
+                             AND b.indicator_id = ?
+                             GROUP BY b.graph_id', [$indicator_details['id']]);
 
-        // maybe it needs a function?
-        foreach ($query as $result) {
-
-            if (!isset($graphs[$result->graph_name])) {
-                $graphs[$result->graph_name] = [];
-
-                $graphs[$result->graph_name] = [
-                    'id' => $result->id,
-                    'title' => $result->graph_title
-                ];
-            }
-
-            if (!isset($graphs[$result->graph_name]['inputs']))
-                $graphs[$result->graph_name]['inputs'] = [];
-
-            $inputs = [
-                'name' => $result->input_name,
-                'title' => $result->input_title,
-                'type' => $result->type,
-                'size' => $result->size
-            ];
-
-            $graphs[$result->graph_name]['inputs'][] = $inputs;
-
-        }
-        return $graphs;
-    }
-    public function getIndicatorGraphInputs(int $indicator_id, int $graph_id)
-    {
-        $query = DB::select('SELECT a.name
-                    FROM inputs AS a,
-                    indicators_graph_with_input AS b
-                    WHERE a.id = b.input_id
-                    AND b.indicator_id = ?
-                    AND b.graph_id = ?', [$indicator_id, $graph_id]);
-
-        dd($query);
+        return $query;
     }
     private function getIndicatorDetailsByRoute(string $route): Model
     {
@@ -158,7 +118,7 @@ class IndicatorService
     private function sendRequest(array $params): array
     {
         $query_params = [
-            "url" => CompanyUtility::getCompanyApiUrl($params['subdomain']),
+            "url" => CompanyService::getCompanyApiBySubdomain($params['subdomain']),
             "method" => $params['method'],
             "data" => $params['data']
         ];

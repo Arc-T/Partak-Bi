@@ -44,7 +44,7 @@
     <script src={{ asset('extensions/apexcharts/apexcharts.min.js') }}></script>
     {{-- <script src={{ asset('assets/js/main.js') }}></script> --}}
     <!-- {% block js %}{% endblock %} -->
-    @yield('js_files')
+    @stack('scripts')
 </body>
 
 </html>
