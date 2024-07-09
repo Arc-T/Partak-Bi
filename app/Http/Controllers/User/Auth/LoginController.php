@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\User\Auth;
 
-use App\Http\Controllers\User\BaseController;
 use Exception;
+use App\Models\User;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\User\BaseController;
 
 class LoginController extends BaseController
 {
@@ -24,7 +25,7 @@ class LoginController extends BaseController
         // dd($request->session());
 
         return view('common.login', [
-            'company'   => $company_table
+            'company' => $company_table
         ]);
     }
 
@@ -35,7 +36,12 @@ class LoginController extends BaseController
 
             if (Auth::attempt(['username' => $request['username'], 'password' => $request['password']])) {
 
-                if (Auth::user()->active == '0') return redirect()->back()->with('error', 'کاربر غیر فعال می باشد !');
+                if (Auth::user()->active == '0')
+                    return redirect()->back()->with('error', 'کاربر غیر فعال می باشد !');
+
+                User::where('id', Auth::user()->id)->update([
+                    'token' => md5('Partak.' . Auth::user()->id . Request()->subdomain . date('Y-m-d'))
+                ]);
 
                 return redirect()->route('user.dashboard.home', [$this->subdomain]);
 
@@ -60,12 +66,16 @@ class LoginController extends BaseController
 
     public function logout(Request $request)
     {
+        User::where('id', Auth::user()->id)->update([
+            'token' => ''
+        ]);
+
         Auth::logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('user.login', [$this->subdomain])->with('warning', 'شما با موفقیت از سامانه خارج شدید !');
+        return redirect('/login')->with('warning', 'شما با موفقیت از سامانه خارج شدید !');
     }
 }

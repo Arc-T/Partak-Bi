@@ -13,7 +13,10 @@ class CompanyService
     }
     public static function getCompanyApiBySubdomain(string $subdomain): string
     {
-        return Company::where('subdomain', $subdomain)->pluck('api');
+        return Company::where('subdomain', $subdomain)->pluck('api')[0];
+    }
+    public static function requestCompanyCities(string $subdomain): array{
+
     }
 
 }

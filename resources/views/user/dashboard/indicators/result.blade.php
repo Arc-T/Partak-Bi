@@ -40,9 +40,8 @@
                                         <div class="col-md-{{$input->size}} mt-4">
                                             <h6>{{$input->title}}</h6>
                                             @if($input->type === 'select')
-                                                <select class="choices form-select multiple-remove" name='{{$input->name}}' multiple="multiple">
-                                                    <option value="ALL" selected>انتخاب همه
-                                                    </option>
+                                                <select id="lastgamer" class="choices form-select multiple-remove" name='{{$input->name}}'
+                                                    multiple="multiple">
                                                 </select>
                                             @elseif($input->type === 'date')
                                                 <input type="text" class="form-control" name="{{$input->name}}">
@@ -92,4 +91,5 @@
         }
 
     </script>
+
 @endpush

@@ -205,7 +205,7 @@
     </style>
 @endsection
 
-@section('js_files')
+@push('scripts')
     <script src="https://cdn.anychart.com/releases/8.12.1/js/anychart-base.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4">
     </script>
     <script src="https://cdn.anychart.com/releases/8.12.1/js/anychart-map.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4">
@@ -500,6 +500,7 @@
         bar.render();
         line.render();
         radialGradient.render();
+
     </script>
-@endsection
+@endpush
 @endsection

@@ -90,7 +90,7 @@
             @endforeach
 
         </ul>
-        <form method="POST" action="{{ url('user/logout') }}" class="sidebar-exit-button">
+        <form method="POST" action="{{ url('/logout') }}" class="sidebar-exit-button">
             @csrf
             <button class="btn btn-block btn-outline-primary" type="submit">خروج</button>
         </form>

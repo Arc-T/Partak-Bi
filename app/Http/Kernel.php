@@ -40,8 +40,8 @@ class Kernel extends HttpKernel
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            'throttle:api',
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            // 'throttle:api',
+            // \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
 
@@ -53,9 +53,10 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
-        'check.subdomain'               => \App\Http\Middleware\CheckSubdomain::class,
-        'user.session.controller'       => \App\Http\Middleware\AuthenticateCompanySession::class,
+        'check.subdomain' => \App\Http\Middleware\CheckSubdomain::class,
+        'user.session.controller' => \App\Http\Middleware\AuthenticateCompanySession::class,
+        // 'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         // 'user.user.controller'          => \App\Http\Middleware\AuthenticateCompanyUser::class,
-        'admin.session.controller'      => \App\Http\Middleware\AuthenticateAdminSession::class,
+        'admin.session.controller' => \App\Http\Middleware\AuthenticateAdminSession::class,
     ];
 }

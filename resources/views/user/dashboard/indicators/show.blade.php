@@ -59,35 +59,9 @@
 @endsection
 
 @push('scripts')
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
-    <script>
-        let receivedValue;
-        let baseUrl = {!! json_encode($url) !!};
-
-        $.ajax({
-            url: baseUrl + '/api/BI/rest.php',
-            type: "GET",
-            headers: {
-                "accept": "application/json",
-                "Access-Control-Allow-Origin": "*"
-            },
-            data: { "method": "getCities" },
-            cache: false,
-            success: function (html) {
-                // Store the returned value in the variable
-                receivedValue = html;
-
-                // Log the value to the console (for debugging purposes)
-                console.log("Received value:", receivedValue);
-
-                // Append the returned HTML to the #provinces element
-                $("#provinces").append(html);
-            }
-        });
-    </script>
-
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
@@ -96,6 +70,61 @@
     <script src={{ asset('js/pages/form-element-select.js') }}></script>
 
     <script src={{ asset('extensions/apexcharts/apexcharts.min.js') }}></script>
+
+
+    <script>
+
+        parameters = {
+            user: "{{ Auth::user()->id }}",
+            company: "{{ Request()->subdomain }}",
+            indicator: "{{Request()->indicator}}",
+            token: "{{md5('Partak.' . Auth::user()->id . Request()->subdomain . date('Y-m-d'))}}"
+        };
+
+        $(document).ready(function () {
+            // Perform the AJAX request to fetch the data
+            $.ajax({
+                url: "{{ route('getCities') }}",
+                type: "GET",
+                data: parameters,
+                accepts: "application/json",
+                cache: false,
+                success: function (data) {
+                    // Loop through each select element with class .choices
+                    $('.choices').each(function () {
+                        var $select = $(this);
+
+                        // Clear existing options and reset select
+                        $select.empty();
+
+                        // Add the default option "انتخاب همه"
+                        $select.append($('<option>', {
+                            value: 'ALL',
+                            text: 'انتخاب همه',
+                            selected: true
+                        }));
+
+                        // Append fetched options from AJAX response
+                        data.forEach(res => {
+                            $select.append(new Option(res.CityName, res.CityRef));
+                        });
+
+                        // Initialize Choices.js for each select element
+                        new Choices(this, {
+                            delimiter: ',',
+                            editItems: true,
+                            maxItemCount: -1,
+                            removeItemButton: true,
+                        });
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX request failed:", textStatus, errorThrown);
+                }
+            });
+        });
+
+    </script>
 
     <script>
 
