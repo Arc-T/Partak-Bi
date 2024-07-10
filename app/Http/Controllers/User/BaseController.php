@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Utilities\CompanyUtility;
 
 class BaseController extends Controller
 {
     public $subdomain = '';
-    public function __construct(Request $request)
+    public $route = '';
+    public $sub_route = '';
+
+    public function __construct()
     {
-        $this->subdomain = $request->route('subdomain');
+        $this->subdomain = Request()->subdomain;
+        $this->route = Request()->route;
+        $this->sub_route = Request()->sub_route;
 
         view()->share('subdomain', $this->subdomain);
 

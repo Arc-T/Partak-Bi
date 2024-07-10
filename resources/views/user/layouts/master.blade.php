@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,12 +40,13 @@
         </div>
     </div>
     <script src={{ asset('js/bootstrap.bundle.min.js') }}></script>
-    <script src={{ asset('js/app.js') }}></script>
     <script src={{ asset('vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}></script>
     <script src={{ asset('extensions/apexcharts/apexcharts.min.js') }}></script>
-    {{-- <script src={{ asset('assets/js/main.js') }}></script> --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <!-- {% block js %}{% endblock %} -->
     @stack('scripts')
+    <script src={{ asset('js/app.js') }}></script>
 </body>
 
 </html>

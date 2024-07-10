@@ -40,6 +40,7 @@ class LoginController extends BaseController
                     return redirect()->back()->with('error', 'کاربر غیر فعال می باشد !');
 
                 User::where('id', Auth::user()->id)->update([
+                    
                     'token' => md5('Partak.' . Auth::user()->id . Request()->subdomain . date('Y-m-d'))
                 ]);
 

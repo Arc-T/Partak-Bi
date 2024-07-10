@@ -34,11 +34,11 @@ Route::domain('{subdomain}.localhost')
 
             Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard.home');
 
-            Route::get('/indicators/{indicator}/{route}', [UserIndicatorController::class, 'show']);
+            Route::get('/indicators/{route}/{sub_route}', [UserIndicatorController::class, 'show']);
 
-            Route::post('/indicators/{indicator}/{route}', [UserIndicatorController::class, 'store']);
+            Route::post('/indicators/{route}/{sub_route}', [UserIndicatorController::class, 'store']);
 
-            Route::post('/indicators/{indicator}/{route}/report', [ReportsController::class, 'store']);
+            Route::post('/indicators/{route}/{sub_route}/report', [ReportsController::class, 'store']);
 
             // Route::resource('/reports', ReportsController::class);
         });

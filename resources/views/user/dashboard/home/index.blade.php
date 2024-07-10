@@ -2,207 +2,207 @@
 
 @section('main_content')
 
-    <div class="page-content">
-        <section class="row">
-            <div class="col-12 col-lg-9">
-                <div class="row">
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-3 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="stats-icon purple">
-                                            <svg width="1.6em" height="1.6em" style="color: rgb(255, 255, 255);">
-                                                <use
-                                                    xlink:href="vendors/bootstrap-icons/bootstrap-icons.svg#calendar-date-fill">
-                                                </use>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">تاریخ امروز</h6>
-                                        <h6 class="font-extrabold mb-0">{{ verta()->format('%d %B %Y') }}</h6>
+<div class="page-content">
+    <section class="row">
+        <div class="col-12 col-lg-9">
+            <div class="row">
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="stats-icon purple">
+                                        <svg width="1.6em" height="1.6em" style="color: rgb(255, 255, 255);">
+                                            <use
+                                                xlink:href="vendors/bootstrap-icons/bootstrap-icons.svg#calendar-date-fill">
+                                            </use>
+                                        </svg>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-3 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="stats-icon blue">
-                                            <i class="iconly-boldProfile"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">مشتریان فعال</h6>
-                                        <h6 class="font-extrabold mb-0">183</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-3 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="stats-icon green">
-                                            <svg width="1.8em" height="2em" style="color: rgb(255, 255, 255);">
-                                                <use xlink:href="vendors/bootstrap-icons/bootstrap-icons.svg#stack">
-                                                </use>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">سرویس فعال</h6>
-                                        <h6 class="font-extrabold mb-0">560</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-3 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="stats-icon red">
-                                            <!-- <i class="iconly-boldBookmark"></i> -->
-                                            <svg width="1.4em" height="2em" style="color: rgb(255, 255, 255);">
-                                                <use xlink:href="vendors/bootstrap-icons/bootstrap-icons.svg#building">
-                                                </use>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">نیروهای شرکت</h6>
-                                        <h6 class="font-extrabold mb-0">132</h6>
-                                    </div>
+                                <div class="col-md-8">
+                                    <h6 class="text-muted font-semibold">تاریخ امروز</h6>
+                                    <h6 class="font-extrabold mb-0">{{ verta()->format('%d %B %Y') }}</h6>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>آمار کلی سامانه</h4>
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="stats-icon blue">
+                                        <i class="iconly-boldProfile"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="text-muted font-semibold">مشتریان فعال</h6>
+                                    <h6 class="font-extrabold mb-0">183</h6>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <div id="bar"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="stats-icon green">
+                                        <svg width="1.8em" height="2em" style="color: rgb(255, 255, 255);">
+                                            <use xlink:href="vendors/bootstrap-icons/bootstrap-icons.svg#stack">
+                                            </use>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="text-muted font-semibold">سرویس فعال</h6>
+                                    <h6 class="font-extrabold mb-0">560</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="stats-icon red">
+                                        <!-- <i class="iconly-boldBookmark"></i> -->
+                                        <svg width="1.4em" height="2em" style="color: rgb(255, 255, 255);">
+                                            <use xlink:href="vendors/bootstrap-icons/bootstrap-icons.svg#building">
+                                            </use>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="text-muted font-semibold">نیروهای شرکت</h6>
+                                    <h6 class="font-extrabold mb-0">132</h6>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-3">
-                <div class="card">
-                    <div class="card-body py-4 px-5">
-                        <div class="d-flex align-items-center">
-                            <div class="avatar avatar-xl">
-                                <img src="{{ asset('images/faces/1.jpg') }}" alt="Face">
-                            </div>
-                            <div class="me-3 name ps-2">
-                                <h5 class="font-bold">{{ Auth::user()->name }}</h5>
-                                <h6 class="text-muted mt-0">{{ Auth::user()->username . '@' }}</h6>
-                            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>آمار کلی سامانه</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="bar"></div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-3">
+            <div class="card">
+                <div class="card-body py-4 px-5">
+                    <div class="d-flex align-items-center">
+                        <div class="avatar avatar-xl">
+                            <img src="{{ asset('images/faces/1.jpg') }}" alt="Face">
+                        </div>
+                        <div class="me-3 name ps-2">
+                            <h5 class="font-bold">{{ Auth::user()->name }}</h5>
+                            <h6 class="text-muted mt-0">{{ Auth::user()->username . '@' }}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="card">
+                <div class="card-header">
+                    <h4>پر مخاطب ترین استان ها</h4>
+                    <h6 class="text-muted mb-0 pt-1">اطلاعات آپدیت شده</h6>
+                </div>
+                <div class="card-body">
+                    <div id="container"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
-                        <h4>پر مخاطب ترین استان ها</h4>
-                        <h6 class="text-muted mb-0 pt-1">اطلاعات آپدیت شده</h6>
+                        <h4>میزان فروش ماهیانه</h4>
                     </div>
                     <div class="card-body">
-                        <div id="container"></div>
+                        <div id="area"></div>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section class="section">
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>میزان فروش ماهیانه</h4>
-                        </div>
-                        <div class="card-body">
-                            <div id="area"></div>
-                        </div>
+            {{-- <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>پرفروش ترین بسته ترافیکی</h4>
+                        <h6 class="text-muted mb-0 pt-1">بسته ترافیکی مشترکین ADSL</h6>
+                    </div>
+                    <div class="card-body">
+                        <div id="radialGradient"></div>
                     </div>
                 </div>
-                {{-- <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>پرفروش ترین بسته ترافیکی</h4>
-                            <h6 class="text-muted mb-0 pt-1">بسته ترافیکی مشترکین ADSL</h6>
-                        </div>
-                        <div class="card-body">
-                            <div id="radialGradient"></div>
-                        </div>
+            </div> --}}
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>پرفروش ترین سرویس ها</h4>
                     </div>
-                </div> --}}
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>پرفروش ترین سرویس ها</h4>
-                        </div>
-                        <div class="card-content pb-4">
-                            <div class="recent-message d-flex px-4 py-3">
-                                {{-- <div class="avatar avatar-lg">
+                    <div class="card-content pb-4">
+                        <div class="recent-message d-flex px-4 py-3">
+                            {{-- <div class="avatar avatar-lg">
                                 <img src="assets/images/faces/4.jpg">
                             </div> --}}
-                                <div class="name me-4">
-                                    <h5 class="mb-1">سرویس 400 گیگ TDLTE</h5>
-                                    <h6 class="text-muted mb-0">سرویس مشترکین TDLTE سه ماهه با سرعت 1 مگ</h6>
-                                </div>
+                            <div class="name me-4">
+                                <h5 class="mb-1">سرویس 400 گیگ TDLTE</h5>
+                                <h6 class="text-muted mb-0">سرویس مشترکین TDLTE سه ماهه با سرعت 1 مگ</h6>
                             </div>
-                            <div class="recent-message d-flex px-4 py-3">
-                                {{-- <div class="avatar avatar-lg">
+                        </div>
+                        <div class="recent-message d-flex px-4 py-3">
+                            {{-- <div class="avatar avatar-lg">
                                 <img src="assets/images/faces/5.jpg">
                             </div> --}}
-                                <div class="name me-4">
-                                    <h5 class="mb-1">سرویس 100 گیگ ADSL</h5>
-                                    <h6 class="text-muted mb-0">سرویس مشترکین ADSL سه ماهه با سرعت 5 مگ</h6>
-                                </div>
+                            <div class="name me-4">
+                                <h5 class="mb-1">سرویس 100 گیگ ADSL</h5>
+                                <h6 class="text-muted mb-0">سرویس مشترکین ADSL سه ماهه با سرعت 5 مگ</h6>
                             </div>
-                            <div class="recent-message d-flex px-4 py-3">
-                                {{-- <div class="avatar avatar-lg">
+                        </div>
+                        <div class="recent-message d-flex px-4 py-3">
+                            {{-- <div class="avatar avatar-lg">
                                 <img src="assets/images/faces/1.jpg">
                             </div> --}}
-                                <div class="name me-4">
-                                    <h5 class="mb-1">سرویس 200 گیگ Wireless</h5>
-                                    <h6 class="text-muted mb-0">سرویس مشترکین Wireless سه ماهه با سرعت 9 مگ</h6>
-                                </div>
+                            <div class="name me-4">
+                                <h5 class="mb-1">سرویس 200 گیگ Wireless</h5>
+                                <h6 class="text-muted mb-0">سرویس مشترکین Wireless سه ماهه با سرعت 9 مگ</h6>
                             </div>
-                            <div class="recent-message d-flex px-4 py-3">
+                        </div>
+                        <div class="recent-message d-flex px-4 py-3">
 
-                                <div class="name me-4">
-                                    <h5 class="mb-1">سرویس 200 گیگ FTTH</h5>
-                                    <h6 class="text-muted mb-0">سرویس مشترکین FTTH یک ماهه با سرعت 9 مگ</h6>
-                                </div>
+                            <div class="name me-4">
+                                <h5 class="mb-1">سرویس 200 گیگ FTTH</h5>
+                                <h6 class="text-muted mb-0">سرویس مشترکین FTTH یک ماهه با سرعت 9 مگ</h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
+</div>
 
 @section('inline_css')
-    <style>
-        #container {
-            height: 365px;
-        }
-    </style>
+<style>
+    #container {
+        height: 365px;
+    }
+</style>
 @endsection
 
 @push('scripts')
@@ -212,64 +212,68 @@
     </script>
     <script
         src="https://cdn.anychart.com/releases/8.12.1/js/anychart-exports.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4">
-    </script>
+        </script>
     <script src="https://cdn.anychart.com/releases/8.12.1/js/anychart-ui.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4">
     </script>
     <script src="{{ asset('js/iran.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.15/proj4.js"></script>
 
     <script>
-        anychart.onDocumentReady(function() {
-            // This sample uses 3rd party proj4 component
-            // that makes it possible to set coordinates
-            // for the points and labels on the map and
-            // required for custom projections and grid labels formatting.
-            // See https://docs.anychart.com/Maps/Map_Projections
-
+        anychart.onDocumentReady(function () {
             // data
-            var data = [{
-                    id: "IR.CM",
-                    size: 2
-                },
-                {
-                    id: "IR.TH",
-                    size: 3
-                },
+            var data = [
+                { id: "IR.CM", size: 2 },
+                { id: "IR.TH", size: 3 }
             ];
 
             // create map chart
             var map = anychart.map();
 
-            // set geodata using https://cdn.anychart.com/geodata/2.2.0/countries/australia/australia.js
+            // set geodata
             map.geoData(anychart.maps["iran"]);
-
-            //create bubble series
+            // create bubble series
             var series = map.bubble(data);
-
-            //set series geo id field settings
+            
+            // set series geo id field settings
             series.labels().format("{%name}");
-
             series.tooltip().format("{%size} thousands of tourists");
-
             series.tooltip().titleFormat("{%name}");
 
-
+            // set map title
             map.title("استان تهران، پر مخاطب ترین \n منطقه ی فروش");
-
+            map.title().fontFamily('Shabnam');
             // set max and min bubble sizes
             map.maxBubbleSize(35);
             map.minBubbleSize(10);
-
             // set container id for the chart
             map.container("container");
 
             // initiate chart drawing
             map.draw();
+
+            // Function to change the background color dynamically
+            function setBackgroundColor(color) {
+                map.background().fill(color);
+                map.draw();
+            }
+
+            // jQuery event to toggle the theme
+            $('#toggle-dark').on('click', function () {
+                // Toggle between dark and light themes
+                var currentBackground = map.background().fill();
+
+                if (currentBackground === "#1e1e2d") {
+                    setBackgroundColor("#FFFFFF"); // Change to white for light theme
+                } else {
+                    setBackgroundColor("#1e1e2d"); // Change to dark for dark theme
+                }
+            });
         });
     </script>
 
     <script src="{{ asset('extensions/apexcharts/apexcharts.min.js') }}"></script>
-    {{-- <script src="{{ asset('assets/js/pages/ui-apexchart.js') }}"></script> --}}
+    {{--
+    <script src="{{ asset('assets/js/pages/ui-apexchart.js') }}"></script> --}}
     <script>
         var lineOptions = {
             chart: {
@@ -278,32 +282,32 @@
             series: [{
                 name: "مشتریان",
                 data: @json($sum),
-            }, ],
+            },],
             xaxis: {
                 categories: @json($date),
             },
         };
         var barOptions = {
             series: [{
-                    name: "مالی",
-                    data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
-                },
-                {
-                    name: "پشتیبانی",
-                    data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
-                },
-                {
-                    name: "خدمات",
-                    data: [35, 40, 37, 26, 45, 48, 52, 53, 41],
-                },
-                {
-                    name: "سرویس",
-                    data: [37, 46, 31, 29, 33, 48, 52, 56, 49],
-                },
-                {
-                    name: "مشتری",
-                    data: [39, 43, 30, 21, 33, 48, 52, 56, 49],
-                },
+                name: "مالی",
+                data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
+            },
+            {
+                name: "پشتیبانی",
+                data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
+            },
+            {
+                name: "خدمات",
+                data: [35, 40, 37, 26, 45, 48, 52, 53, 41],
+            },
+            {
+                name: "سرویس",
+                data: [37, 46, 31, 29, 33, 48, 52, 56, 49],
+            },
+            {
+                name: "مشتری",
+                data: [39, 43, 30, 21, 33, 48, 52, 56, 49],
+            },
             ],
             chart: {
                 type: "bar",
@@ -332,7 +336,7 @@
             },
             tooltip: {
                 y: {
-                    formatter: function(val) {
+                    formatter: function (val) {
                         return val + " ﷼";
                     },
                 },
@@ -389,7 +393,7 @@
                             fontSize: "17px",
                         },
                         value: {
-                            formatter: function(val) {
+                            formatter: function (val) {
                                 return parseInt(val);
                             },
                             color: "#111",
@@ -419,21 +423,21 @@
         };
         var areaOptions = {
             series: [{
-                    name: "مجمموعه اول",
-                    data: [31, 40, 28, 51, 42, 109, 100],
-                },
-                {
-                    name: "مجموعه دوم",
-                    data: [110, 320, 405, 320, 340, 520, 410],
-                },
-                {
-                    name: "مجموعه سوم",
-                    data: [1, 30, 40, 3, 31, 52, 41],
-                },
-                {
-                    name: "مجموعه چهارم",
-                    data: [11, 32, 45, 32, 34, 52, 41],
-                },
+                name: "مجمموعه اول",
+                data: [31, 40, 28, 51, 42, 109, 100],
+            },
+            {
+                name: "مجموعه دوم",
+                data: [110, 320, 405, 320, 340, 520, 410],
+            },
+            {
+                name: "مجموعه سوم",
+                data: [1, 30, 40, 3, 31, 52, 41],
+            },
+            {
+                name: "مجموعه چهارم",
+                data: [11, 32, 45, 32, 34, 52, 41],
+            },
             ],
             chart: {
                 height: 350,
@@ -481,7 +485,7 @@
                         total: {
                             show: true,
                             label: "Total",
-                            formatter: function(w) {
+                            formatter: function (w) {
                                 // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
                                 return 249;
                             },

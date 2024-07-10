@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
+use Exception;
 use App\Models\Report;
 use App\Models\ReportGraph;
-use Exception;
+use App\Facades\IndicatorFacade;
 
 class ReportService
 {
@@ -42,15 +43,18 @@ class ReportService
     }
     public static function saveReportDetails(array $params): bool
     {
+        $data = IndicatorFacade::processIndicatorRequest($params);
+
+        if(empty($data)) return false;
+
         try {
 
             $report_graph = new ReportGraph;
             $report_graph->report_id = $params['report'];
             $report_graph->graph_id = $params['graph'];
+            $report_graph->data = json_encode($data);
             $report_graph->size = 'B';
-            $report_graph->config_id = 1;
-            if (isset($params['comment']))
-                $report_graph->comment = $params['comment'];
+            if (isset($params['comment'])) $report_graph->comment = $params['comment'];
             $report_graph->save();
 
             return true;

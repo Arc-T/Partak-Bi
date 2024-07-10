@@ -14,46 +14,34 @@
                         @endphp
                         <div class="col-{{ ($graphs->graph['name'] === 'pie') ? '4' : '12'}} mt-4">
                             <div class="card border-primary mb-3">
+                                <div class="row justify-content-between">
+                                    <div class="col-md-4">
+                                        <h4>بدون عنوان</h4>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline-secondary dropdown-toggle me-1" type="button"
+                                                id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                style="float: left;"
+                                                aria-expanded="false">
+                                                <i class="bi bi-gear"></i>
+                                                تنظیمات
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
+                                                <a class="dropdown-item" href="#">نمایش روزانه</a>
+                                                <a class="dropdown-item" href="#">نمایش هفتگی</a>
+                                                <a class="dropdown-item" href="#">نمایش ماهانه</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
                                 <div class="card-header">
-                                    <h4>بدون عنوان</h4>
                                     <h6 class="text-muted mb-0 pt-1">اطلاعات از تاریخ تا هستند</h6>
                                 </div>
                                 <div class="card-body px-3 py-4-5">
                                     <div chart-type-{{$graphs_count}}="{{$graphs->graph['name']}}"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-8 mt-4">
-                                    <h6>عنوان نمودار</h6>
-                                    <input type="text" class="form-control" placeholder="گزارش نمونه" name="title">
-                                </div>
-                                <div class="col-md-4 mt-4">
-                                    <h6>اندازه نمودار</h6>
-                                    <select class="form-select" style="background-position: left.75rem center" name="size">
-                                        <option value="S">کوچک</option>
-                                        <option value="M">متوسط</option>
-                                        <option value="B">بزرگ</option>
-                                    </select>
-                                </div>
-                                @foreach ($inputs as $input)
-                                    @if ($input->graph_id === $graphs['graph_id'])
-                                        <div class="col-md-{{$input->size}} mt-4">
-                                            <h6>{{$input->title}}</h6>
-                                            @if($input->type === 'select')
-                                                <select id="lastgamer" class="choices form-select multiple-remove" name='{{$input->name}}'
-                                                    multiple="multiple">
-                                                </select>
-                                            @elseif($input->type === 'date')
-                                                <input type="text" class="form-control" name="{{$input->name}}">
-                                            @endif
-                                        </div>
-                                    @endif
-                                @endforeach
-                                <div class="col-md-6 mt-4">
-                                    <button type="submit" class="btn btn-block btn-outline-danger">حذف</button>
-                                </div>
-                                <div class="col-md-6 mt-4">
-                                    <button type="submit" class="btn btn-block btn-outline-primary">ثبت</button>
                                 </div>
                             </div>
                         </div>

@@ -16,7 +16,7 @@
         <hr />
 
         <div class="col-md-4 mt-2">
-            <form action="{{ url('/indicators/' . Request()->indicator . '/' . Request()->route . '/report')}}"
+            <form action="{{ url('/indicators/' . Request()->route . '/' . Request()->sub_route . '/report')}}"
                 method="post">
                 @csrf
                 <br />
@@ -127,7 +127,7 @@
                             <div class="card">
                                 <div class="card-content">
                                     <form method=post
-                                        action="{{ url('/indicators/' . Request()->indicator . '/' . Request()->route) }}">
+                                        action="{{ url('/indicators/' . Request()->route . '/' . Request()->sub_route) }}">
                                         @csrf
                                         <img class="card-img-top img-fluid"
                                             src="{{ asset('images/graphs/' . $graph->name . '-chart.png') }}"
@@ -136,7 +136,6 @@
                                         <div class="card-body">
                                             <h4 class="card-title">{{ 'نمودار ' . $graph->title }}
                                             </h4>
-
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <h6 class="mt-4">گزارش ها</h6>
@@ -148,9 +147,44 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
+                                                    <div class="row">
+                                                        @foreach ($inputs as $input)
+                                                            @if ($input->graph_id === $graph->id)
+                                                                <div class="col-md-{{$input->size}} mt-4">
+                                                                    <h6>{{$input->title}}</h6>
+                                                                    @if($input->type === 'select')
+                                                                        <select id="lastgamer" class="choices form-select multiple-remove"
+                                                                            name='{{$input->name}}' multiple="multiple">
+                                                                        </select>
+                                                                    @elseif($input->type === 'date')
+                                                                        <input data-jdp type="text" class="form-control" name="{{$input->name}}">
+                                                                    @endif
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                        <h6 class="mt-4">نحوه نمایش</h6>
+                                                        <div class="btn-group" style="z-index: 0">
+                                                            <input type="radio" value="D" class="btn-check"
+                                                                name="options-outlined" id="daily{{$graph->id}}" checked="true">
+                                                            <label class="btn btn-outline-secondary"
+                                                                for="daily{{$graph->id}}">روزانه</label>
+                                                            <input type="radio" value="W" class="btn-check"
+                                                                name="options-outlined" id="weekly{{$graph->id}}">
+                                                            <label class="btn btn-outline-secondary"
+                                                                for="weekly{{$graph->id}}">هفتگی</label>
+                                                            <input type="radio" value="M" class="btn-check"
+                                                                name="options-outlined" id="monthly{{$graph->id}}">
+                                                            <label class="btn btn-outline-secondary"
+                                                                for="monthly{{$graph->id}}">ماهانه</label>
+                                                            <input type="radio" value="Y" class="btn-check"
+                                                                name="options-outlined" id="yearly{{$graph->id}}">
+                                                            <label class="btn btn-outline-secondary"
+                                                                for="yearly{{$graph->id}}">سالانه</label>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="mt-4">
-                                                    <button type="submit" class="btn btn-block btn-primary">ثبت</button>
+                                                    <button type="submit" class="btn btn-block btn-outline-secondary">ثبت</button>
                                                 </div>
                                             </div>
                                         </div>

@@ -2,22 +2,14 @@
 
 namespace App\Services;
 
-use App\Models\Indicator;
 use App\Models\Report;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Indicator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 class IndicatorService
 {
-    private object $response;
-    /*
-     * Process indicator request in 3 steps
-     * 1st: send request to CRM
-     * 2nd: clean response data
-     * 3rd: assign data to charts
-     */
     public function processIndicatorCustomRequest(array $params = null): array
     {
         // $data = $this->sendRequest($params);
@@ -84,7 +76,7 @@ class IndicatorService
 
         return $query;
     }
-    private function getIndicatorDetailsByRoute(string $route): Model
+    public static function getIndicatorDetailsByRoute(string $route): Model
     {
         return Indicator::where('route', $route)->firstOrFail();
     }
@@ -112,34 +104,10 @@ class IndicatorService
     {
         return Indicator::where('route', $route)->pluck('id')[0];
     }
-    private function cacheDailyIndicatorResponse()
-    {
-    }
-    private function sendRequest(array $params): array
-    {
-        $query_params = [
-            "url" => CompanyService::getCompanyApiBySubdomain($params['subdomain']),
-            "method" => $params['method'],
-            "data" => $params['data']
-        ];
-        /*
-        ! Curls error should be handled
-        */
-        $this->response = Http::withBody(json_encode($query_params), 'application/json')
-            ->get($params['url']);
-
-        // http code above 200 and less than 300
-        if ($this->response->successful()) {
-            $data = $this->response->json();
-            return $data['Result'];
-        }
-
-        return [];
-    }
     /*
      * Filters response data of API.
      */
-    private function filterDataResponse(array $data = null): array
+    public static function filterDataResponse(array $data = null): array
     {
         $data2 = [
             'Dates' => [

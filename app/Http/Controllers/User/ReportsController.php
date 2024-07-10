@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-use App\Models\Report;
 use App\Services\ReportService;
-use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class ReportsController extends Controller
+class ReportsController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -33,8 +30,15 @@ class ReportsController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+
+        // $params = $request->validate([
+        //     'report' => 'required|numeric',
+        //     'graph' => 'required|numeric',
+        //     'comment' => 'nullable|max|255'
+        // ]);
+        
         //TODO: check params
-        return ReportService::saveReport(Request()->subdomain, Request()->route, $request) ? redirect()->back()->with('success', 'گزارش با موفقیت ثبت گردید !') : redirect()->back()->with('error', 'در ثبت گزارش خطایی رخ داده است !');
+        return ReportService::saveReport($this->subdomain, $this->sub_route, $request) ? redirect()->back()->with('success', 'گزارش با موفقیت ثبت گردید !') : redirect()->back()->with('error', 'در ثبت گزارش خطایی رخ داده است !');
     }
 
     /**
