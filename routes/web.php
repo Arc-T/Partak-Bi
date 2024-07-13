@@ -38,6 +38,8 @@ Route::domain('{subdomain}.localhost')
 
             Route::post('/indicators/{route}/{sub_route}', [UserIndicatorController::class, 'store']);
 
+            Route::delete('/indicators/{route}/{sub_route}', [UserIndicatorController::class, 'destroy']);
+
             Route::post('/indicators/{route}/{sub_route}/report', [ReportsController::class, 'store']);
 
             // Route::resource('/reports', ReportsController::class);

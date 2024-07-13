@@ -14,8 +14,8 @@ class IndicatorController extends BaseController
     public function store(Request $request): RedirectResponse
     {
         $params = $request->validate([
-            'begin_date'=> 'required',
-            'end_date'=> 'required',
+            'begin_date' => 'required',
+            'end_date' => 'required',
             'report' => 'required|numeric',
             'graph' => 'required|numeric',
             'comment' => 'nullable|max|255'
@@ -25,9 +25,8 @@ class IndicatorController extends BaseController
         $params['sub_route'] = $this->sub_route;
         $params['subdomain'] = $this->subdomain;
 
-        return ReportService::saveReportDetails($params) ? redirect()->back()->with('success', 'نمودار با موفقیت ثبت گردید !') : redirect()->back()->with('error', 'در ثبت نمودار خطایی رخ داده است !');
+        return ReportService::saveReportGraph($params) ? redirect()->back()->with('success', 'نمودار با موفقیت ثبت گردید !') : redirect()->back()->with('error', 'در ثبت نمودار خطایی رخ داده است !');
     }
-
     public function show(): View
     {
         $t = new IndicatorService;
@@ -50,5 +49,13 @@ class IndicatorController extends BaseController
             'reports' => $reports,
             'graphs_list' => $graphs_list
         ]);
+    }
+    public function destroy(Request $request): RedirectResponse
+    {
+        $params = $request->validate([
+            'report_id' => 'required'
+        ]);
+        
+        return ReportService::removeReportGraph($params) ? redirect()->back()->with('success', 'نمودار با موفقیت حذف گردید !') : redirect()->back()->with('error', 'در حذف نمودار خطایی رخ داده است !');
     }
 }

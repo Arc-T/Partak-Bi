@@ -41,11 +41,12 @@ class ReportService
             return false;
         }
     }
-    public static function saveReportDetails(array $params): bool
+    public static function saveReportGraph(array $params): bool
     {
         $data = IndicatorFacade::processIndicatorRequest($params);
 
-        if(empty($data)) return false;
+        if (empty($data))
+            return false;
 
         try {
 
@@ -54,7 +55,8 @@ class ReportService
             $report_graph->graph_id = $params['graph'];
             $report_graph->data = json_encode($data);
             $report_graph->size = 'B';
-            if (isset($params['comment'])) $report_graph->comment = $params['comment'];
+            if (isset($params['comment']))
+                $report_graph->comment = $params['comment'];
             $report_graph->save();
 
             return true;
@@ -66,5 +68,19 @@ class ReportService
         }
 
     }
+    public static function removeReportGraph(array $params): bool
+    {
 
+        try {
+            $params = explode('-', $params['report_id']);   
+            ReportGraph::where(['report_id' => $params[0], 'graph_id' => $params[1]])->delete();
+            return true;
+
+        } catch (Exception $exception) {
+
+            //TODO remember to remove
+            dd($exception);
+            return false;
+        }
+    }
 }
