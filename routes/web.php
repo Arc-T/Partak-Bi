@@ -40,7 +40,11 @@ Route::domain('{subdomain}.localhost')
 
             Route::delete('/indicators/{route}/{sub_route}', [UserIndicatorController::class, 'destroy']);
 
+            Route::patch('/indicators/{route}/{sub_route}', [UserIndicatorController::class, 'update']);
+
             Route::post('/indicators/{route}/{sub_route}/report', [ReportsController::class, 'store']);
+
+            Route::delete('/indicators/{route}/{sub_route}/report', [ReportsController::class, 'destroy']);
 
             // Route::resource('/reports', ReportsController::class);
         });

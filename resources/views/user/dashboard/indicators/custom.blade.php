@@ -103,7 +103,19 @@
                                                 <span class="badge bg-danger">غیر فعال</span>
                                             @endif
                                         </td>
-                                        <td>...</td>
+                                        <td>
+                                            <a href="#" data-bs-toggle="modal"
+                                                data-bs-target="#danger{{$report->id}}" title="حذف گزارش">
+                                            <i class="badge-circle badge-circle-light-secondary font-medium-1"
+                                                    data-feather="trash"></i>
+                                            </a>
+                                                @include('user.layouts.partials.delete', [
+                                                'url' => '/indicators/' . Request()->route . '/' . Request()->sub_route . '/report',
+                                                'id' => $report->id,
+                                                'title' => 'گزارش ' . $report['title'],
+                                                'name' =>'report_id'
+                                                ])
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -153,11 +165,15 @@
                                                                 <div class="col-md-{{$input->size}} mt-4">
                                                                     <h6>{{$input->title}}</h6>
                                                                     @if($input->type === 'select')
-                                                                        <select id="lastgamer" class="choices form-select multiple-remove"
-                                                                            name='{{$input->name}}' multiple="multiple">
+                                                                        <!-- <select id="lastgamer" class="choices form-select multiple-remove"
+                                                                            name='{{$input->name}}' multiple="multiple"> -->
+                                                                        <!-- </select> -->
+                                                                        <select class="form-select" name="location[]" style="background-position: left.75rem center">
+                                                                        <option value="NONE">انتخاب کنید ...</option>
                                                                         </select>
                                                                     @elseif($input->type === 'date')
-                                                                        <input data-jdp type="text" class="form-control" name="{{$input->name}}">
+                                                                        <input data-jdp type="text" class="form-control begin_date"
+                                                                            name="{{$input->name}}">
                                                                     @endif
                                                                 </div>
                                                             @endif
@@ -184,7 +200,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="mt-4">
-                                                    <button type="submit" class="btn btn-block btn-outline-secondary">ثبت</button>
+                                                    <button type="submit"
+                                                        class="btn btn-block btn-outline-primary">ثبت</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -204,3 +221,111 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+
+<script>
+        parameters = {
+            user: "{{ Auth::user()->id }}",
+            company: "{{ Request()->subdomain }}",
+            indicator: "{{Request()->route}}",
+            token: "{{md5('Partak.' . Auth::user()->id . Request()->subdomain . date('Y-m-d'))}}"
+        };
+
+        $(document).ready(function () {
+            // Perform the AJAX request to fetch the data
+            $.ajax({
+                url: "{{ route('getCities') }}",
+                type: "GET",
+                data: parameters,
+                accepts: "application/json",
+                cache: false,
+                success: function (data) {
+                    // Clear the existing options
+                    // $('select[name="location"]').empty();
+
+                    // Append new options
+                    data.forEach(res => {
+                        $('select[name="location[]"]').append(`<option value="${res.CityRef}">${res.CityName}</option>`);
+                    });
+
+                    // Loop through each select element with class .choices
+
+                    // $('.choices').each(function () {
+                    //     var $select = $(this);
+
+                    //     // Clear existing options and reset select
+                    //     $select.empty();
+
+                    //     // Add the default option "انتخاب همه"
+                    //     $select.append($('<option>', {
+                    //         value: 'ALL',
+                    //         text: 'انتخاب همه',
+                    //         selected: true
+                    //     }));
+
+                    //     // Append fetched options from AJAX response
+                    //     data.forEach(res => {
+                    //         $select.append(new Option(res.CityName, res.CityRef));
+                    //     });
+
+                    //     // Initialize Choices.js for each select element
+                    //     new Choices(this, {
+                    //         delimiter: ',',
+                    //         editItems: true,
+                    //         maxItemCount: -1,
+                    //         removeItemButton: true,
+                    //     });
+                    // });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX request failed:", textStatus, errorThrown);
+                }
+            });
+        });
+
+</script>
+
+    <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            jalaliDatepicker.startWatch();
+
+            $('input[name="begin_date"], input[name="end_date"]').change(disableInputsBasedOnDateRange);
+
+            function disableInputsBasedOnDateRange() {
+
+                var startDate = $('input[name="begin_date"]').val();
+
+                var endDate = $('input[name="end_date"]').val();
+
+                console.log(startDate);
+
+                console.log(endDate);
+
+                if (startDate && endDate) {
+
+                    var start = new Date(startDate);
+
+                    var end = new Date(endDate);
+
+                    var diffDays = (end - start) / (1000 * 60 * 60 * 24);
+
+                    if (diffDays > 10) {
+
+                        $('#daily1').attr('disabled', true);
+
+                        $('#weekly1').attr('checked', true);
+
+                    } else {
+
+                        $('#daily1').attr('disabled', false);
+                    }
+                }
+            }
+
+        });
+    </script>
+
+@endpush

@@ -11,7 +11,7 @@ class CompanyService
 
         return Company::where('subdomain', $subdomain)->pluck('id')[0];
     }
-    public static function getCompanyApiBySubdomain(string $subdomain): string
+    public static function getCompanyApiUrlBySubdomain(string $subdomain): string
     {
         return Company::where('subdomain', $subdomain)->pluck('api')[0];
     }

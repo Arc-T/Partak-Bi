@@ -25,7 +25,7 @@ class GeneralController extends Controller
                 "method" => "getCities"
             ];
 
-            $url = CompanyService::getCompanyApiBySubdomain($request->company);
+            $url = CompanyService::getCompanyApiUrlBySubdomain($request->company);
 
             $response = Http::withBody(json_encode($parameters), 'application/json')
                 ->get($url);

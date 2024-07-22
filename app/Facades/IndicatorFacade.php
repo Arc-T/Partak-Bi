@@ -2,7 +2,9 @@
 
 namespace App\Facades;
 
+use App\Services\CompanyService;
 use App\Services\IndicatorService;
+use App\Services\RequestService;
 use Hekmatinasser\Verta\Verta;
 
 class IndicatorFacade
@@ -13,25 +15,29 @@ class IndicatorFacade
      * 2nd: clean response data
      * 3rd: assign data to charts
      */
+
     public static function processIndicatorRequest(array $params): array
     {
         $indicator = IndicatorService::getIndicatorDetailsByRoute($params['route']);
 
-        if (empty($indicator)) return [];
+        if (empty($indicator))
+            return [];
+
+        $api_url = CompanyService::getCompanyApiUrlBySubdomain($params['subdomain']);
 
         $query_params = [
-            "subdomain" => $params['subdomain'],
             "method" => "indicator",
             "data" => [
                 "IndicatorRef" => $indicator['id'],
+                "CityRef" => $params['location'],
                 "BeginDate" => Verta::parse($params['begin_date'] . '00:00:01')->formatGregorian('Y-m-d H:i:s'), //2022-08-15 00:00:00,
                 "EndDate" => Verta::parse($params['end_date'] . ' 23:59:59')->formatGregorian('Y-m-d H:i:s')
             ],
         ];
 
-        //$response = RequestService::sendRequest($query_params);
+        $response = RequestService::sendRequest($query_params, $api_url);
 
-        return $filtered_data = IndicatorService::filterDataResponse(null);
+        return IndicatorService::filterDataResponse($response);
 
         /**
          * * Should Assign Data base on chart types
@@ -39,8 +45,6 @@ class IndicatorFacade
         // $charts = ApexChart::commonChartDataSort($filtered_data);
 
         // return $charts;
-
-
     }
 
 }

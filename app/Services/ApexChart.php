@@ -34,7 +34,6 @@ class ApexChart
 
         return $results;
     }
-
     public function basicChartDataSort(array $data, array $filters): array
     {
         $results = [];
@@ -79,7 +78,6 @@ class ApexChart
 
         return $results;
     }
-
     public static function commonChartDataSort(array $filtered_data): array
     {
         $categories = $filtered_data['locations'];

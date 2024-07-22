@@ -14,6 +14,7 @@ class IndicatorController extends BaseController
     public function store(Request $request): RedirectResponse
     {
         $params = $request->validate([
+            'location' => 'required',
             'begin_date' => 'required',
             'end_date' => 'required',
             'report' => 'required|numeric',
@@ -31,7 +32,9 @@ class IndicatorController extends BaseController
     {
         $t = new IndicatorService;
 
-        $general = $t->processIndicatorDailyGraphs($this->subdomain, $this->sub_route);
+        //$general = $t->processIndicatorDailyGraphs($this->subdomain, $this->sub_route);
+
+        $general = [];
 
         $graphs_list = $t->getIndicatorGraphsByRoute($this->sub_route);
 
@@ -40,6 +43,7 @@ class IndicatorController extends BaseController
         $inputs = GraphService::getGraphInputsByIndicatorId($this->sub_route);
 
         // $url = CompanyService::getCompanyApiBySubdomain(Request()->subdomain);
+
         $url = 'https://178.173.128.10/api/BI/rest.php';
 
         return view('user.dashboard.indicators.show', [
@@ -55,7 +59,18 @@ class IndicatorController extends BaseController
         $params = $request->validate([
             'report_id' => 'required'
         ]);
-        
-        return ReportService::removeReportGraph($params) ? redirect()->back()->with('success', 'نمودار با موفقیت حذف گردید !') : redirect()->back()->with('error', 'در حذف نمودار خطایی رخ داده است !');
+
+        return ReportService::removeReportGraph(intval($params['report_id'])) ? redirect()->back()->with('success', 'نمودار با موفقیت حذف گردید !') : redirect()->back()->with('error', 'در حذف نمودار خطایی رخ داده است !');
+    }
+    public function update(Request $request): RedirectResponse
+    {
+        $params = $request->validate([
+            'id' => 'required',
+            'graph_title' => 'nullable',
+            'graph_size' => 'nullable',
+            'graph_theme' => 'nullable'
+        ]);
+
+        return ReportService::updateReportGraph($params) ? redirect()->back()->with('success', 'نمودار با موفقیت آپدیت شد !') : redirect()->back()->with('error', 'در آپدیت نمودار خطایی رخ داده است !');
     }
 }

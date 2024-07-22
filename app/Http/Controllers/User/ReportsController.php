@@ -36,7 +36,7 @@ class ReportsController extends BaseController
         //     'graph' => 'required|numeric',
         //     'comment' => 'nullable|max|255'
         // ]);
-        
+
         //TODO: check params
         return ReportService::saveReport($this->subdomain, $this->sub_route, $request) ? redirect()->back()->with('success', 'گزارش با موفقیت ثبت گردید !') : redirect()->back()->with('error', 'در ثبت گزارش خطایی رخ داده است !');
     }
@@ -63,26 +63,18 @@ class ReportsController extends BaseController
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Request $request): RedirectResponse
     {
-        //
+
+        $params = $request->validate([
+            'report_id' => 'required'
+        ]);
+
+        return ReportService::removeReport(intval($params['report_id'])) ? redirect()->back()->with('success', 'نمودار با موفقیت حذف گردید !') : redirect()->back()->with('error', 'در حذف نمودار خطایی رخ داده است !');
     }
 }

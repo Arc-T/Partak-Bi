@@ -41,6 +41,21 @@ class ReportService
             return false;
         }
     }
+    public static function removeReport(int $id): bool
+    {
+        try {
+
+            Report::find($id)->delete();
+
+            return true;
+
+        } catch (Exception $exception) {
+
+            //TODO remember to remove
+            dd($exception);
+            return false;
+        }
+    }
     public static function saveReportGraph(array $params): bool
     {
         $data = IndicatorFacade::processIndicatorRequest($params);
@@ -57,28 +72,41 @@ class ReportService
             $report_graph->size = 'B';
             if (isset($params['comment']))
                 $report_graph->comment = $params['comment'];
-            $report_graph->save();
 
-            return true;
+            return $report_graph->save();
 
         } catch (Exception $exception) {
             //TODO remember to remove
             dd($exception);
             return false;
         }
-
     }
-    public static function removeReportGraph(array $params): bool
+    public static function removeReportGraph(int $id): bool
     {
-
         try {
-            $params = explode('-', $params['report_id']);   
-            ReportGraph::where(['report_id' => $params[0], 'graph_id' => $params[1]])->delete();
-            return true;
+
+            return ReportGraph::find($id)->delete();
 
         } catch (Exception $exception) {
 
             //TODO remember to remove
+            dd($exception);
+            return false;
+        }
+    }
+    public static function updateReportGraph(array $params): bool
+    {
+        try {
+
+            $graph = ReportGraph::find(intval($params['id']));
+
+            $graph->title = $params['graph_title'];
+            $graph->size = $params['graph_size'];
+
+            return $graph->save();
+
+        } catch (Exception $exception) {
+
             dd($exception);
             return false;
         }

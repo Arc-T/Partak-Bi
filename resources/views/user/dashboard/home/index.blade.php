@@ -98,6 +98,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12">
+                    <div id="bar22"></div>
+                </div>
             </div>
         </div>
         <div class="col-12 col-lg-3">
@@ -233,7 +236,7 @@
             map.geoData(anychart.maps["iran"]);
             // create bubble series
             var series = map.bubble(data);
-            
+
             // set series geo id field settings
             series.labels().format("{%name}");
             series.tooltip().format("{%size} thousands of tourists");
@@ -248,6 +251,9 @@
             // set container id for the chart
             map.container("container");
 
+            if (localStorage.getItem("theme") == 'theme-dark') map.background().fill("#1e1e2d");
+
+            else map.background().fill("#FFFFFF");
             // initiate chart drawing
             map.draw();
 
@@ -259,16 +265,21 @@
 
             // jQuery event to toggle the theme
             $('#toggle-dark').on('click', function () {
-                // Toggle between dark and light themes
+
+                console.log(localStorage.getItem("theme"));
+
                 var currentBackground = map.background().fill();
 
                 if (currentBackground === "#1e1e2d") {
-                    setBackgroundColor("#FFFFFF"); // Change to white for light theme
+
+                    setBackgroundColor("#FFFFFF");
+
                 } else {
-                    setBackgroundColor("#1e1e2d"); // Change to dark for dark theme
+                    setBackgroundColor("#1e1e2d");
                 }
             });
         });
+
     </script>
 
     <script src="{{ asset('extensions/apexcharts/apexcharts.min.js') }}"></script>
@@ -286,6 +297,82 @@
             xaxis: {
                 categories: @json($date),
             },
+        };
+        var options111 = {
+            series: [{
+                name: 'Marine Sprite',
+                data: [44, 55, 41, 37, 22, 43, 21]
+            }, {
+                name: 'Striking Calf',
+                data: [53, 32, 33, 52, 13, 43, 32]
+            }, {
+                name: 'Tank Picture',
+                data: [12, 17, 11, 9, 15, 11, 20]
+            }, {
+                name: 'Bucket Slope',
+                data: [9, 7, 5, 8, 6, 9, 4]
+            }, {
+                name: 'Reborn Kid',
+                data: [25, 12, 19, 32, 25, 24, 10]
+            }],
+            chart: {
+                type: 'bar',
+                height: 350,
+                stacked: true,
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                    dataLabels: {
+                        total: {
+                            enabled: true,
+                            offsetX: 0,
+                            style: {
+                                fontSize: '13px',
+                                fontWeight: 900
+                            }
+                        }
+                    }
+                },
+            },
+            stroke: {
+                width: 1,
+                colors: ['#fff']
+            },
+            title: {
+                text: 'Fiction Books Sales'
+            },
+            xaxis: {
+                categories: [2008, 2009, 2010, 2011, 2012, 2013, 2014],
+                labels: {
+                    formatter: function (val) {
+                        return val + "K"
+                    }
+                }
+            },
+            yaxis: {
+                labels: {
+                    offsetX: -30,
+                },
+                    title: {
+                    text: undefined
+                },
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val + "K"
+                    }
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'left',
+                offsetX: 40
+            }
         };
         var barOptions = {
             series: [{
@@ -499,7 +586,8 @@
         var line = new ApexCharts(document.querySelector("#line"), lineOptions);
         // var candle = new ApexCharts(document.querySelector("#candle"), candleOptions);
         var radialGradient = new ApexCharts(document.querySelector("#radialGradient"), radialGradientOptions);
-        var area = new ApexCharts(document.querySelector("#area"), areaOptions);
+        var area1 = new ApexCharts(document.querySelector("#bar22"), options111);
+        area1.render();
         area.render();
         bar.render();
         line.render();

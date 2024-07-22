@@ -28,36 +28,6 @@ class IndicatorService
 
         return $filtered_data;
     }
-    public function processIndicatorDailyGraphs(string $subdomain, string $route): array
-    {
-        $indicator = $this->getIndicatorDetailsByRoute($route);
-
-        $date = date('d.m.Y', strtotime("-1 days"));
-
-        $params = [
-            "subdomain" => $subdomain,
-            "method" => "indicator",
-            "data" => [
-                "IndicatorRef" => $indicator['parent_id'],
-                "BeginDate" => $date,
-                "EndDate" => $date
-            ],
-        ];
-
-        // $data = $this->sendRequest($params);
-
-        /**
-         * * Remove Null after test
-         */
-        return $filtered_data = $this->filterDataResponse(null);
-
-        /**
-         * * Should Assign Data base on chart types
-         */
-        // $charts = ApexChart::commonChartDataSort($filtered_data);
-
-        // return $charts;
-    }
     public function getIndicatorGraphsByRoute(string $route): array
     {
         /**
@@ -104,27 +74,107 @@ class IndicatorService
     {
         return Indicator::where('route', $route)->pluck('id')[0];
     }
-    /*
-     * Filters response data of API.
-     */
     public static function filterDataResponse(array $data = null): array
     {
+
         // $data2 = [
         //     'Dates' => [
         //         '2014-02-05' => [
         //             'Provinces' => [
         //                 'Isfahan' => [
         //                     'Status' => [
-        //                         'A' => 30,
+        //                         'آماده به نصب' => 30,
         //                         'بهره بردار' => 20,
-        //                         'C' => 22
+        //                         'مشکل دار' => 22,
+        //                         'جمع شده' => 43
         //                     ],
         //                 ],
         //                 'Tehran' => [
         //                     'Status' => [
-        //                         'A' => 80,
-        //                         'B' => 330,
-        //                         'C' => 222
+        //                         'آماده به نصب' => 80,
+        //                         'بهره بردار' => 330,
+        //                         'مشکل دار' => 222,
+        //                         'جمع شده' => 43
+        //                     ],
+        //                 ],
+        //             ],
+        //         ],
+        //         '2015-03-10' => [
+        //             'Provinces' => [
+        //                 'Isfahan' => [
+        //                     'Status' => [
+        //                         'آماده به نصب' => 45,
+        //                         'بهره بردار' => 150,
+        //                         'مشکل دار' => 90,
+        //                         'جمع شده' => 43
+        //                     ],
+        //                 ],
+        //                 'Tehran' => [
+        //                     'Status' => [
+        //                         'آماده به نصب' => 60,
+        //                         'بهره بردار' => 200,
+        //                         'مشکل دار' => 180,
+        //                         'جمع شده' => 43
+        //                     ],
+        //                 ],
+        //             ],
+        //         ],
+        //         '2016-04-15' => [
+        //             'Provinces' => [
+        //                 'Isfahan' => [
+        //                     'Status' => [
+        //                         'آماده به نصب' => 25,
+        //                         'بهره بردار' => 75,
+        //                         'مشکل دار' => 50,
+        //                         'جمع شده' => 43
+        //                     ],
+        //                 ],
+        //                 'Tehran' => [
+        //                     'Status' => [
+        //                         'آماده به نصب' => 70,
+        //                         'بهره بردار' => 250,
+        //                         'مشکل دار' => 150,
+        //                         'جمع شده' => 43
+        //                     ],
+        //                 ],
+        //             ],
+        //         ],
+        //         '2017-05-20' => [
+        //             'Provinces' => [
+        //                 'Isfahan' => [
+        //                     'Status' => [
+        //                         'آماده به نصب' => 55,
+        //                         'بهره بردار' => 130,
+        //                         'مشکل دار' => 75,
+        //                         'جمع شده' => 43
+        //                     ],
+        //                 ],
+        //                 'Tehran' => [
+        //                     'Status' => [
+        //                         'آماده به نصب' => 40,
+        //                         'بهره بردار' => 120,
+        //                         'مشکل دار' => 100,
+        //                         'جمع شده' => 43
+        //                     ],
+        //                 ],
+        //             ],
+        //         ],
+        //         '2018-06-25' => [
+        //             'Provinces' => [
+        //                 'Isfahan' => [
+        //                     'Status' => [
+        //                         'آماده به نصب' => 90,
+        //                         'بهره بردار' => 300,
+        //                         'مشکل دار' => 210,
+        //                         'جمع شده' => 43
+        //                     ],
+        //                 ],
+        //                 'Tehran' => [
+        //                     'Status' => [
+        //                         'آماده به نصب' => 35,
+        //                         'بهره بردار' => 110,
+        //                         'مشکل دار' => 80,
+        //                         'جمع شده' => 43
         //                     ],
         //                 ],
         //             ],
@@ -132,128 +182,27 @@ class IndicatorService
         //     ],
         // ];
 
-        $data2 = [
-            'Dates' => [
-                '2014-02-05' => [
-                    'Provinces' => [
-                        'Isfahan' => [
-                            'Status' => [
-                                'آماده به نصب' => 30,
-                                'بهره بردار' => 20,
-                                'مشکل دار' => 22,
-                                'جمع شده' => 43
-                            ],
-                        ],
-                        'Tehran' => [
-                            'Status' => [
-                                'آماده به نصب' => 80,
-                                'بهره بردار' => 330,
-                                'مشکل دار' => 222,
-                                'جمع شده' => 43
-                            ],
-                        ],
-                    ],
-                ],
-                '2015-03-10' => [
-                    'Provinces' => [
-                        'Isfahan' => [
-                            'Status' => [
-                                'آماده به نصب' => 45,
-                                'بهره بردار' => 150,
-                                'مشکل دار' => 90,
-                                'جمع شده' => 43
-                            ],
-                        ],
-                        'Tehran' => [
-                            'Status' => [
-                                'آماده به نصب' => 60,
-                                'بهره بردار' => 200,
-                                'مشکل دار' => 180,
-                                'جمع شده' => 43
-                            ],
-                        ],
-                    ],
-                ],
-                '2016-04-15' => [
-                    'Provinces' => [
-                        'Isfahan' => [
-                            'Status' => [
-                                'آماده به نصب' => 25,
-                                'بهره بردار' => 75,
-                                'مشکل دار' => 50,
-                                'جمع شده' => 43
-                            ],
-                        ],
-                        'Tehran' => [
-                            'Status' => [
-                                'آماده به نصب' => 70,
-                                'بهره بردار' => 250,
-                                'مشکل دار' => 150,
-                                'جمع شده' => 43
-                            ],
-                        ],
-                    ],
-                ],
-                '2017-05-20' => [
-                    'Provinces' => [
-                        'Isfahan' => [
-                            'Status' => [
-                                'آماده به نصب' => 55,
-                                'بهره بردار' => 130,
-                                'مشکل دار' => 75,
-                                'جمع شده' => 43
-                            ],
-                        ],
-                        'Tehran' => [
-                            'Status' => [
-                                'آماده به نصب' => 40,
-                                'بهره بردار' => 120,
-                                'مشکل دار' => 100,
-                                'جمع شده' => 43
-                            ],
-                        ],
-                    ],
-                ],
-                '2018-06-25' => [
-                    'Provinces' => [
-                        'Isfahan' => [
-                            'Status' => [
-                                'آماده به نصب' => 90,
-                                'بهره بردار' => 300,
-                                'مشکل دار' => 210,
-                                'جمع شده' => 43
-                            ],
-                        ],
-                        'Tehran' => [
-                            'Status' => [
-                                'آماده به نصب' => 35,
-                                'بهره بردار' => 110,
-                                'مشکل دار' => 80,
-                                'جمع شده' => 43
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-
         // Provinces, Cities , Mdfs
-        $location_filter = array_key_first(array_values($data2['Dates'])[0]);
+        $location_filter = array_key_first(array_values($data['Dates'])[0]);
 
         // Status
-        $indicator_filter = array_key_first(array_values(array_values($data2['Dates'])[0][$location_filter])[0]);
+        $indicator_filter = array_key_first(array_values(array_values($data['Dates'])[0][$location_filter])[0]);
 
-        $dates = array_keys($data2['Dates']);
-
+        $dates = array_keys($data['Dates']);
+        
+        $jalali_dates = [];
         $indicators = [];
         $locations = [];
 
         foreach ($dates as $date) {
 
-            $locations = array_keys($data2['Dates'][$date][$location_filter]);
+            $jalali_dates [] = verta($date)->format('Y-m-d');
+
+            $locations = array_keys($data['Dates'][$date][$location_filter]);
 
             foreach ($locations as $location) {
-                $indicator_result = $data2['Dates'][$date][$location_filter][$location]['Status'];
+
+                $indicator_result = $data['Dates'][$date][$location_filter][$location]['StatusName'];
 
                 foreach ($indicator_result as $indicator_key => $indicator_value) {
 
@@ -274,11 +223,13 @@ class IndicatorService
             }
         }
 
-        return [
-            'dates' => $dates,
+        $result = [
+            'dates' => $jalali_dates,
             'locations' => $locations,
             'indicators' => $indicators
         ];
+
+        return $result;
     }
 
 }

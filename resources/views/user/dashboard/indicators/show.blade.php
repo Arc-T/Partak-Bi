@@ -21,6 +21,11 @@
                             aria-controls="personal" aria-selected="true">آمار شخصی</a>
                     </li>
 
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="settings-tab" data-bs-toggle="tab" href="#settings" role="tab"
+                            aria-controls="settings" aria-selected="true">تنظیمات</a>
+                    </li>
+
                     @if($reports->isNotEmpty())
                         @foreach ($reports as $report)
                             <li class="nav-item" role="presentation">
@@ -44,6 +49,10 @@
 
                     @include('user.dashboard.indicators.custom')
 
+                    <!-- -------------- Settings -------------- -->
+
+                    @include('user.dashboard.indicators.settings')
+
                     <!-- -------------- Result -------------- -->
 
                     @if ($reports->isNotEmpty())
@@ -59,139 +68,23 @@
 @endsection
 
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <script src={{ asset('extensions/choices.js/public/assets/scripts/choices.js') }}></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
 
-    <script src={{ asset('js/pages/form-element-select.js') }}></script>
+    <!-- <script src={{ asset('extensions/choices.js/public/assets/scripts/choices.js') }}></script> -->
+
+    <!-- <script src={{ asset('js/pages/form-element-select.js') }}></script> -->
 
     <script src={{ asset('extensions/apexcharts/apexcharts.min.js') }}></script>
-
-    <script>
-
-        parameters = {
-            user: "{{ Auth::user()->id }}",
-            company: "{{ Request()->subdomain }}",
-            indicator: "{{Request()->route}}",
-            token: "{{md5('Partak.' . Auth::user()->id . Request()->subdomain . date('Y-m-d'))}}"
-        };
-
-        $(document).ready(function () {
-            // Perform the AJAX request to fetch the data
-            $.ajax({
-                url: "{{ route('getCities') }}",
-                type: "GET",
-                data: parameters,
-                accepts: "application/json",
-                cache: false,
-                success: function (data) {
-                    // Loop through each select element with class .choices
-                    $('.choices').each(function () {
-                        var $select = $(this);
-
-                        // Clear existing options and reset select
-                        $select.empty();
-
-                        // Add the default option "انتخاب همه"
-                        $select.append($('<option>', {
-                            value: 'ALL',
-                            text: 'انتخاب همه',
-                            selected: true
-                        }));
-
-                        // Append fetched options from AJAX response
-                        data.forEach(res => {
-                            $select.append(new Option(res.CityName, res.CityRef));
-                        });
-
-                        // Initialize Choices.js for each select element
-                        new Choices(this, {
-                            delimiter: ',',
-                            editItems: true,
-                            maxItemCount: -1,
-                            removeItemButton: true,
-                        });
-                    });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("AJAX request failed:", textStatus, errorThrown);
-                }
-            });
-        });
-
-    </script>
-
-    <script>
-
-        let data = {!! json_encode($general) !!};
-
-        let options_1 = {
-            series: data['indicators'],
-            chart: {
-                type: 'bar',
-                height: 350,
-                stacked: true,
-                toolbar: {
-                    show: true
-                },
-                zoom: {
-                    enabled: true
-                }
-            },
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    legend: {
-                        position: 'bottom',
-                        offsetX: -10,
-                        offsetY: 0
-                    }
-                }
-            }],
-            plotOptions: {
-                bar: {
-                    horizontal: false,
-                    borderRadius: 10,
-                    borderRadiusApplication: 'end', // 'around', 'end'
-                    borderRadiusWhenStacked: 'last', // 'all', 'last'
-                    dataLabels: {
-                        total: {
-                            enabled: true,
-                            style: {
-                                fontSize: '13px',
-                                fontWeight: 900
-                            }
-                        }
-                    }
-                },
-            },
-            xaxis: {
-                categories: data['locations'],
-            },
-            legend: {
-                position: 'right',
-                offsetY: 40
-            },
-            fill: {
-                opacity: 1
-            }
-        };
-
-        let chart2 = new ApexCharts(document.querySelector("#chart"), options_1);
-        chart2.render();
-
-    </script>
-
-    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
-    <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
-    <script>
-        jalaliDatepicker.startWatch();
-    </script>
 
 @endpush
 
 @section('inline_css')
+
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 <link rel="stylesheet" href={{ asset('extensions/choices.js/public/assets/styles/choices.css') }} />
+
+<link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+
 @endsection
