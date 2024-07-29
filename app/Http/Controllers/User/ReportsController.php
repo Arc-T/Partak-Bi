@@ -37,8 +37,9 @@ class ReportsController extends BaseController
         //     'comment' => 'nullable|max|255'
         // ]);
 
-        //TODO: check params
-        return ReportService::saveReport($this->subdomain, $this->sub_route, $request) ? redirect()->back()->with('success', 'گزارش با موفقیت ثبت گردید !') : redirect()->back()->with('error', 'در ثبت گزارش خطایی رخ داده است !');
+        return ReportService::saveReport($this->subdomain, $this->sub_route, $request)
+         ? redirect()->back()->with(['success' => 'گزارش با موفقیت ثبت شد !', 'tab' => 2]) 
+         : redirect()->back()->with(['error', 'در ثبت گزارش خطایی رخ داده است !', 'tab' => 2]);
     }
 
     /**
@@ -70,11 +71,13 @@ class ReportsController extends BaseController
 
     public function destroy(Request $request): RedirectResponse
     {
-
         $params = $request->validate([
             'report_id' => 'required'
         ]);
 
-        return ReportService::removeReport(intval($params['report_id'])) ? redirect()->back()->with('success', 'نمودار با موفقیت حذف گردید !') : redirect()->back()->with('error', 'در حذف نمودار خطایی رخ داده است !');
+        return ReportService::removeReport(intval($params['report_id']))
+            ? redirect()->back()->with(['success' => 'گزارش با موفقیت حذف شد !', 'tab' => 2])
+            : redirect()->back()->with(['error' => 'در حذف گزارش خطایی رخ داده است !', 'tab' => 2]);
     }
 }
+

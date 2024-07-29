@@ -23,6 +23,7 @@
                     @csrf
                     @method('DELETE')
                     <input type="hidden" value="{{$id}}" name="{{$name}}">
+                    <input type="hidden" value="{{$report}}" name="report_id">
                     <button type="submit" class="btn btn-danger ml-1">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">ادامه</span>

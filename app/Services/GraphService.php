@@ -13,7 +13,6 @@ class GraphService
 
         return $query;
     }
-
     public static function getGraphInputsByIndicatorId(string $route): array
     {
 
@@ -25,6 +24,4 @@ class GraphService
                              AND b.indicator_id = ?', [$indicator_id]);
         return $query;
     }
-
-
 }

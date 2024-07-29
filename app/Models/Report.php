@@ -11,7 +11,7 @@ class Report extends Model
     use HasFactory;
     protected $table = 'reports';
 
-    public function reportGraphs(): HasMany
+    public function reports_graphs(): HasMany
     {
         return $this->hasMany(ReportGraph::class);
     }

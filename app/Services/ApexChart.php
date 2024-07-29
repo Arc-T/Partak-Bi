@@ -4,7 +4,6 @@ namespace App\Services;
 
 class ApexChart
 {
-
     public function pieChartDataSort(array $data, array $filters): array
     {
         $results = [];

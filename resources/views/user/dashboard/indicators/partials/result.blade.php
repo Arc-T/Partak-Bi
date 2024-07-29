@@ -1,35 +1,80 @@
 @foreach ($reports as $report)
-    <div class="tab-pane fade" id="custom{{$loop->iteration}}" role="tabpanel"
-        aria-labelledby="custom{{$loop->iteration}}-tab">
+    <div class="tab-pane fade {{$tab_index == $report->id ? 'show active' : '' }}" id="custom{{$loop->iteration}}"
+        role="tabpanel" aria-labelledby="custom{{$loop->iteration}}-tab">
         <br />
         <div class="col-12">
             <div class="row">
-                @if(!$report->reportGraphs->isEmpty())
-                    @foreach ($report->reportGraphs as $graphs) 
-                        <!-- <div class="col-{{ ($graphs->graph['name'] === 'pie') ? '4' : '12'}} mt-4"> -->
-                        <div class="col-md-12 mt-4">
+                @if(!$report->reports_graphs->isEmpty())
+                    @foreach ($report->reports_graphs as $graphs) 
+                        <div class="col-md-{{$graphs->width}} mt-4">
                             <div class="row justify-content-between">
                                 <div class="col-md-4">
-                                    <h4>{{ !is_null($graphs->title) ? $graphs->title : 'بدون عنوان' }}</h4>
+                                    <h4>
+                                        {{ !is_null($graphs->title) ? $graphs->title . ' ' : ' بدون عنوان ' }}<a
+                                            style="font-size: 1.2rem;" href="#" data-bs-toggle="tooltip"
+                                            data-bs-original-title="یادداشت ذخیره شده برای این نمودار نمایش داده شود برای نمونه">(یادداشت)</a>
+                                    </h4>
                                 </div>
                                 <div class="col-md-4">
                                     @include('user.layouts.partials.delete', [
-                            'url' => '/indicators/' . Request()->route . '/' . Request()->sub_route,
-                            'id' => $graphs->id,
-                            'title' => 'نمودار ' . $graphs->graph['title'],
-                            'name' => 'report_id'
-                        ])
+                                        'url' => '/indicators/' . Request()->route . '/' . Request()->sub_route,
+                                        'id' => $graphs->id,
+                                        'report' => $report->id,
+                                        'title' => 'نمودار ' . $graphs->graph['title'],
+                                        'name' => 'report_graph_id'
+                                    ])
 
                                     @include('user.layouts.partials.edit', [
-                            'url' => '/indicators/' . Request()->route . '/' . Request()->sub_route,
-                            'id' => $graphs->id
-                        ])
+                                        'url' => '/indicators/' . Request()->route . '/' . Request()->sub_route,
+                                        'report' => $report->id,
+                                        'id' => $graphs->id
+                                    ])
+                                    <a href="#" style="float: left;" title="یادداشت" data-bs-toggle="modal"
+                                        data-bs-target="#secondary{{$loop->iteration}}">
+                                        <i class="badge-circle badge-circle-light-secondary font-medium-1 me-1"
+                                            data-feather="edit"></i>
+                                    </a>
+                                    <div class="modal fade text-left" id="secondary{{$loop->iteration}}" tabindex="-1" role="dialog"
+                                        aria-labelledby="myModalLabel160" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-warning">
+                                                    <h5 class="modal-title white" id="myModalLabel160">یادداشت نمودار</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h5>متن یادداشت</h5>
+                                                            <textarea type="text" class="form-control" name="graph_title"
+                                                                rows="5"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                                        <i class="bx bx-x d-block d-sm-none"></i>
+                                                        <span class="d-none d-sm-block">بازگشت</span>
+                                                    </button>
+                                                    <button type="submit" class="btn btn-warning ms-1">
+                                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                                        <span class="d-none d-sm-block">ثبت تغییرات</span>
+                                                    </button>
+                                                    <input type="hidden" name="id" value="{{$loop->iteration}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div>
-                                <h6 class="text-muted mb-0 pt-1">اطلاعات از تاریخ تا هستند</h6>
+                                @php
+                                    $data = json_decode($graphs->data);
+                                @endphp
+                                <h6 class="text-muted mb-0 pt-1">{!! 
+                                 "نمودار از تاریخ &lrm;{$data->dates[0]}&lrm; تا تاریخ &lrm;{$data->dates[count($data->dates) - 1]}&lrm; می باشد"
+                                  !!}</h6>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 mt-4">
                                 <div chart-type-{{$report->id . $loop->iteration - 1}}="{{$graphs->graph['name']}}"></div>
                             </div>
                         </div>
@@ -48,12 +93,30 @@
 @endforeach
 
 @push('scripts')
-
     <script>
 
-        let graph = {!! json_encode($reports) !!};
+        /*
+        * ! DANGER DATA EXPOSE
+        */
 
-        if (graph.length !== 0) {
+        let graph2 = {!! json_encode($reports) !!};
+        
+        let location_type2 = "  {{ Request()->sub_route == 'province' ? 'استان ' : 'شهر '  }}";
+
+        if (graph2.length !== 0) {
+
+            const colors = [
+                "#008FFB", // Blue
+                "#00E396", // Green
+                "#FEB019", // Yellow/Orange
+                "#FF4560", // Red
+                "#775DD0", // Purple
+                "#3F51B5", // Dark Blue
+                "#546E7A", // Grayish Blue
+                "#D4526E", // Pinkish Red
+                "#8D5B4C", // Brown
+                "#F86624"  // Orange
+            ];
 
             let font_family = 'Shabnam';
 
@@ -113,19 +176,21 @@
                 }
             };
 
-            for (let i = 0; i < graph.length; i++) {
+            for (let i = 0; i < graph2.length; i++) {
 
-                for (let j = 0; j < graph[i].report_graphs.length; j++) {
+                for (let j = 0; j < graph2[i].reports_graphs.length; j++) {
 
-                    let res = JSON.parse(graph[i].report_graphs[j].data);
+                    let height = graph2[i].reports_graphs[j].height;
 
-                    let title = graph[i].report_graphs[j].title;
+                    let res = JSON.parse(graph2[i].reports_graphs[j].data);
 
-                    let chart_number = document.querySelector('[chart-type-' + graph[i].id + j.toString() + ']');
+                    let title = location_type2 + res.locations + " ";
+
+                    let chart_number = document.querySelector('[chart-type-' + graph2[i].id + j.toString() + ']');
 
                     if (chart_number) {
 
-                        let chart_value = chart_number.getAttribute('chart-type-' + graph[i].id + j.toString());
+                        let chart_value = chart_number.getAttribute('chart-type-' + graph2[i].id + j.toString());
 
                         let options;
 
@@ -138,7 +203,7 @@
                                         defaultLocale: 'fa',
                                         fontFamily: font_family,
                                         type: 'bar',
-                                        height: 350,
+                                        height: height,
                                         stacked: true,
                                         stackType: '100%'
                                     },
@@ -163,6 +228,7 @@
                                             offsetX: -50,
                                         },
                                     },
+                                    colors: colors,
                                     /*
                                     tooltip: {
                                     y: {
@@ -196,6 +262,7 @@
                                             enabled: false
                                         }
                                     },
+                                    colors: colors,
                                     dataLabels: {
                                         enabled: false
                                     },
@@ -227,6 +294,7 @@
                                         width: 400,
                                         type: 'pie',
                                     },
+                                    colors: colors,
                                     labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
                                     responsive: [{
                                         breakpoint: 480,
@@ -251,6 +319,7 @@
                                         height: 350,
                                         type: 'radar',
                                     },
+                                    colors: colors,
                                     dataLabels: {
                                         enabled: true
                                     },
@@ -309,6 +378,7 @@
                                         height: 350,
                                         type: 'area'
                                     },
+                                    colors: colors,
                                     dataLabels: {
                                         enabled: false
                                     },

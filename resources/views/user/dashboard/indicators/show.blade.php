@@ -10,27 +10,32 @@
 
                 <!-- ############    TABS START     ############ -->
 
+                @php
+                    $tab_index = !is_null(session('tab')) ? session('tab') : 1;
+                @endphp
+
                 <ul class="nav nav-tabs" id="myTab" role="tablist" style="padding-right: 1.5em;">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="general-tab" data-bs-toggle="tab" href="#general" role="tab"
-                            aria-controls="general" aria-selected="false">آمار جامع</a>
+                        <a class="nav-link {{$tab_index == 1 ? 'active' : ''}}" id="general-tab" data-bs-toggle="tab"
+                            href="#general" role="tab" aria-controls="general" aria-selected="false">آمار جامع</a>
                     </li>
 
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="personal-tab" data-bs-toggle="tab" href="#personal" role="tab"
-                            aria-controls="personal" aria-selected="true">آمار شخصی</a>
+                        <a class="nav-link {{$tab_index == 2 ? 'active' : ''}}" id="personal-tab" data-bs-toggle="tab"
+                            href="#personal" role="tab" aria-controls="personal" aria-selected="true">آمار شخصی</a>
                     </li>
 
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="settings-tab" data-bs-toggle="tab" href="#settings" role="tab"
-                            aria-controls="settings" aria-selected="true">تنظیمات</a>
+                        <a class="nav-link {{$tab_index == 3 ? 'active' : ''}}" id="settings-tab" data-bs-toggle="tab"
+                            href="#settings" role="tab" aria-controls="settings" aria-selected="true">تنظیمات</a>
                     </li>
 
                     @if($reports->isNotEmpty())
                         @foreach ($reports as $report)
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="custom{{$loop->iteration}}-tab" data-bs-toggle="tab"
-                                    href="#custom{{$loop->iteration}}" role="tab" aria-controls="custom{{$loop->iteration}}"
+                                <a class="nav-link {{$tab_index == $report->id ? 'active' : ''}}"
+                                    id="custom{{$loop->iteration}}-tab" data-bs-toggle="tab" href="#custom{{$loop->iteration}}"
+                                    role="tab" aria-controls="custom{{$loop->iteration}}"
                                     aria-selected="true">{{$report->title}}</a>
                             </li>
                         @endforeach
@@ -43,20 +48,20 @@
 
                     <!-- -------------- General -------------- -->
 
-                    @include('user.dashboard.indicators.general')
+                    @include('user.dashboard.indicators.partials.general')
 
                     <!-- -------------- Custom -------------- -->
 
-                    @include('user.dashboard.indicators.custom')
+                    @include('user.dashboard.indicators.partials.custom')
 
                     <!-- -------------- Settings -------------- -->
 
-                    @include('user.dashboard.indicators.settings')
+                    @include('user.dashboard.indicators.partials.settings')
 
                     <!-- -------------- Result -------------- -->
 
                     @if ($reports->isNotEmpty())
-                        @include('user.dashboard.indicators.result')
+                        @include('user.dashboard.indicators.partials.result')
                     @endif
 
                 </div>
@@ -68,12 +73,6 @@
 @endsection
 
 @push('scripts')
-
-    <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
-
-    <!-- <script src={{ asset('extensions/choices.js/public/assets/scripts/choices.js') }}></script> -->
-
-    <!-- <script src={{ asset('js/pages/form-element-select.js') }}></script> -->
 
     <script src={{ asset('extensions/apexcharts/apexcharts.min.js') }}></script>
 

@@ -10,24 +10,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class IndicatorService
 {
-    public function processIndicatorCustomRequest(array $params = null): array
-    {
-        // $data = $this->sendRequest($params);
-
-        $indicator_id = $this->getIndicatorIdByRoute($params['route']);
-
-        $graph_object = new GraphService;
-
-        $graph_id = $graph_object->getGraphIdByName($params['graph']);
-
-        $params = $this->getIndicatorGraphInputs($indicator_id, $graph_id);
-
-        $filtered_data = $this->filterDataResponse([]);
-
-        $charts = $this->assignDataToChart($filtered_data, ['type' => 'common']);
-
-        return $filtered_data;
-    }
     public function getIndicatorGraphsByRoute(string $route): array
     {
         /**
@@ -68,7 +50,16 @@ class IndicatorService
 
         $company_id = CompanyService::getCompanyIdBySubdomain($subdomain);
 
-        return Report::where(['company_id' => $company_id, 'indicator_id' => $indicator_id])->get();
+        return Report::where(['company_id' => $company_id, 'indicator_id' => $indicator_id])
+            ->select(['id', 'title', 'active', 'comment', 'created_at'])
+            ->get();
+    }
+    public static function saveDailyIndicatorGraph(string $filtered_data, int $id): bool
+    {
+        return DB::update('UPDATE indicators_daily_graphs 
+                    SET data = ?, 
+                        updated_at = NOW() 
+                    WHERE id = ?', [$filtered_data, $id]);
     }
     public static function getIndicatorIdByRoute(string $route): int
     {
@@ -76,7 +67,6 @@ class IndicatorService
     }
     public static function filterDataResponse(array $data = null): array
     {
-
         // $data2 = [
         //     'Dates' => [
         //         '2014-02-05' => [
@@ -181,7 +171,6 @@ class IndicatorService
         //         ],
         //     ],
         // ];
-
         // Provinces, Cities , Mdfs
         $location_filter = array_key_first(array_values($data['Dates'])[0]);
 
@@ -189,20 +178,20 @@ class IndicatorService
         $indicator_filter = array_key_first(array_values(array_values($data['Dates'])[0][$location_filter])[0]);
 
         $dates = array_keys($data['Dates']);
-        
+
         $jalali_dates = [];
         $indicators = [];
         $locations = [];
 
         foreach ($dates as $date) {
 
-            $jalali_dates [] = verta($date)->format('Y-m-d');
+            $jalali_dates[] = verta($date)->format('Y-m-d');
 
-            $locations = array_keys($data['Dates'][$date][$location_filter]);
+            $locations = array_keys($data['Dates'][$date]['Location']);
 
             foreach ($locations as $location) {
 
-                $indicator_result = $data['Dates'][$date][$location_filter][$location]['StatusName'];
+                $indicator_result = $data['Dates'][$date]['Location'][$location]['StatusName'];
 
                 foreach ($indicator_result as $indicator_key => $indicator_value) {
 
@@ -231,5 +220,16 @@ class IndicatorService
 
         return $result;
     }
+    public static function getDailyIndicatorGraphs(string $subdomain, string $route): array
+    {
+        $indicator_id = self::getIndicatorIdByRoute($route);
 
+        $company_id = CompanyService::getCompanyIdBySubdomain($subdomain);
+
+        return DB::select('SELECT a.id,a.title,a.data,a.updated_at,b.name
+                           FROM indicators_daily_graphs AS a, graphs AS b
+                           WHERE a.company_id = ?
+                           AND a.indicator_id = ?
+                           AND a.graph_id = b.id',[$company_id,$indicator_id]);
+    }
 }

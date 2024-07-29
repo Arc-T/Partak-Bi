@@ -1,17 +1,28 @@
-** BUGS **
+****************************** CRITICAL *************************************
 /**
-*! User accepts Partak user
+*! User accepts Admin user
 *! Cache delete in admin panel should be handled
 *! try-catch in queries
 *! logging system should be handled
+*! colors around buttons of user panel should be fixed
+*! empty result from api should be handled
+*! user token will be expired if 1 day passes and user is still logged in
 *! validation rules should be implemented
 */
-/////////////////////////////////////
-//        "laravel/sanctum": "^3.0",
-//        "laravel/tinker": "^2.7",
-//        "predis/predis": "^2.1"
-//"maatwebsite/excel": "^3.1"
-///////////////////////////////////
+
+************************** CLEAN UPS ****************************************
+
+/**
+* TODO : buttons hover color should be changed based on company primary and secondary colors
+* TODO : a function to extract json data and renders charts for general and custom tabs
+*/
+
+************************** IMPROVEMENTS ****************************************
+
+/**
+** Its better to create a table named graph_details which holds all the graphs details whether its daily or custom
+*/
+
 ################################### Database Migration #######################################
 CREATE DATABASE partak_bi CHARACTER 
 SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';

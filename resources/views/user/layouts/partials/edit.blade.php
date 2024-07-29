@@ -18,21 +18,22 @@
                             <input type="text" class="form-control" placeholder="نمودار تست" name="graph_title">
                         </div>
                         <div class="col-md-6 mt-4">
-                            <h5>اندازه نمودار</h5>
-                            <select class="form-select" name="graph_size"
+                            <h5>طول نمودار</h5>
+                            <select class="form-select" name="graph_width"
                                 style="background-position: left.75rem center">
-                                <option value="s">کوچک</option>
-                                <option value="m">متوسط</option>
-                                <option value="l">بزرگ</option>
+                                <option value="3">کوچک</option>
+                                <option value="6">متوسط</option>
+                                <option value="12">بزرگ</option>
                             </select>
                         </div>
                         <div class="col-md-6 mt-4">
-                            <h5>تم رنگ</h5>
-                            <select class="form-select" name="graph_theme"
+                            <h5>عرض نمودار</h5>
+                            <select class="form-select" name="graph_height"
                                 style="background-position: left.75rem center">
-                                <option value="s">تیره</option>
-                                <option value="m">روشن</option>
-                            </select>
+                                <option value="350">کوچک</option>
+                                <option value="550">متوسط</option>
+                                <option value="750">بزرگ</option>
+                            </select>   
                         </div>
                     </div>
                 </div>
@@ -41,11 +42,12 @@
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">بازگشت</span>
                     </button>
-                    <button type="submit" class="btn btn-primary ms-1">
+                    <button type="submit" class="btn btn-secondary ms-1" style="background-color: #435ebe;">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">ثبت تغییرات</span>
                     </button>
                     <input type="hidden" name="id" value="{{$id}}">
+                    <input type="hidden" value="{{$report}}" name="report_id">
                 </div>
             </div>
         </form>

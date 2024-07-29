@@ -56,22 +56,18 @@ class ReportService
             return false;
         }
     }
-    public static function saveReportGraph(array $params): bool
+    public static function saveReportGraph(array $inputs, string $filtered_data): bool
     {
-        $data = IndicatorFacade::processIndicatorRequest($params);
-
-        if (empty($data))
-            return false;
-
         try {
 
             $report_graph = new ReportGraph;
-            $report_graph->report_id = $params['report'];
-            $report_graph->graph_id = $params['graph'];
-            $report_graph->data = json_encode($data);
-            $report_graph->size = 'B';
-            if (isset($params['comment']))
-                $report_graph->comment = $params['comment'];
+            $report_graph->report_id = $inputs['report'];
+            $report_graph->graph_id = $inputs['graph'];
+            $report_graph->width = 12;
+            $report_graph->height = 350;
+            $report_graph->data = $filtered_data;
+            if (isset($inputs['comment']))
+                $report_graph->comment = $inputs['comment'];
 
             return $report_graph->save();
 
@@ -100,9 +96,12 @@ class ReportService
 
             $graph = ReportGraph::find(intval($params['id']));
 
-            $graph->title = $params['graph_title'];
-            $graph->size = $params['graph_size'];
+            if (!is_null($params['graph_title']))
+                $graph->title = $params['graph_title'];
 
+            $graph->width = $params['graph_width'];
+            $graph->height = $params['graph_height'];
+            
             return $graph->save();
 
         } catch (Exception $exception) {

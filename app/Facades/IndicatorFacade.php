@@ -4,47 +4,79 @@ namespace App\Facades;
 
 use App\Services\CompanyService;
 use App\Services\IndicatorService;
+use App\Services\ReportService;
 use App\Services\RequestService;
-use Hekmatinasser\Verta\Verta;
+use Illuminate\Support\Facades\DB;
 
 class IndicatorFacade
 {
-    /*
-     * Process indicator request in 3 steps
-     * 1st: send request to CRM
-     * 2nd: clean response data
-     * 3rd: assign data to charts
-     */
-
-    public static function processIndicatorRequest(array $params): array
+    public static function processCustomIndicatorRequest(array $params): bool
     {
-        $indicator = IndicatorService::getIndicatorDetailsByRoute($params['route']);
+        $indicator_id = IndicatorService::getIndicatorIdByRoute($params['details']['sub_route']);
+
+        $api_url = CompanyService::getCompanyApiUrlBySubdomain($params['details']['subdomain']);
+
+        $query_params = RequestService::createRequestParams($params['query_params'], $indicator_id, false);
+
+        $response = RequestService::sendRequest($query_params, $api_url);
+        /**
+         * TODO: check result
+         */
+        $filtered_data = IndicatorService::filterDataResponse($response);
+
+        /**
+         * TODO: check result
+         */
+        return ReportService::saveReportGraph($params['details'], json_encode($filtered_data));
+
+    }
+
+    public static function processDailyIndicatorRequest(): bool
+    {
+
+        /*
+         *? This query gets result from bottom to top ......
+         */
+
+        $query = DB::select('SELECT a.id,a.params, a.indicator_id,
+                                    b.api
+                             FROM indicators_daily_graphs AS a, companies AS b
+                             WHERE a.company_id = b.id');
+
+        foreach ($query as $row) {
+
+            $query_params = RequestService::createRequestParams(explode(',', $row->params), $row->indicator_id, true);
+
+            $response = RequestService::sendRequest($query_params, $row->api);
+
+            $filtered_data = IndicatorService::filterDataResponse($response);
+
+            /*
+             * Should log if successful or not
+             */
+            $is_saved = IndicatorService::saveDailyIndicatorGraph(json_encode($filtered_data), $row->id);
+        }
+
+        return true;
+
+    }
+    public static function getDailyIndicatorGraphs(array $params): array
+    {
+        $indicator_id = IndicatorService::getIndicatorIdByRoute($params['route']);
 
         if (empty($indicator))
             return [];
 
-        $api_url = CompanyService::getCompanyApiUrlBySubdomain($params['subdomain']);
+        $company_id = CompanyService::getCompanyIdBySubdomain($params['subdomain']);
 
-        $query_params = [
-            "method" => "indicator",
-            "data" => [
-                "IndicatorRef" => $indicator['id'],
-                "CityRef" => $params['location'],
-                "BeginDate" => Verta::parse($params['begin_date'] . '00:00:01')->formatGregorian('Y-m-d H:i:s'), //2022-08-15 00:00:00,
-                "EndDate" => Verta::parse($params['end_date'] . ' 23:59:59')->formatGregorian('Y-m-d H:i:s')
-            ],
-        ];
+        $daily_graphs = DB::select('SELECT *
+                    FROM indicators_daily_graph
+                    WHERE indicator_id = ?
+                    AND  company_id = ?', [$indicator_id, $company_id]);
 
-        $response = RequestService::sendRequest($query_params, $api_url);
-
-        return IndicatorService::filterDataResponse($response);
-
-        /**
-         * * Should Assign Data base on chart types
+        /*
+         * LOG & ERROR HANDLE
          */
-        // $charts = ApexChart::commonChartDataSort($filtered_data);
-
-        // return $charts;
+        return $daily_graphs;
     }
-
 }

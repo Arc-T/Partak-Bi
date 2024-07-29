@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\GeneralController;
 
@@ -15,6 +14,10 @@ use App\Http\Controllers\Api\GeneralController;
 |
 */
 
-Route::prefix('api/v1')->group(function () {
+Route::prefix('/v1')->group(function () {
+
     Route::get('/get-cities', [GeneralController::class, 'getCompanyCities'])->name('getCities');
+
+    Route::get('/get-provinces', [GeneralController::class, 'getCompanyProvinces'])->name('getProvinces');
+
 });
